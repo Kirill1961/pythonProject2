@@ -84,3 +84,7 @@ print(*zip(a, b), " обратная распаковка из списка эл
 print(list(zip(*s)), " вывод запакованных элементов из *s с zip через list", "\n")
 print((*zip(s), " вывод распакованных элементов из *s с zip через list", "\n"))
 
+# zip с LIST  разной длинны
+b = [[10], [20]]
+a = [[1], [2], [3]]
+print([[i * j for i, j in zip(a[k], b[k])] for k, _ in enumerate(b)], " zip с LIST  разной длинны", "\n")

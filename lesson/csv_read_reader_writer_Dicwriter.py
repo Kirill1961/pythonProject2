@@ -92,7 +92,7 @@ data_users = [
 
 with open('c_from_data.csv', 'w', newline='') as file_d:
     write_r = csv.writer(file_d, delimiter=';')  # создаём ОБ писатель with name write_r
-    write_r.writerows(data_users)  # .writerows запишет все строки rows из коллекции
+    write_r.writerows(data_users)  # writerows запишет все строки rows из коллекции
 
 with open('c_from_data.csv', 'r') as read_users:
     for read_us in csv.reader(read_users):

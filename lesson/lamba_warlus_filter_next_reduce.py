@@ -1,6 +1,12 @@
 import random
 import numpy as np
 from functools import reduce
+from collections import defaultdict
+
+counts = defaultdict(lambda: [1, 1])  # lambda передаёт в созданный словарь величину [1, 1]
+counts["asdf"].append(555)
+print(counts, " величине [1, 1] в созданном словаре присвоили key - asdf и добавили величину 555")
+
 
 def fuf(x, y):
     return x / y
@@ -210,8 +216,6 @@ y_ = [0.5, 0.5, 0.5, 0.5]
 print(list(map(lambda enum_and_y, data: [d * y_[enum_and_y[0]] for d in data], enumerate(y_), x_)),
       " Разный LEN() у LIST и LIST[LIST] и Операции между LIST и LIST[LIST] с разным LEN()", "\n")
 
-
-
 #  reduce  используем с 3х мерной матрицей
 
 ar = np.arange(1, 13, 1).reshape(2, 3, 2)
@@ -220,8 +224,33 @@ print(ar, " генерируем 3х мерную матрицу от 1 до 12 
 ar_reduc_1 = reduce(lambda x, y: x + y, ar)
 print(ar_reduc_1, " reduce уменьшает размерность матрицы суммируя ОБ в матрице, сумма ОБ не меняется = 78", "\n")
 
-ar_reduc_2 = reduce(lambda x, y: x + y, ar_reduc_1 )
+ar_reduc_2 = reduce(lambda x, y: x + y, ar_reduc_1)
 print(ar_reduc_2, " ещё раз уменьшили ", "\n")
 
 ar_reduc_3 = reduce(lambda x, y: x + y, ar_reduc_2)
 print(ar_reduc_3, " и ещё раз ", "\n")
+
+#  Использование цепочки методов в lambda функции
+
+l = [1, 2]
+lb = (lambda x: (l.pop(), l.append(x), l.insert(0, 100)))(10)
+print(l, " Использование цепочки методов в lambda функции, здесь применены l.pop(),l.append(x), l.insert(0, 100)", "\n")
+
+# reduce действия со списком
+
+print(reduce(lambda x, y: x * y, (2, 5)), " reduce действия со списком", "\n")
+
+# Перемножение, сложение, и тд с LC , lambda, reduce. Списки с разным len
+print([[reduce(lambda x, y: x * y, (m)) for m in list(i)]
+       for i in list(map(lambda y: zip(y, b), x))], " Перемножение, сложение, и тд с LC , lambda, "
+                                                    "reduce. Списки с разным len", "\n")
+
+# min значение в списке
+a = [1, 2, 3, 0.5]
+print(min(range(len(a)), key=lambda i: a[i]), "min значение в списке, проверка поиндексно", "\n")
+
+#  Преобразование в матрицу 1 / 0 по совпадению в списках
+b = [9, 5, 2, 10, 10, 10, 10, 1, 9, 3]
+d = [[5, 9], [11, 10], [13, 4], [6, 10], [11, 12]]
+n = list(map(lambda x: [1 if j in x else 0 for j in b], d))
+print(n, " Преобразование в матрицу 1 / 0 по совпадению в списках", "\n")

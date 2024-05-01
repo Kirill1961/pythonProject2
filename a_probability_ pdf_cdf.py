@@ -1,10 +1,14 @@
 import random
 import math
 import matplotlib.pyplot as plt
-from collections import  Counter
+from collections import Counter
+
+
 # наступление события, что оба ребёнка девочки
 def random_kid():
-    return random.choice (['boy', 'girl'])
+    return random.choice(['boy', 'girl'])
+
+
 # print(random_kid())
 
 both_girls = 0
@@ -22,8 +26,8 @@ for _ in range(10000):
         older_girl += 1
     if older == 'girl' and younger == 'girl':  # условие если старший и младший ребёнок девочки
         both_girls += 1
-    if older == 'girl' or younger == 'girl': # условие если старший илиё младший ребёнок девочки
-        either_girl +=1
+    if older == 'girl' or younger == 'girl':  # условие если старший илиё младший ребёнок девочки
+        either_girl += 1
     if younger == 'girl':
         younger_girl += 1
     if older == 'boy' and younger == 'boy':
@@ -34,51 +38,54 @@ print('younger_girl / младшая', younger_girl)
 print('older_girl/старшая', older_girl)
 print('both_girls/ обе девочки', both_girls)
 print('either_girl/ любая из них', either_girl)
-print('both_boys / обa мальчика', both_boys )
+print('both_boys / обa мальчика', both_boys)
 print('either_boy / любой из мальчиков', either_boy)
 
 
 # ДФР - probability density function (pdf), ф-ция плотности равномерного распределения
-# вероятность наблюдать значение в определённом интервале = интегралу взятому в отм пределе
-def uniform_pdf(a): # Равномерность распределения
+# вероятность наблюдать значение в определённом интервале = интегралу взятому в этом пределе
+def uniform_pdf(a):  # Равномерность распределения
 
     print((a))
     return 1 if a >= 0 and a < 1 else 0
 
-print(uniform_pdf(random.random()))
 
+print(uniform_pdf(random.random()))
 
 
 # ДФР нормального распределения
 
-# def normal_pdf(x, mu = 0, sigma = 1):
-#     sqrt_two_pi = math.sqrt(2*math.pi)
-#     return (math.exp(-(x - mu)**2 / 2 / sigma**2) / (sqrt_two_pi * sigma))
-# print(normal_pdf(2, 2, 2))
+def normal_pdf(x, mu=0, sigma=1):
+    sqrt_two_pi = math.sqrt(2 * math.pi)
+    return (math.exp(-(x - mu) ** 2 / 2 / sigma ** 2) / (sqrt_two_pi * sigma))
 
 
-
+print(normal_pdf(2, 2, 2))
 
 # Графики некоторых ДФР
 
-# xs = [x / 10.0 for x in range (-50, 50)]
-# print(xs)
-# plt.plot(xs, [normal_pdf(x, sigma=1) for x in xs], '-', label='mu=0, sigma=1')
-# plt.plot(xs, [normal_pdf(x, sigma=2) for x in xs], '--', label='mu=0, sigma=2')
-# plt.plot(xs, [normal_pdf(x, sigma=0.5) for x in xs], ':', label='mu=0, sigma=0.5')
-# plt.plot(xs, [normal_pdf(x, mu=-1) for x in xs], '-.', label='mu=-1, sigma=1')
-# plt.legend()
-# plt.show()
-
+xs = [x / 10.0 for x in range(-50, 50)]
+print(xs)
+plt.plot(xs, [normal_pdf(x, sigma=1) for x in xs], '-', label='mu=0, sigma=1')
+plt.plot(xs, [normal_pdf(x, sigma=2) for x in xs], '--', label='mu=0, sigma=2')
+plt.plot(xs, [normal_pdf(x, sigma=0.5) for x in xs], ':', label='mu=0, sigma=0.5')
+plt.plot(xs, [normal_pdf(x, mu=-1) for x in xs], '-.', label='mu=-1, sigma=1')
+plt.legend()
+plt.show()
 
 
 # ИФР - commutative distribution function (cdf), интегральная ф-ция распределения,
 # определяет вероятность случайного значения  < или = некоторому значению " x ".
 
 def uniform_cdf(x):
-    if x < 0: return 0
-    elif x < 1: return x
-    else: return 1
+    if x < 0:
+        return 0
+    elif x < 1:
+        return x
+    else:
+        return 1
+
+
 print(uniform_cdf(random.random()))
 
 
@@ -87,6 +94,7 @@ print(uniform_cdf(random.random()))
 def normal_cdf(x, mu=0, sigma=1):
     # print(x, 'qqqqq')
     return ((1 + math.erf((x - mu) / math.sqrt(2) / sigma)) / 2)
+
 
 # xs = [x_ / 10.0 for x_ in range (-50, 50)]
 # # print(xs)
@@ -110,12 +118,12 @@ def invers_normal_cdf(p, mu=0, sigma=1, tolerance=0.0001):
     hi_z, hi_p = 10, 1
     while hi_z - low_z > tolerance:
         # print(hi_z,low_z,  ' hi_z, low_z - заданные нижн и верхн граница z ')
-        mid_z = (low_z + hi_z)/2
+        mid_z = (low_z + hi_z) / 2
         # print('\t' * 2, mid_z, ' mid_z  - среднее случайной величины z ')
 
         mid_p = normal_cdf(mid_z)
         # print('\t' * 4,mid_p, ' mid_p - вероятность ср велечины z')
-        if mid_p < p :
+        if mid_p < p:
             low_z, low_p = mid_z, mid_p
             # print(low_z, low_p, ' low_z, low_p')
         elif mid_p > p:
@@ -126,9 +134,7 @@ def invers_normal_cdf(p, mu=0, sigma=1, tolerance=0.0001):
     return mid_z
 
 
-
 # print(invers_normal_cdf(0.1), ' invers_normal_cdf')
-
 
 
 # Распределение Бернулли, Независимое испытание Бернулли в котором два исхода 1 и 0
@@ -136,7 +142,9 @@ def invers_normal_cdf(p, mu=0, sigma=1, tolerance=0.0001):
 
 def bernoulli_trial(p):
     # print(random.random(), ' random.random')
-    return  1 if random.random() < p else 0
+    return 1 if random.random() < p else 0
+
+
 # print(bernoulli_trial(0.5), ' bernoulli_trial')
 #
 #
@@ -146,16 +154,18 @@ def bernoulli_trial(p):
 
 def binominal(n, p):
     return sum(bernoulli_trial(p) for _ in range(n))
+
+
 print(binominal(100, 0.5), ' binominal')
 
 
-def make_hist (p, n , num_points):
+def make_hist(p, n, num_points):
     # print(num_points, ' num_points')
-    data = [binominal(n, p) for _ in range (num_points)]
+    data = [binominal(n, p) for _ in range(num_points)]
     histogram = Counter(data)
     # print(histogram)
     plt.bar([x - 0.4 for x in histogram.keys()],
-            [v / num_points for v in histogram.values()],0.5,   color='0.8')
+            [v / num_points for v in histogram.values()], 0.5, color='0.8')
     mu = p * n
     sigma = math.sqrt(n * p * (1 - p))
 
@@ -163,6 +173,8 @@ def make_hist (p, n , num_points):
     ys = [normal_cdf(i + 0.5, mu, sigma) - normal_cdf(i - 0.5, mu, sigma) for i in xs]
     plt.plot(xs, ys)
     # plt.show()
+
+
 make_hist(0.75, 100, 1000)
 
 
@@ -175,6 +187,8 @@ def normal_aproxim_to_binominal(n, p):
     sigma = math.sqrt(p * (1 - p) * n)
     print(mu, sigma, ' normal_aproxim_to_binominal(n, p)')
     return mu, sigma
+
+
 print(normal_aproxim_to_binominal(10, 0.5), ' normal_aproxim_to_binominal')
 print('')
 
@@ -184,30 +198,30 @@ normal_probability_below = normal_cdf
 
 # Норм случ величина выше порогового значения если не ниже его
 
-def normal_probability_above(lo, mu=0 , sigma=1):
+def normal_probability_above(lo, mu=0, sigma=1):
     return 1 - normal_cdf(lo, mu, sigma)
+
 
 # print(normal_probability_above(0.1))
 
 # " Х " - лежит между если ниже hi, но выше lo
 
-def normal_probability_between(lo, hi, mu=0 , sigma=1):
+def normal_probability_between(lo, hi, mu=0, sigma=1):
     return normal_cdf(hi, mu, sigma) - normal_cdf(lo, mu, sigma)
-
-
 
 
 # " Х " - лежит за пределами если оно не внутри
 
-def normal_probability_outside(lo, hi, mu=0 , sigma=1):
-    return 1 - normal_probability_between(lo, hi, mu , sigma)
-
+def normal_probability_outside(lo, hi, mu=0, sigma=1):
+    return 1 - normal_probability_between(lo, hi, mu, sigma)
 
 
 # Верхняя граница нормальной величины
 def normal_apper_bound(probability, mu=0, sigma=1):
     """ возвращает z для которого P(Z <= z) = prodability """
-    return  invers_normal_cdf(probability, mu, sigma)
+    return invers_normal_cdf(probability, mu, sigma)
+
+
 print(normal_apper_bound(0.9), ' apper возвр верхн границу величины Z при заданной вероятности')
 
 
@@ -215,15 +229,15 @@ print(normal_apper_bound(0.9), ' apper возвр верхн границу ве
 def normal_lower_bound(probability, mu=0, sigma=1):
     """ возвращает z для которого P(Z >= z) = prodability """
     return invers_normal_cdf(1 - probability, mu, sigma)
-print(normal_lower_bound(0.9), ' lower возвр нижн границу величины Z при заданной вероятности')
 
+
+print(normal_lower_bound(0.9), ' lower возвр нижн границу величины Z при заданной вероятности')
 
 
 # Двусторонние границы нормальной случайной величины
 def normal_two_sided_bounds(probability, mu=0, sigma=1):
     """ возвращает симметричные границы в которых находится указанная вероятность"""
     tail_probability = (1 - probability) / 2
-
 
     # Верхняя граница должна иметь значение хвостовой вероятности
     # tail_probability выше её
@@ -236,19 +250,17 @@ def normal_two_sided_bounds(probability, mu=0, sigma=1):
 
     return lower_bound, upper_bound
 
+
 # print(normal_two_sided_bounds (0.9))
 
 # 2х сторонние границы нормальной случайной величины Z
 mu_0, sigma_0 = normal_aproxim_to_binominal(1000, 0.5)
 print(mu_0, sigma_0)
-print(normal_two_sided_bounds (0.95, mu_0, sigma_0), ' 2х сторонние границы Z')
-
-
+print(normal_two_sided_bounds(0.95, mu_0, sigma_0), ' 2х сторонние границы Z')
 
 # 95% границы при условии что р = 0,5
 lo, hi = normal_two_sided_bounds(0.5, mu_0, sigma_0)
-print(normal_two_sided_bounds (0.5, mu_0, sigma_0), ' 95% границы при условии что р = 0,5')
-
+print(normal_two_sided_bounds(0.5, mu_0, sigma_0), ' 95% границы при условии что р = 0,5')
 
 # Фактические mu и  sugma при р = 0,55
 mu_1, sigma_1 = normal_aproxim_to_binominal(1000, 0.55)
@@ -256,7 +268,7 @@ print(normal_aproxim_to_binominal(1000, 0.55), ' Фактические mu и  s
 
 
 # 2х стороннее р - значение
-def two_side_p_value (x, mu = 0, sigma = 1):
+def two_side_p_value(x, mu=0, sigma=1):
     print(x, ' two_side_p_value')
     if x >= mu:
         # если х больше среднего значения то значения в хвосте больше х
@@ -264,8 +276,9 @@ def two_side_p_value (x, mu = 0, sigma = 1):
     else:
         # если х меньше среднего значения то значения в хвосте меньше х
         return 2 * normal_probability_below(x, mu, sigma)
-print(two_side_p_value(529.5, mu_0, sigma_0), ' При 1000 бросков выпадение 530 орлов с  р = 0.062')
 
+
+print(two_side_p_value(529.5, mu_0, sigma_0), ' При 1000 бросков выпадение 530 орлов с  р = 0.062')
 
 
 # A / B Тестирование, испытание Бернули
@@ -273,10 +286,12 @@ print(two_side_p_value(529.5, mu_0, sigma_0), ' При 1000 бросков вы�
 # n / N нормальная случ величина с вероятностьо " р "
 
 #  Оценочные параметры
-def  estimated_parameters(N, n):
+def estimated_parameters(N, n):
     p = n / N
     sigma = math.sqrt(p * (1 - p) / N)
     return p, sigma
+
+
 # print(estimated_parameters(1000, 180))
 
 
@@ -286,15 +301,17 @@ def a_b_best_statbatic(N_A, n_A, N_B, n_B):
     p_B, sigma_B = estimated_parameters(N_B, n_B)
     # print(p_B - p_A, p_B, p_A)
     return (p_B - p_A) / math.sqrt(sigma_A ** 2 + sigma_B ** 2)
+
+
 z = a_b_best_statbatic(1000, 200, 1000, 150)
 print(z)
 print(two_side_p_value(z))
 
 print('')
 
-
-
 """ БЕТА РАСПРЕДЕЛЕНИЕ"""
+
+
 # Стат вывод Байеса, априорное распределение берём из бета-распределения
 # ВЕРОЯТНОСТЬ ВРОЯТНОСТИ,
 
@@ -303,6 +320,8 @@ print('')
 # значит альфа = 3, бета - 7,
 def B(alfa, beta):
     return math.gamma(alfa) * math.gamma(beta) / math.gamma(alfa + beta)
+
+
 # print(B(3, 7), 'В-функция')
 
 
@@ -316,11 +335,9 @@ def expected_for_beta_distribution(alfa, beta):
 def beta_pdf(x, alfa, beta):
     if x < 0 or x > 1:
         return 0
-    print(x**(alfa - 1)* (1 - x)**(beta - 1) / B(alfa, beta), 'по оси У, PDF для бета-распределёной величины х')
+    print(x ** (alfa - 1) * (1 - x) ** (beta - 1) / B(alfa, beta), 'по оси У, PDF для бета-распределёной величины х')
     print(expected_for_beta_distribution(alfa, beta), 'по оси Х, вес данного распределения / мат ожидание')
-    return x**(alfa - 1)* (1 - x)**(beta - 1) / B(alfa, beta), expected_for_beta_distribution(alfa, beta)
+    return x ** (alfa - 1) * (1 - x) ** (beta - 1) / B(alfa, beta), expected_for_beta_distribution(alfa, beta)
+
+
 print(beta_pdf(0.2, 4, 16), ' beta_pdf')
-
-
-
-

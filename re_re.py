@@ -1,5 +1,6 @@
 
 import re
+from bs4 import BeautifulSoup
 s = 'aC/DCAC/DCAC/DCAC/DCAC/DCAC/DCAC/DCAC/DCAC/DCAC/DC'
 
 res = re.match('AC/DC', s, flags=re.I) # поиск подстроки В НАЧАЛЕ СТРОКИ s

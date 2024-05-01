@@ -14,7 +14,7 @@ def mean(x_):
 print(mean(num_friends_three), ' среднее варриационного ряда')
 print('  ')
 def de_mean(x_):
-    x_bar = mean(x_) # Среднее арифметическое коллекции
+    x_bar = mean(x_) # Среднее арифметическое выборки
     print(x_bar, '   x_bar среднее арифметическое варриационного ряда')
     print('  ')
     return [x_ix - x_bar for x_ix in x_] # среднее результата будет равно нулю

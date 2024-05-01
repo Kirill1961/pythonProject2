@@ -1,19 +1,87 @@
 from functools import wraps
 
+
+def g(f):  # g(f) - сюда передали адрес ячейки ф-ции р(с)
+    def l(x):  # сюда передали адрес ячейки аргумента ф-ции р(с)
+        print(x ** 2, "before")
+        f(x)  # обратились к ячейкам ф-ции и аргумента
+        print(x ** 2, "after")
+        return x ** 3  # возвращаем res ф-ции l(x)
+
+    return l  # возвращаем ячейку ф-ции l
+
+
+@g  # этот декоратор передаёт ф-цию р(с) в аргумент ф-ции g(f)
+def p(c):  # Вызов p(c) активизирует декоратор @g который передаёт адреса ячеек ф-ции p() и её аргумента c в g(f) и l(x)
+    print(c ** 2)
+
+
+print(p(2), " печать вызова", "\n")
+
+print(" Структура декоратора c @", "\n")
+
+
+def a(x):
+    def c(y):
+        print("a")
+        x(y)
+        return x
+
+    return c
+
+
+@a
+def b(z):
+    print(z)
+    return z
+
+
+b("NN")  # Вызов b(z) активизирует декоратор @a который передаёт адреса ячеек ф-ции b() и её аргумента z в a(x) и в c(y)
+
+print(" Структура декоратора с декорированием через переменную", "\n")
+
+
+def a(u):
+    def c(y):
+        print("a")
+        u(y)
+        return u
+
+    return c
+
+
+af = a(b)  # af = a(b) Играет роль декоратора
+af("MM")    # передача аргумента декорируемой ф-ции b(z)
+
+
+def b(z):
+    print(z)
+
+print(" Структура декоратора c переменной", "\n")
+
+# print(g(p(2)))
+
+
 def f_d(fun):
     def wr(x):
         print('befor')
-        fun(x)
-        print(x, " xxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-        print('after')
-    return wr
+        fun(x)  # тело ф-ции s_f(x)
+        print(x, " xxxxxx")
+        print('after', "\n")
+        # return x
+
+    return wr  # возврат результ ф-ции wr
+
+
+@f_d
 def s_f(x):
+    print(f'{x}', " 1-й заброс в декоратор'")
 
-    print(f'{x}', " (f'{x}'")
-f = f_d(s_f)
 
-f('ok / no')
-
+f_d(s_f(" OK NO OK NO"))
+# f = f_d(s_f)
+# f('ok / no')
+# print(f('ok / no'),   ">>>>>>>>>>>>", "\n")
 
 # def aa(ff):
 
@@ -97,7 +165,6 @@ f('ok / no')
 тк при передаче декорируемой ф-ции в качестве аргумента имя декорируемой 
 ф-ции меняется на имя вложенной ф-ции inner, что бы того не произошло 
 используем @wraps из класса functools для сохранения имени и документации  """
-from functools import wraps
 
 
 def outer(fu_nc):
@@ -111,10 +178,10 @@ def outer(fu_nc):
     return inner
 
 
-def outer_1(func):
+def outer_2(func):
     @wraps(func)
     def inner_1(*args, **kwargs):
-        print('*' * 10)
+        print('V' * 10)
         return func(*args, **kwargs)
 
     return inner_1
@@ -149,44 +216,52 @@ print('nums = ', f(10, 100, 1000))
 
 
 def oter(func):
-    def inr(*x):
+    def inr(*x):  # ф-ция inr(*x) - через декоратор @oter становится ф-цией work(v)
+        s = [func(x)]
+        for i in s:
+            print(i, ":-( кортеж;")
         for y in x:
-            func(x)
-            print(f'{y}')
+            # func(x)
+            print(y * 7)
+            # print(f'{y}')
 
         return x
 
     return inr
 
 
-@oter # принадлежность декоратору
-def work(v):
-    v = 'nums or '
-    print(v + 'num = ', " >>>>>>>>>> @oter ", end='')
+@oter  # принадлежность к аргументу функции @oter
+def work(v):  # ф-ция work(v) аргумент ф-ции oter(func)
+    # v = 'nums or '
+    # print(v + 'num = ', " >>>>>>>>>> @oter ", end='')
+    value = [v]  # v - аргумент ф-ции work(v)
 
 
-# f = oter(work)
-# print( f(10, 100, 1000))
+f = oter(work)  # ф-ция work(v) аргумент ф-ции oter(func)
+wf = work
+# wf(50, 500, 5000)
+f(10, 100, 1000)  # все эти аргументы передаются в inr(*x)
+wf(50, 500, 5000, "Y")  # все эти аргументы передаются в inr(*x)
 
-df = print(work(10, 100, 1000, ' 2й вариант с @oter'))
-print(df)
-
-
+# df = print(work(10, 100, 1000, ' 2й вариант с @oter'))  # все эти аргументы передаются в inr(*x)
+# print(df)
 
 """ _______________Алгоритм Эвклида_____________"""
 import time
+
+
 def oter(func):
     def inr(*args):
-
         ds = time.time()
         # time.sleep(2)
         nod = func(*args)
         df = time.time()
         dw = df - ds
-        print('Time work code  ',  dw)
+        print('Time work code  ', dw)
         return nod
 
     return inr
+
 
 def get_nod(a, b):
     while a != b:
@@ -201,12 +276,14 @@ f = oter(get_nod)
 print(f(70, 84), 'наибольший ОД')
 
 
-
 # ф-цию degree(k) через переменную function_from_list закидываем в список res для действий с генерируемой " k "
+def degree(k):
+    return k ** 2
+
 
 def make(a, function_from_list):
-    res = [function_from_list(k) for k in range(a)] # каждый цикл res вызывает degree(k), return k**2 возвращает в res
+    res = [function_from_list(k) for k in range(a)]  # каждый цикл res вызывает degree(k), return k**2 возвращает в res
     print(res, ' res res res')
-def degree(k):
-    return k**2
+
+
 make(5, degree)

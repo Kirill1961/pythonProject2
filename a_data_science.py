@@ -2,12 +2,13 @@ from collections import Counter, defaultdict
 
 frdsh = [(0, 3), (2, 0), (3, 2), (1, 3), (4, 0)]
 users: list[dict] = [{'id': 50, 'name': 'Sveta'}, {'id': 10, 'name': 'Jhon'}, {'id': 20, 'name': 'Ray'},
-                     {'id': 30, 'name': 'Ciril'}, {'id': 40, 'name': 'David'}]
+                     {'id': 30, 'name': 'Ciril'}, {'id': 40, 'name': 'David'}]  # list[dict] - аннотация
 
 # Дружественные связи
 
 for user in users:
-    user['friends'] = []
+    user['friends'] = []  # инициализация ключа 'friends' с пустым списком
+    # user.update({'friends': [], 'enemy': []})   # My joke - добавить в dict  несколько key:value
 
 for i, j in frdsh:
     print(i, j, ' connect fr')

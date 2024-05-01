@@ -21,17 +21,17 @@ def train_label_message(words_for_count):
     # print(words_for_count, " words_for_count")
     words = words_for_count.split(" ")
     w = random.choice([1, 0])
-    return  [x_mes for x_mes in zip([x for x in words ], [random.choice([1, 0]) for _ in range(len(words))])]
+    return [x_mes for x_mes in zip([x for x in words], [random.choice([1, 0]) for _ in range(len(words))])]
 
 # print(train_label_message(str))
 
 
 # Считаем частотность слов
 def count_words(training_set):
-    counts = defaultdict(lambda:[0, 0])# из тела lambda в словарь counts  передаём value [0, 0]
+    counts = defaultdict(lambda: [0, 0])# из тела lambda в словарь counts  передаём value [0, 0]
     for message, is_spam in training_set:
         for word in tokenize(message):
-            counts [word][0 if is_spam else  1] += 1
+            counts[word][0 if is_spam else 1] += 1
     # print(counts, " counts counts counts")
     return counts
 print(" ")

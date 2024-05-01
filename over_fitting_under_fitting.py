@@ -17,7 +17,7 @@ def split_data(data, prob): # prob  число определяющее долю
 # print(split_data([1,0.5,0.8,1.2, 0.13], 0.2), ' split_data')
 
 
-#  разбирвка на обучающую и контрольную выборку
+#  разбивка на обучающую и контрольную выборку
 
 def train_test_split(x, y, test_pct):    # test_pct - процент данных для test
     data = zip(x, y)    # соеденяем в кортеж (x, y) для split_data()

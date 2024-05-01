@@ -12,16 +12,19 @@ index = 0
 while index < 5:
     print(index, 'index принт в теле цикла')
     index += 1
-print(index,'index принт в конце цикла')
+print(index, 'index принт в конце цикла')
 
-""" Вариант остановки цикла с помощью return"""
+""" Вариант остановки цикла по условию с помощью return"""
 
 a = [1, 2, 3, 4, 5]
+
+
 def w():
     while a:
         if len(a) > 3:
             print('ok')
         return a
+
 
 print(w(), '**************')
 
@@ -30,12 +33,11 @@ print(w(), '**************')
 b = 1
 
 while b < 5:
-   print('условие верно')
-   b = b + 1
-   print(b)
+    print('условие верно')
+    b = b + 1
+    print(b)
 else:
-   print('условие неверно')
-
+    print('условие неверно')
 
 """ ______________Прерывания цикла while с помощью Break _________________
     Break — ключевое слово break прерывает цикл и передает управление в конец цикла"""
@@ -45,8 +47,7 @@ while a < 5:
     a += 1
     if a == 3:
         break
-    print('break') # 2
-
+    print('break')  # 2
 
 """ ______________Прерывания цикла while с помощью Continue _________________
     Continue — ключевое слово continue прерывает текущую итерацию и передает 
@@ -62,27 +63,32 @@ while a < 5:
     print(a)  # вывод 2, 4, 5
 """ ________________Вариации с " is not  None "__________________"""
 
-l = [0,1,2,3,4]
+l = [0, 1, 2, 3, 4]
 l1 = []
 
+
 def whle():
-    while l is not  None:
+    while l is not None:
         l1.append(l.pop())
         if len(l1) == 3:
             return l1
 
+
 print(whle())
 
-l = [0,1,2,3,4]
+l = [0, 1, 2, 3, 4]
 l1 = []
+
+
 def whle():
-    while l is not  None:
+    while l is not None:
         l1.append(l.pop())
         if len(l1) == 4:
             break
     print(l1)
-whle()
 
+
+whle()
 
 """ более сложные, составные условия. Они могут быть сколь угодно длинными, 
     а в их записи используются логические операторы (not, and, or):"""
@@ -100,7 +106,8 @@ while not dayoff and sunrise <= worktime <= sunset:
         print('You have ', sunset - worktime, ' hours to work')
     worktime += 1
 
-list = [10,20,30]
+list = [10, 20, 30]
+
 
 # def defineAList():
 #     list = ['1','2','3']
@@ -108,7 +115,8 @@ list = [10,20,30]
 #     return list
 
 def useTheList(*args, **kwargs):
-    print ("For checking purposes: in useTheList, list is",*args, **kwargs)
+    print("For checking purposes: in useTheList, list is", *args, **kwargs)
+
 
 # def main():
 #     # defineAList()
@@ -117,14 +125,17 @@ def useTheList(*args, **kwargs):
 # main()
 useTheList(list)
 
-def laz (n):
+
+def laz(n):
     i = 0
     while i < n:
-
         yield i
         i += 1
+
+
 fg = [k for k in laz(100)]
 print(fg)
+
 
 # Цикл в Цикле
 
@@ -136,4 +147,34 @@ def out():
         while n < 10:
             n += 1
             print(n, " Цикл в Цикле ")
+
+
 out()
+
+"""while True: -  бесконечный цикл
+   while False: или пустой  list()  или  пустая  str() - цикл ни когда неначнётся"""
+
+# Если поместить условие бесконечного цикла True в переменную, а затем изменить её на False, то цикл остановится
+condition = True
+x = 0
+while condition:  # Цикл идёт пока condition = True
+    print(x)
+    x += 1
+    if x == 3:
+        condition = False
+        print(x, "condition = True, при х = 3 condition = False")
+
+# Пока список b непустой цикл работает
+b = [[1, 2], [3, 4], [5, 6]]
+while b:
+    b.pop()
+    print(b, "Пока список b непустой цикл работает")
+
+x = 0
+while True:  # True - бесконечный цикл
+    print(x)
+    x += 1
+    if x == 3:
+        break
+
+    print(x, "True в условии, останов по break")

@@ -9,6 +9,7 @@ import numpy as np
 def raw_major__vote(labels):
     votes = Counter(labels)
     winner, _ = votes.most_common(1)[0]
+
     print(winner, ' winner ,', votes, ' словарь; key - МЕТКА : value - ЧИСЛО повторов')
     return winner
 

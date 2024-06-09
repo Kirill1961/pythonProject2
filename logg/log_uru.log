@@ -1,0 +1,74 @@
+2024-01-17T18:25:53.114376+0300 INFO OK OK
+2024-01-17T18:26:40.224887+0300 INFO OK OK
+2024-01-17T18:26:40.226891+0300 ERROR An error has been caught in function '<module>', process 'MainProcess' (12888), thread 'MainThread' (15948):
+Traceback (most recent call last):
+
+> File "C:\Users\Kirill\PycharmProjects\pythonProject1\imp_f\log_uru.py", line 24, in <module>
+    m()
+    └ <function m at 0x0000022B0C5DB560>
+
+  File "C:\Users\Kirill\PycharmProjects\pythonProject1\imp_f\log_uru.py", line 23, in m
+    d(1, 0)
+    └ <function d at 0x0000022B0C5CAD40>
+
+  File "C:\Users\Kirill\PycharmProjects\pythonProject1\imp_f\log_uru.py", line 19, in d
+    return a / b
+           │   └ 0
+           └ 1
+
+ZeroDivisionError: division by zero
+2024-01-17T18:26:55.174793+0300 INFO OK OK
+2024-01-17T18:27:02.718938+0300 INFO OK OK
+2024-01-17T18:27:02.719937+0300 ERROR An error has been caught in function '<module>', process 'MainProcess' (15592), thread 'MainThread' (15972):
+Traceback (most recent call last):
+
+> File "C:\Users\Kirill\PycharmProjects\pythonProject1\imp_f\log_uru.py", line 24, in <module>
+    m()
+    └ <function m at 0x000001B9E03EB560>
+
+  File "C:\Users\Kirill\PycharmProjects\pythonProject1\imp_f\log_uru.py", line 23, in m
+    d(1, 0)
+    └ <function d at 0x000001B9E03DAD40>
+
+  File "C:\Users\Kirill\PycharmProjects\pythonProject1\imp_f\log_uru.py", line 19, in d
+    return a / b
+           │   └ 0
+           └ 1
+
+ZeroDivisionError: division by zero
+2024-01-17T20:31:14.899974+0300 INFO OK OK
+2024-01-17T20:31:14.900973+0300 ERROR An error has been caught in function '<module>', process 'MainProcess' (17140), thread 'MainThread' (9840):
+Traceback (most recent call last):
+
+> File "C:\Users\Kirill\PycharmProjects\pythonProject1\imp_f\log_uru.py", line 25, in <module>
+    m()
+    └ <function m at 0x000001BB642DB560>
+
+  File "C:\Users\Kirill\PycharmProjects\pythonProject1\imp_f\log_uru.py", line 24, in m
+    d(1, 0)
+    └ <function d at 0x000001BB642CAD40>
+
+  File "C:\Users\Kirill\PycharmProjects\pythonProject1\imp_f\log_uru.py", line 20, in d
+    return a / b
+           │   └ 0
+           └ 1
+
+ZeroDivisionError: division by zero
+2024-01-18T23:27:56.463257+0300 INFO OK OK
+2024-01-18T23:27:56.466255+0300 ERROR An error has been caught in function '<module>', process 'MainProcess' (11028), thread 'MainThread' (4148):
+Traceback (most recent call last):
+
+> File "C:\Users\Kirill\PycharmProjects\pythonProject1\imp_f\log_uru.py", line 25, in <module>
+    m()
+    └ <function m at 0x0000020681A0B560>
+
+  File "C:\Users\Kirill\PycharmProjects\pythonProject1\imp_f\log_uru.py", line 24, in m
+    d(1, 0)
+    └ <function d at 0x00000206819FAD40>
+
+  File "C:\Users\Kirill\PycharmProjects\pythonProject1\imp_f\log_uru.py", line 20, in d
+    return a / b
+           │   └ 0
+           └ 1
+
+ZeroDivisionError: division by zero

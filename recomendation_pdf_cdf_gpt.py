@@ -1,5 +1,6 @@
 from collections import deque, Counter
 import numpy as np
+
 import matplotlib.pyplot as plt
 from scipy.stats import norm, uniform
 

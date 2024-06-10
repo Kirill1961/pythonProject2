@@ -108,4 +108,4 @@ class NaiveBayesClassifier:
 
 t_s = NaiveBayesClassifier()
 # t_s.train(train_label_message(train_set))
-print(t_s.classify(for_tokenize_message))
+print(t_s.classify(for_tokenize_message), "TRANSFORM on Git")

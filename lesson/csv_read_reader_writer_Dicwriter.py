@@ -214,3 +214,8 @@ with open('c_from_data.csv', 'r') as da_ta:
         for i_dict in reader:
             print(i_dict)
             writer.writerow(i_dict)
+
+# Читаем из txt и обрабатываем строки в своей директории
+with open("text.txt") as files:
+    while reader := files.readline():
+        print(reader)

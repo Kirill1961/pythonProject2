@@ -44,3 +44,8 @@ def v_t_l():
 
 
 print(v_t_l())
+
+# Walrus - Читаем из txt и обрабатываем строки в своей директории
+with open("file.txt") as files:
+    while reader := files.readline():
+        print(reader.strip(), "Walrus - Читаем из txt и обрабатываем строки")

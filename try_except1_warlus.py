@@ -74,3 +74,28 @@ except:
 division by zero
 <traceback object at 0x000001821F8B0F80>"""
 
+
+# Читаем из txt и обрабатываем строки в своей директории
+with open('file.txt') as f:
+    while line := f.readline():
+        print(f"Прочитана строка: {line.strip()}")
+
+
+# Список, в котором нужно находить и сохранять длины строк больше 3
+data = ["abc", "de", "fghi", "jklm"]
+long_strings = [length for s in data if (length := len(s)) > 3]
+print(long_strings)  # Выведет: [4, 4]
+
+
+# Присваивание переменной внутри выражения, Пример использования в цикле
+numbers = [1, 2, 3, 4, 5]
+while (n := len(numbers)) > 0:
+    print(f"Длина списка: {n}")
+    numbers.pop()
+
+
+# Пример использования в условии if
+numbers = [1, 2, 3, 4, 51, 2, 3, 4, 5]
+if (m := len(numbers)) > 0:
+    print(f"Длина списка: {m}")
+

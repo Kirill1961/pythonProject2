@@ -129,6 +129,13 @@ p = [k for k in filter(lambda row: not row[1], f)][:]
 print(p, "\n")
 
 
+# Фильтрация по типу данных
+list_1 = [11, "qwer", True, "asdf", False, 555]
+res_filrt = filter(lambda x: type(x) == bool, list_1)
+print("\t" * 5, list(res_filrt), "Фильтрация по типу данных", "\n")
+
+
+
 # Оператор Морж / Warlus
 
 def func(x):

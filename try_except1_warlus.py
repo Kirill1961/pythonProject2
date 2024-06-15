@@ -99,3 +99,10 @@ numbers = [1, 2, 3, 4, 51, 2, 3, 4, 5]
 if (m := len(numbers)) > 0:
     print(f"Длина списка: {m}")
 
+
+# warlus - это действие с действием
+lista = [2, 5, 8, 9, 12]
+def foo(b):
+    (w := list(filter(lambda x: x % 2 == 0, b))).append(55)
+    return w
+print(foo(lista), "warlus - это действие с действием")

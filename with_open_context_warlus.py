@@ -49,3 +49,5 @@ print(v_t_l())
 with open("file.txt") as files:
     while reader := files.readline():
         print(reader.strip(), "Walrus - Читаем из txt и обрабатываем строки")
+
+

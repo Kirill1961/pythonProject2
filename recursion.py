@@ -1,7 +1,7 @@
 
 def rc(i):
     print(i,'one')  
-    if i >3: # базовый случай
+    if i > 3: # базовый случай
         return i     
     else:      
         print(rc(i+1),'for') # ркурсивный случай

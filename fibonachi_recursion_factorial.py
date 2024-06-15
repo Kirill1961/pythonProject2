@@ -27,13 +27,28 @@ def foo(a):
 
 print(list(foo(5)), "Фибо - просто", "\n")
 
+
+# Фибо - ещё проще c while
+a, b = 0, 1
+while b < 5:
+    a, b = b, a + b
+    print(b, "Фибо - ещё проще c while")
+
+
+# Фибо - ещё проще c for
+c, b = 0, 1
+for _ in range(5):
+    c, b = b, c + b
+    print(b, "Фибо - ещё проще c for")
+
+
 #  1_reduce с выводом промежуточных рез
 from functools import reduce
 
 
-def sum_with_print(acumulator, x):
-    new_acc = acumulator + x
-    print(f"{acumulator} + {x} = {new_acc}")
+def sum_with_print(acum, x):
+    new_acc = acum + x
+    print(f"{acum} + {x} = {new_acc}")
     return new_acc
 
 
@@ -44,10 +59,10 @@ print(result, "reduce с выводом промежуточных рез", "\n"
 
 
 #  2_reduce с выводом промежуточных рез
-def sum_with_save(acumulator, x):
-    current_sum = acumulator[-1] + x
-    acumulator.append(current_sum)
-    return acumulator
+def sum_with_save(acum, x):
+    current_sum = acum[-1] + x
+    acum.append(current_sum)
+    return acum
 
 a = [1, 2, 3, 4]
 intermediate_sums = reduce(sum_with_save, a, [0])[1:]  # Начинаем с [0], убираем начальный 0
@@ -80,3 +95,26 @@ def foo(c):
     print(c)
     return c
 print(foo(1), "Рекурсия простенькая", "\n")
+
+
+def reduce(function, iterable, initializer=None):
+    it = iter(iterable)
+    if initializer is None:
+        value = next(it)
+    else:
+        value = initializer
+    for element in it:
+        value = function(value, element)
+    return value
+
+# Факториал просто 1
+def foo(x):
+    if x == 1:  # базовый случай
+        return x
+    return x * foo(x - 1)  # рекурсивный случай
+print(foo(3), "Факториал просто 1")
+
+# Факториал просто 2
+def foo(x):
+    return x * foo(x - 1) if x else 1  # рекусивный случай и базовый в одном реторне
+print(foo(5), "рекусивный случай и базовый в одном return")

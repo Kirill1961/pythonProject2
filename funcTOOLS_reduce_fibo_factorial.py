@@ -15,6 +15,7 @@ sh.setLevel(logging.DEBUG)
 def factorial(n):
     return n * factorial(n - 1) if n else 1
 
+
 print(factorial(5), "с помощью @cache отображает результат предыдущего кэшированного значения")
 logger.debug(factorial(10))  # не кэшированный ранее результат, делает 11 рекурсивных вызовов
 logger.debug(factorial(5))  # просто отображает результат кэшированного значения
@@ -31,6 +32,8 @@ def fib(n):
 [fib(n) for n in range(16)]
 # [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610]
 print([fib(n) for n in range(16)], " возврат ряда Фибоначи")
+
+
 # logger.debug([fib(n) for n in range(16)])
 
 
@@ -50,6 +53,7 @@ def example():
     """Docstring"""
 
     return ("Called example function 2")
+
 
 print(example(), "вместо присваивания переменной внешней ф-ции используем декоратор")
 logger.debug((example(), example.__name__, example.__doc__))
@@ -74,30 +78,43 @@ def reduce(function, iterable, initializer=None):
 print(reduce(foo, [1, 2, 3, 4], 2), "reduce")
 
 
-
 # reduce - с выводом промежуточных значений
+#  initializer - добавляется к последовательности как начальный элемент
+#  перед которым проходят все элементы исходной последовательности.
 def sum_with_save(acc, x):
     current_sum = acc[-1] + x  # Суммируем последнее значение из аккумулятора с текущим элементом x
     acc.append(current_sum)  # Добавляем новый промежуточный результат в аккумулятор
     return acc  # Возвращаем обновлённый аккумулятор
 
-a = [10, 20, 30, 40]
-result = reduce(sum_with_save, a, [0])  # [0] - Инициализация пустого списка для аккумуляции "acc"
-print(result, "reduce - с выводом промежуточных значений")
 
+a = [10, 20, 30, 40]
+result = reduce(sum_with_save, a, [0])  # [0] - начальный элемент, Инициализация пустого списка для аккумуляции "acc"
+print(result, "reduce - с выводом промежуточных значений")
 
 """ """
 a = [10, 20, 30, 40]
+
+
 def sum_with_save(x, y):
     print("\t" * 4, x, "x - аккумулирующая переменная, [0] - заданная структура аккумулятора")
     print(y, "y - итерация ОБ из коллекции < a > ")
     return x, y  # Возвращаем обновлённый аккумулятор
+
+
 result = reduce(sum_with_save, a, [0])
 print(result, "[0] - заданная структура аккумулятора")
 
+# использования initializer в reduce c lambda
+from functools import reduce
 
-def foo():
-    return [random.randint(1, 11) for _ in range(4)]
-# print(foo())
-# for i in iter(foo, 5):
-#     print(i)
+
+# Применение reduce с начальным значением (например, 10)
+a = [1, 2, 3, 4]
+result = reduce(lambda x, y: x + y, a, 10)
+print(result, "Применение reduce с начальным значением (например, 10)")  # Выведет 20 (10 + 1 + 2 + 3 + 4)
+
+
+# Применение reduce с начальным значением (например, "Start: ")
+strings = ["one", " ", "two", " ","three"]
+result = reduce(lambda x, y: x + y, strings, "Start: ")
+print(result)  # Выведет "Start: onetwothree"

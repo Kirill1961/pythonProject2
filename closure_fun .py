@@ -1,12 +1,13 @@
 # Просто вложенная ф-ция inner()
 def outer(name):
     def inner():
-        print('good pogrammerrrrr  -  ' + name)
+        return 'good pogrammerrrrr  -  ' + name
 
-    inner()
+    return inner
+    # inner()
 
 
-outer('Kirill')
+print(outer('Kirill')())
 
 """ Замыкание ф-ции происходит так :
     переменная (name) находится в глобальной области  ф-ции outer и не стирается после выполнения ф-ции inner
@@ -75,3 +76,14 @@ cl2 = count_out1()
 print(cl(2), cl2(2))
 print(cl(2), cl2(2))
 print(cl(2), cl2(0))
+
+
+# ou(5)(100) - (5) аргумент для наружней ф-ции, (100) - аргумент для внутренней ф-ции
+def ou(x):
+    def ine(y):
+        return (x ** 2) * y
+
+    return ine
+
+
+ou(5)(100)

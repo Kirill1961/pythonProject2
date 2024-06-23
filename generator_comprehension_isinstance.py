@@ -153,3 +153,8 @@ print([(i, j) for i in range(5) for j in range(5)], "Создание всех �
 x = ['a', 'b', 'c']
 print([(j, i) for i in x for j in [x.index(i)]], " Список преобр. в pairs in tuple (индекс,, значение)", "\n")
 print([(j, i) for i in x for j in [rn.randint(1, 10)]], " Список преобр. в pairs in tuple (random_ind, value)", "\n")
+
+
+# isinstance(x, str) - определение и фильтрация по типу данных
+list_2 = [22, "qwer", True, "asdf", 77, False, True]
+print([x for x in list_2 if isinstance(x, bool)], " --> isinstance определение и фильтрация по типу данных", "\n")

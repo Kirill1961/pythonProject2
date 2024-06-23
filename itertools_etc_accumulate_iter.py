@@ -2,6 +2,9 @@ import itertools
 import itertools as it
 import operator
 import numpy as np
+import random
+
+
 a = [[0, 1], [0, 0], [1, 0], [1, 1]]
 
 
@@ -33,3 +36,30 @@ print(arr, " комбинацию в матрицу ", "\n")
 for i in arr:
     print(i)
 print("for loop матрицы", "\n")
+
+
+
+# iter - остановка генератора  по заданному значению
+def foo():
+    return random.randint(1, 3)
+
+
+for i in iter(foo, 1):
+    print(i, "остановка генератора  по заданному значению < 1 >")
+
+
+
+
+def generate_number():
+    # Функция-генератор для чисел от 0 до 10
+    current_number = 0
+    while current_number <= 10:
+        yield current_number
+        current_number += 1
+
+# Создаём генератор
+number_generator = generate_number()
+
+# Используем iter с методом next и контрольным значением 11
+for number in iter(number_generator.__next__, 7):
+    print(f"остановка генератора  по заданному значению: {number}")

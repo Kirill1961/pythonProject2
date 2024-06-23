@@ -169,3 +169,6 @@ l = [
      ]
 
 print(list(map(len, l)), "Len вложенных списков")
+
+if __name__ == "__mane__":
+    print('UNPACK')

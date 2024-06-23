@@ -65,8 +65,8 @@ def correlation(x_, y_):
     stdev_x = standart_deviations(x_)
     stdev_y = standart_deviations(y_)
     print(stdev_x, stdev_y, '  standart_deviations for x_,y_', "\n")
-    if stdev_x>0 and stdev_y>0 :
-        return  covariance(x_, y_)/ stdev_x / stdev_y
+    if stdev_x > 0 and stdev_y > 0 :
+        return covariance(x_, y_)/ stdev_x / stdev_y
     else:
         return 0
 print('correlation = ' ,correlation(num_friends_three, daily_minutes), "\n")
@@ -108,8 +108,8 @@ print(sum_of_square_error(27.849969715324047, 0.05784373107207752))  # *alpha_be
 
 def least_squares_fit(x, y):
     # print(x,y, "  о ц е н о ч н ы е коэффициенты", "\n")
-    beta = correlation(x, y) * standart_deviations(y) / standart_deviations(x) # beta -  коэффициент регрессии
-    alpha = mean(y) - beta * mean(x) # alpha - смещение
+    beta = correlation(x, y) * standart_deviations(y) / standart_deviations(x)  # beta - коэффициент регрессии
+    alpha = mean(y) - beta * mean(x)  # alpha - смещение
     print("  о ц е н о ч н ы е к о э ф ф и ц и е н т ы", alpha, " - alpha",  beta, " - beta", "\n")
     return alpha, beta
 print("\t" * 4, least_squares_fit(num_friends_three, daily_minutes), " alpha и beta методом "

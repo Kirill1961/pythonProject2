@@ -164,10 +164,10 @@ res_y_func = [y for x in data if (y := func(x))]  # func() вызывается 
 print(res_func, " res_func", "\n")
 print(res_y_func, " res_y_func", "\n")
 
-# Накапливание данных
+# walrus - Накапливание данных
 c = 0
 data = [5, 4, 3, 2]
-print([c := c + x for x in data], " Накапливание данных", "\n")
+print([c := c + x for x in data], " walrus - Накапливание данных", "\n")
 
 # lambda определяет заданное число совпадений ОБ
 

@@ -1,13 +1,14 @@
 """ Импорт папок из других веток
 ПРАВИЛЬНЫЙ СПОСОБ ИМПОРТА ИЗ ДРУГОЙ ВЕТКИ
 sys.path.insert(1, os.path.join(sys.path[0]))  или sys.path.insert(1, os.path.join(sys.path[0],'..'))"""
+
 """ Импорт в PyCh просто"""
 import sys,os,pathlib
 p = os.path.relpath(path='vsearch.py',start='aaa.py')
 print(p)
 
 sys.path.insert(1,os.path.join(sys.path[0],'..'))
-from mymodules.vsearch import t
+from lesson.vsearch import t
 print(t)
 
 sys.path.insert(1, str(pathlib.Path(__file__).parent))
@@ -19,11 +20,11 @@ from imp_f.imp2 import gp
 print(gp)
 
 sys.path.insert(1,os.path.join(sys.path[0],'../../'))
-from mymodules import vsearch
+from lesson import vsearch
 print(vsearch.t)
 
 sys.path.insert(1,os.path.join(sys.path[0],'../../'))
-from mymodules.vsearch import t
+from lesson.vsearch import t
 print(t)
 
 sys.path.insert(1,os.path.join(sys.path[0],'../../'))
@@ -34,7 +35,7 @@ print(w)
 # #sys.path.insert(1, os.path.join(sys.path[0]))        #  с insert
 # #from flask import Flask
 # sys.path.insert(1, os.path.join(sys.path[0],'..'))   #   c insert
-# from mymodules.vsearch import s4l
+# from lesson.vsearch import s4l
 # print(s4l('assdg','a'))
 
 # sys.path.insert(1, os.path.join(sys.path[0],'..'))

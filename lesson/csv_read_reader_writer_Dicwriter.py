@@ -36,6 +36,7 @@ writerow имеет 1 аргумент поэтому данные объеде�
     extrasaction='ignore' или 'raise'- значение отсутствующего ключа имени поля
     restval='' - значение поля для лишних/отсутствующих заголовков"""
 import csv
+import glob
 
 """ io.TextIOBase - Буферизованный текстовый поток поверх двоичного потока."""
 """ __________________можно записать  в 'c_s_v.csv' готовый list,dict,tuple например такой как 
@@ -48,7 +49,7 @@ with open('c_s_v.csv', 'w') as fil:
     wri_te = csv.writer(fil, delimiter='+')  # создаём ОБ писатель wri_te котор преобр fil в строки с разделителями
     wri_te.writerow([name_dict, name_2, name_1])
 
-with open('c_s_v.csv' ) as fil:
+with open('c_s_v.csv') as fil:
     print(fil.readline())  # читаем содержимое с помощью read, readline, readlines
 
 """ можно изначально добавить в 'csv - файл' заголовки колонок example:
@@ -103,7 +104,6 @@ with open('c_from_data.csv', newline='\n') as d_read_users:
         print(dic_read)
 
 """ ________Добавляем в ф-л cdata расписание:c помощью for + .write ; for + .writerow ; .writerows; .writelines"""
-
 
 time_dest = [['11:45', 'ROCK SOUND'],
              ['17:55', 'ROCK SOUND'],
@@ -187,10 +187,10 @@ with open('c_from_data.csv', 'r') as da_ta:
     reader = csv.DictReader(da_ta, fieldnames=['name users /', 'addresses users /', 'Phone'], )
     with open('c_in_data.csv', 'w', newline='') as fi_le:
         writer = csv.DictWriter(fi_le, fieldnames=['name users /', 'Phone'])
-        writer.writeheader()  #  заголовков
+        writer.writeheader()  # заголовков
         for i_dict in reader:
             # print(i_dict)
-            del i_dict ['addresses users /']
+            del i_dict['addresses users /']
             writer.writerow(i_dict)
             print(i_dict)
 """ ________________________Простой способ записи csv в виде словаря"""
@@ -214,6 +214,33 @@ with open('c_from_data.csv', 'r') as da_ta:
         for i_dict in reader:
             print(i_dict)
             writer.writerow(i_dict)
+
+directory = r"C:\Users\Kirill\PycharmProjects\pythonProject3\*"
+file = glob.glob(directory)
+print(file, ">>>>>>>>>>>>>>>")
+# Чтение строки из файла и обработка
+
+# with open('file.txt') as f:
+#     while line := f.readline():
+#         print(f"Прочитана строка: {line.strip()}")
+
+
+# Функция для поиска файлов с нужным расширением
+import glob
+
+
+# Функция для поиска файлов с нужным расширением
+def find_files(directory, extension):
+    pattern = f'{directory}/**/*.{extension}'
+    return glob.glob(pattern, recursive=True)
+
+
+# Пример использования
+directory = r"C:\Users\Kirill\PycharmProjects\pythonProject3\**"  # Текущий каталог
+extension = 'txt'  # Искомое расширение
+files = find_files(directory, extension)
+
+print(files, " |||||||||||||||||||||||||")
 
 # Читаем из txt и обрабатываем строки в своей директории
 with open("text.txt") as files:

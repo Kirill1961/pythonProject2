@@ -77,11 +77,11 @@ class PrintData:
 
     def print(self, data):
         self.send_data(data)
-        print(f'print: {str(data)}')
+        print(f"print: {str(data)}")
 
     def send_data(self, data):
         if not self.send_to_print(data):
-            raise Exception('printer not answer')
+            raise Exception("printer not answer")
 
     def send_to_print(self, data):
         return False  # если возвращаем False, то код видит что принтер данные не получил если True,
@@ -91,9 +91,13 @@ class PrintData:
 er = PrintData()  # создали экземпляр "er" класса PrintData, затем обрабатываем
 # возможное исключение вызова метода print из объекта "er".
 try:
-    er.print('123')
-except Exception as err:  # через переменную err из класса Exception выводим наименование ошибки 'printer not answer'
-    print('all ok', err, exc_info()[0])  # в [ ] указываем индекс значения из кортежа возвращаемого exc_info()
+    er.print("123")
+except (
+    Exception
+) as err:  # через переменную err из класса Exception выводим наименование ошибки 'printer not answer'
+    print(
+        "all ok", err, exc_info()[0]
+    )  # в [ ] указываем индекс значения из кортежа возвращаемого exc_info()
     # (type, value, traceback)
 """ мы можем написать свой класс исключения
 преимущество самописного класса в том что программист 
@@ -112,11 +116,11 @@ class Exceptionsendtoprint(Exception):
 class PrintData:
     def print(self, data):
         self.send_data(data)
-        print(f'print: {str(data)}')
+        print(f"print: {str(data)}")
 
     def send_data(self, data):
         if not self.send_to_print(data):
-            raise Exceptionsendtoprint('new klass Exceptionsendtoprint')
+            raise Exceptionsendtoprint("new klass Exceptionsendtoprint")
 
     def send_to_print(self, data):
         return False
@@ -124,6 +128,8 @@ class PrintData:
 
 er = PrintData()
 try:
-    er.print('123')
+    er.print("123")
 except Exceptionsendtoprint as ert:
-    print('this except:', ert, sys.exc_info())  # если не указывать индекс в [ ], то вывод всех параметров
+    print(
+        "this except:", ert, sys.exc_info()
+    )  # если не указывать индекс в [ ], то вывод всех параметров

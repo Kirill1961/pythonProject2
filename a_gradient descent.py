@@ -5,9 +5,10 @@ import matplotlib.pyplot as plt
 from functools import partial
 
 
+
 # sum_jf_squares - принимает в аргумента вектор значений 'v'
 def sum_of_squares(v):
-    return sum(v_i ** 2 for v_i in v)
+    return sum(v_i ** 2 for v_i in v  )
 
 
 # print(sum_of_squares([2, 4, 6]))

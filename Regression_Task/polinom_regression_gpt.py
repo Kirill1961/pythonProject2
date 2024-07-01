@@ -4,7 +4,7 @@ from sklearn.linear_model import LinearRegression
 import matplotlib.pyplot as plt
 
 # Пример данных
-x = np.array([1, 2, 3, 4, 5]).reshape(-1, 1)
+x = np.array([1, 2, 3, 4, 5]).reshape(-1, 1   )
 y = np.array([1, 4, 9, 16, 25])  # истинное значение, наблюдаемая оценка
 
 # Преобразование данных в полиномиальные признаки (степень 2)

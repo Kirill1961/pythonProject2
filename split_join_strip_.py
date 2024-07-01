@@ -85,3 +85,4 @@ sd = "asdf" + "\n" + "\n".join("1234")
 print(st,  "Таблица в Питоне", "\n")
 print(sd,  "Таблица в Питоне", "\n")
 
+print("qwer", "asdf", "zxcv", "Используем sep=", sep="\n")

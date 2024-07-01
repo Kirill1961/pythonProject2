@@ -8,15 +8,24 @@ sc = SparkContext(conf=conf)
 # Пример разреженных матриц
 # Матрица A (3x2)
 entries_a = [
-    MatrixEntry(0, 0, 1.0), MatrixEntry(0, 1, 2.0),
-    MatrixEntry(1, 0, 3.0), MatrixEntry(1, 1, 4.0),
-    MatrixEntry(2, 0, 5.0), MatrixEntry(2, 1, 6.0)
+    MatrixEntry(0, 0, 1.0),
+    MatrixEntry(0, 1, 2.0),
+    MatrixEntry(1, 0, 3.0),
+    MatrixEntry(1, 1, 4.0),
+    MatrixEntry(2, 0, 5.0),
+    MatrixEntry(2, 1, 6.0),
 ]
 
 # Матрица B (2x4)
 entries_b = [
-    MatrixEntry(0, 0, 7.0), MatrixEntry(0, 1, 8.0), MatrixEntry(0, 2, 9.0), MatrixEntry(0, 3, 10.0),
-    MatrixEntry(1, 0, 11.0), MatrixEntry(1, 1, 12.0), MatrixEntry(1, 2, 13.0), MatrixEntry(1, 3, 14.0)
+    MatrixEntry(0, 0, 7.0),
+    MatrixEntry(0, 1, 8.0),
+    MatrixEntry(0, 2, 9.0),
+    MatrixEntry(0, 3, 10.0),
+    MatrixEntry(1, 0, 11.0),
+    MatrixEntry(1, 1, 12.0),
+    MatrixEntry(1, 2, 13.0),
+    MatrixEntry(1, 3, 14.0),
 ]
 
 # Создание разреженных матриц
@@ -36,4 +45,3 @@ for entry in result_entries:
 
 # Остановка контекста Spark
 sc.stop()
-

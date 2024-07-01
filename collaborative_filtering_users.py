@@ -26,6 +26,7 @@ users_interests = [['MongoDB', 'data science', 'Spark', 'Postgres', 'pandas', 'N
                    ['Python', 'Hadoop', 'numpy', 'NoSQL', 'HBase', 'NoSQL Big Data'],
 
                    ]
+
 # users_interests = [['statistic', 'R', 'go', 'scipy', 'numpy', 'MongoDB', 'pandas', 'data science'],
 #                    ['MongoDB', 'data science', 'Spark', 'Postgres', 'pandas', 'NoSQL''Big Data'],
 #                    ['Storm', 'Java', 'pandas', 'MongoDB', 'data science', 'pandas', 'data science'],

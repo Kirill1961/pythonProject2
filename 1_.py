@@ -19,3 +19,6 @@ with open("names.csv", "r") as n:
         print(n_)
         if not n_:
             break
+
+k = 10
+print(f"{k}")

@@ -4,8 +4,8 @@
 s = 'Welcome, to, the, python, world' # строка с запятыми и с пробелами
 name = s[5:]
 print(name, " -  вывод строки по индексу")
-A1 = s.split()
-print(A1)
+A1 = s.split("\n")
+print(A1, "...................")
 
 # split() - делит по умолчанию по пробелам если их нет то по запятым
 print(s.split())
@@ -61,6 +61,8 @@ print("The String of list is : " + str(res), " преобразование сп
 a = "\n, asdf, poiu, poiu, dfghrtyu, rtyu, asdfpoiu, \n, 1"
 print(a.strip(", \n 1 "), "- strip  удаляет при выводе 1-й и последний символ, если в арг не указать ничего", "\n")
 
+a_ = 'i  qwer   x'
+print(a_.strip("x i"), " -> Что бы удалить буквы и пробелы указываем их в аргументе в ЛЮБОЙ последовательности", "\n")
 
 # Замена скобок на кавычки Преобразование list[list[str]] в list[str]
 p = [['Storm', 'Java', 'pandas', 'MongoDB', 'data science'], ['HBase', 'Storm', 'Java', 'pandas']]
@@ -70,7 +72,7 @@ print([",".join(i) for i in p], "Преобразование list[list[str]] в
 
 # replace - замена подстроки в строке на другую побстроку
 text = "JavaScript is awesome and JavaScript is easy to learn"
-new_text = text.replace("JavaScript", "Python",  2) # 1й арг - что меняем, 2й арг - на что меняем, 2 - кол-во замен
+new_text = text.replace("JavaScript", "Python")  # 1й арг - что меняем, 2й арг - на что меняем, 2 - кол-во замен
 print(new_text, "replace - замена подстроки в строке на другую побстроку", "\n")
 
 
@@ -86,3 +88,52 @@ print(st,  "Таблица в Питоне", "\n")
 print(sd,  "Таблица в Питоне", "\n")
 
 print("qwer", "asdf", "zxcv", "Используем sep=", sep="\n")
+
+
+str = "Name {}, Old {}, weigh {}"
+name = "Kirill"
+old = "51"
+weigh = "80"
+res = str.format(name, old, weigh)
+print(res, " -> Фу-ция format")
+str_ = "Name {0}, Old {1}, weigh {2}"
+print(str_.format(name, old, weigh), " -> Тоже самое с индексами")
+
+# варианты использования формат
+print(" Это число : {0:.2f}".format(2.7418241824), "варианты использования формат")
+print(" Это число : {1:.2f}".format(2.7418241824, 3.1487962), "варианты использования формат", "\n")
+
+
+# Преобразование строки - Заглавные, все большие, все маленькие
+str = "QWerty, Asdfg, ZXCV"
+print(str.capitalize(), " -> Преобразование строки - Заглавные")
+print(str.upper(), " -> Преобразование строки - все большие")
+print(str.lower(), " -> Преобразование строки - все маленькие", "\n")
+
+
+# islower() / isupper() - Прверка регистра
+str = "QWER, ASDF ,ZXCV"
+print(str.isupper(), " - > islower() / isupper() - Прверка регистра")
+print(str.islower(), " - > islower() / isupper() - Прверка регистра", "\n")
+
+# endswith / startswith - Проверка символов начала и конца предлжения
+s1 = "Qwer, asdf, zxcv ?"
+s2 = "!qwer, asdf, zxcv"
+print(s1.endswith("?"), " ->  endswith  - Проверка символов конца предлжения")
+print(s2.endswith("?"), " ->  endswith  - Проверка символов конца предлжения")
+print(s2.startswith("!"),  " -> startswith - Проверка символов начала предлжения", "\n")
+
+
+# find - Наличие подстроки
+s3 = "В некотором царстве в некотором государстве"
+print(s3.find("царстве"), " -> find - Наличие подстроки - 'царстве'", "\n")
+print(s3[5:10], " -> вытаскиваем по индексу с 5 по 10 символ ", "\n")
+
+
+# replace - Замена подстроки старое на новое
+s4 = "В некотором,  царстве в некотором, государстве"
+print(s4.replace(",", "."), " - > Замена подстроки старое ',' на новое '.'")
+print(s4.replace("В некотором, ", "В тридевятом, ", 2), " - > Замена подстроки старое 'В некотором,' "
+                                                     "на новое 'В тридевятом,.'", "\n")
+
+

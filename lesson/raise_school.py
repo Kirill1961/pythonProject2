@@ -91,7 +91,7 @@ class PrintData:
 er = PrintData()  # создали экземпляр "er" класса PrintData, затем обрабатываем
 # возможное исключение вызова метода print из объекта "er".
 try:
-    er.print("123")
+    er.print("123>>>>>>>>>>>>>>>")
 except (
     Exception
 ) as err:  # через переменную err из класса Exception выводим наименование ошибки 'printer not answer'
@@ -133,3 +133,40 @@ except Exceptionsendtoprint as ert:
     print(
         "this except:", ert, sys.exc_info()
     )  # если не указывать индекс в [ ], то вывод всех параметров
+
+
+# scool and student
+class Scool:
+    free_seats = True
+    remote = 2
+
+    @property  # @property -  превращает метод scool_param в атрибут, можно вызывать без скобок
+    def scool_param(self):
+        if self.free_seats == True and self.remote < 5:
+            return True
+        return False
+
+
+class Student:
+    level = 5
+    age = 20
+
+    @property  # @property - превращает метод student_param  в атрибут, можно вызывать без скобок
+    def student_param(self):
+        if self.level > 3 and self.age < 12:
+            return True
+        return False
+
+
+scl = Scool()
+std = Student()
+
+print(std.student_param)
+print(scl.scool_param)
+
+# if std.student_param and scl.scool_param:  # если используем @property то скобки у методов не ставим
+#     print("Welcome")
+# else:
+#     print("not accepted")
+# std.student_param()
+# scl.scool_param()

@@ -13,72 +13,82 @@
 """ Моя сортировочка"""
 
 # Значения из списка " р " передаются в аргумент " х " ф-ции lambda
-p = [-5,1,3,10]
-p_sorted = sorted(p, key=lambda x : x * -2) # Если задана ключевая функция
+p = [-5, 1, 3, 10]
+p_sorted = sorted(p, key=lambda x: x * -2)  # Если задана ключевая функция
 # , примените ее один раз к каждому элементу списка и отсортируйте их,
 
 print(p_sorted, ' список " р " сортируется с учётом умножения на -2')
 # То же самое + реверс
-p_sorted = sorted(p, key=lambda x : x * -2, reverse=True)
-print(p_sorted, ' То же самое + реверс')
+p_sorted = sorted(p, key=lambda x: x * -2, reverse=True)
+print(p_sorted, " То же самое + реверс")
 
 
 # Сортировка словаря на основе функции len
-l1 = {'carrot': 'vegetable', 'red': 'color', 'apple': 'fruit'}
+l1 = {"carrot": "vegetable", "red": "color", "apple": "fruit"}
 # Возвращает список ключей, отсортированных по функции len
-print(sorted(l1, key=len), 'по функции len 1')
+print(sorted(l1, key=len), "по функции len 1")
 
 
 # Возвращает список значений, отсортированных на основе функции len
-print(sorted(l1.values(), key=len), 'по функции len 2')
+print(sorted(l1.values(), key=len), "по функции len 2")
 
 
 # Сортировка списка на основе функции len
-l1 = ['blue', 'green', 'red', 'orange']
-print(sorted(l1, key=len), 'по функции len 3')
+l1 = ["blue", "green", "red", "orange"]
+print(sorted(l1, key=len), "по функции len 3")
 
 
 # Сортировка списка по абсолютному значению
 l1 = [1, -4, 5, -7, 9, 2]
-print(sorted(l1, key=abs), 'по абсолютному значению')
-
+print(sorted(l1, key=abs), "по абсолютному значению")
 
 
 s1 = "Hello How are you"
 
 # Разбивает строку и сортирует по словам
-print(sorted(s1.split()), 'сортирует по словам')
+print(sorted(s1.split()), "сортирует по словам")
 
 
 # Разбивает строку и сортирует после применения str.lower ко всем элементам
-print(sorted(s1.split(), key=str.lower), 'str.lower')
+print(sorted(s1.split(), key=str.upper), "str.upper  - безучёта регистра")
 
 
-d1 = {'apple': 1, 'Banana': 2, 'Pears': 3}
+d1 = {"apple": 1, "Banana": 2, "Pears": 3}
 # Возвращает список ключей, отсортированный по значениям
-print(sorted(d1), 'список ключей 1')
+print(sorted(d1), "список ключей 1")
 
 # Возвращает список ключей, отсортированный после применения str.lower ко всем элементам
-print(sorted(d1, key=str.lower), 'список ключей 2')
-
+print(sorted(d1, key=str.lower), "список ключей , str.lower - безучёта регистра")
 
 
 # напишем функцию для получения второго элемента
 def sort_key(e):
     return e[1]
 
+
 l1 = [(1, 2, 3), (2, 1, 3), (11, 4, 2), (9, 1, 3)]
 # По умолчанию сортировка выполняется по первому элементу
-print(sorted(l1), ' сортировка по 1му элементу')
+print(sorted(l1), " сортировка по 1му элементу")
 
 
 # Сортировка по второму элементу с помощью функции sort_key
-print(sorted(l1, key=sort_key), ' сортировка по 2му элементу')
+print(sorted(l1, key=sort_key), " сортировка по 2му элементу")
 
 
 # sort списка кортежей по вторым элементам кортежей
 tup = [(2, 2), (17, 89), (142, 17), (51, 14), (-1, 51), (14, -1), (89, 142)]
-tup.sort(key=lambda  row: row[1])
+tup.sort(key=lambda row: row[1])
 print(tup, " sort списка кортежей по вторым элементам кортежей")
+
+
+# Сортировка по определенному полю в словарях
+students = [
+    {'name': 'Alice', 'grade': 90},
+    {'name': 'Bob', 'grade': 82},
+    {'name': 'Charlie', 'grade': 95}
+]
+students.sort(key=lambda x: x['grade'])
+print(students, "Сортировка по определенному полю в словарях")
+
 
 

@@ -117,4 +117,26 @@ print(foo(3), "Факториал просто 1")
 # Факториал просто 2
 def foo(x):
     return x * foo(x - 1) if x else 1  # рекусивный случай и базовый в одном реторне
-print(foo(5), "рекусивный случай и базовый в одном return")
+print(foo(5), "рекусивный случай и базовый в одном return", "\n")
+
+# Факториал с циклом for
+factorial = 4
+for i in range(1, factorial):
+    factorial *= i
+print(factorial, "Факториал с циклом for", "\n")
+
+# Факториал с циклом for обернули в функцию
+def fc(x):
+    res = 1
+    for i in range(1, x + 1):
+        res *= i
+    return res
+print(fc(5), "Факториал с циклом for обернули в функцию", "\n")
+
+# Мой варриант: Факториал с циклом for обернули в функцию
+def fc(x):
+    fact = x
+    for i in range(1, fact):
+        fact *= i
+    return fact
+print(fc(5), "Мой варриант: Факториал с циклом for обернули в функцию")

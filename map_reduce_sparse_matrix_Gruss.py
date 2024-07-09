@@ -44,11 +44,7 @@ B = np.array([[4, -1, 0], [10, 0, 0], [0, 0, 0]])
 
 # print(A[0, 2])
 # Матрица D
-D = [
-    [3, 0, 0],
-    [0, 0, 6],
-    [0, 8, 0]
-]
+D = [[3, 0, 0], [0, 0, 6], [0, 8, 0]]
 
 # Разреженная матрица - sparse matrix, при больших размерах заменяем матрицу на
 
@@ -72,7 +68,10 @@ for item in sparse_representation:
 
 # Генерируем sparse_matrix, для mutate sparse_matrix в кортеж (name, (i, j), value)
 random.seed(0)
-c = [[0 if random.random() < 0.8 else random.randint(1, 10) for i in range(3)] for _ in range(5)]
+c = [
+    [0 if random.random() < 0.8 else random.randint(1, 10) for i in range(3)]
+    for _ in range(5)
+]
 print(c)
 name = "C"
 sparse_matrix = []
@@ -103,9 +102,13 @@ def elements_matrix(name, elems):
         for i in range(len(elem)):  # индексы строк
             for j in range(len(elem[i])):  # индексы столбов
                 if name[n] == "A":
-                    matrix_elem.append((name[n], i, j, elem[i][j]))  # пишем в список координаты и значения для А
+                    matrix_elem.append(
+                        (name[n], i, j, elem[i][j])
+                    )  # пишем в список координаты и значения для А
                 elif name[n] == "B":
-                    matrix_elem.append((name[n], i, j, elem[i][j]))  # пишем в список координаты и значения для В
+                    matrix_elem.append(
+                        (name[n], i, j, elem[i][j])
+                    )  # пишем в список координаты и значения для В
 
     yield matrix_elem
 
@@ -117,7 +120,12 @@ elements = elements_matrix(names, matrix_s)
 #  Привязка значений из елементов к индикаторам
 def matrix_multiply_mapper(m, element):
     for elem in [j for i in element for j in i]:
-        name, i, j, value = elem[0], elem[1], elem[2], elem[3]  # выделение компонентов из элементов - name, i, j, value
+        name, i, j, value = (
+            elem[0],
+            elem[1],
+            elem[2],
+            elem[3],
+        )  # выделение компонентов из элементов - name, i, j, value
         for k in range(m + 1):  # m - общий размер
             if name == "A":
                 yield (i, k), j, value
@@ -136,15 +144,22 @@ print(A, "\n", B)
 def matrix_multiply_reducer(m, key_indexed_value):
     result_by_index = defaultdict(list)
     for index, key, value in key_indexed_value:
-        result_by_index[index].append(value)  # пишем в словарь значения по индексам (i,k)и(k,j) для multiplay
+        result_by_index[index].append(
+            value
+        )  # пишем в словарь значения по индексам (i,k)и(k,j) для multiplay
         # reduce_product = (results for results in result_by_index.values() if len(results) == np.size(A, axis=1)*2)
         # half_num = np.size(A, axis=1)  # число для разбивки списка на 1/2, длина строки матрицы А
         # half_reduce_product = [(row[:half_num], row[half_num:]) for row in reduce_product]  # делим список по палам
         # sum_product = [sum(np.multiply(i, j))for i, j in half_reduce_product]  # итог-умножение по координатно
 
-        sum_product = [sum((k * v) for k, v in i)
-                       for i in [zip(result[0: m], result[m:])
-                          for result in result_by_index.values() if len(result) == m * 2]]  # умножение по координатно
+        sum_product = [
+            sum((k * v) for k, v in i)
+            for i in [
+                zip(result[0:m], result[m:])
+                for result in result_by_index.values()
+                if len(result) == m * 2
+            ]
+        ]  # умножение по координатно
         # sum_product = [result for result in result_by_index.values() if len(result) == m * 2]  # умножение по координатно
         # print(index, sum_product)
         # if sum_product != 0.0:

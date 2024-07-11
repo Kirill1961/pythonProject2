@@ -65,7 +65,7 @@ def correlation(x_, y_):
     print(stdev_x, stdev_y, '  standart_deviations for x_,y_')
     print('  ')
     if stdev_x>0 and stdev_y>0 :
-        return  covariance(x_, y_)/ stdev_x / stdev_y
+        return covariance(x_, y_)/ stdev_x / stdev_y
     else:
         return 0
 print('correlation = ' ,correlation(num_friends_three, daily_minutes))

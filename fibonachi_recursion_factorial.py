@@ -1,5 +1,3 @@
-
-
 # Полный код с комментариями
 def fibonacci_generator():
     # Инициализация первых двух чисел Фибоначчи
@@ -8,13 +6,13 @@ def fibonacci_generator():
         yield a  # Вернуть текущее значение a и приостановить выполнение
         a, b = b, a + b  # Обновить a и b для следующего числа Фибоначчи
 
+
 # Создание экземпляра генератора
 fib_gen = fibonacci_generator()
 
 # Печать первых 10 чисел Фибоначчи
 for _ in range(5):
     print(next(fib_gen))
-
 
 
 # Фибо - просто
@@ -64,8 +62,11 @@ def sum_with_save(acum, x):
     acum.append(current_sum)
     return acum
 
+
 a = [1, 2, 3, 4]
-intermediate_sums = reduce(sum_with_save, a, [0])[1:]  # Начинаем с [0], убираем начальный 0
+intermediate_sums = reduce(sum_with_save, a, [0])[
+    1:
+]  # Начинаем с [0], убираем начальный 0
 
 print("Промежуточные суммы:", intermediate_sums, "\n")
 
@@ -76,6 +77,7 @@ def fibonacci_generator():
     while True:
         yield a
         a, b = b, a + b
+
 
 # Использование генератора
 fib_gen = fibonacci_generator()
@@ -91,9 +93,11 @@ def foo(c):
     if c > 5:
         return c
     else:
-         foo(c + 1)
+        foo(c + 1)
     print(c)
     return c
+
+
 print(foo(1), "Рекурсия простенькая", "\n")
 
 
@@ -107,16 +111,22 @@ def reduce(function, iterable, initializer=None):
         value = function(value, element)
     return value
 
+
 # Факториал просто 1
 def foo(x):
     if x == 1:  # базовый случай
         return x
     return x * foo(x - 1)  # рекурсивный случай
+
+
 print(foo(3), "Факториал просто 1")
+
 
 # Факториал просто 2
 def foo(x):
     return x * foo(x - 1) if x else 1  # рекусивный случай и базовый в одном реторне
+
+
 print(foo(5), "рекусивный случай и базовый в одном return", "\n")
 
 # Факториал с циклом for
@@ -125,13 +135,17 @@ for i in range(1, factorial):
     factorial *= i
 print(factorial, "Факториал с циклом for", "\n")
 
+
 # Факториал с циклом for обернули в функцию
 def fc(x):
     res = 1
     for i in range(1, x + 1):
         res *= i
     return res
+
+
 print(fc(5), "Факториал с циклом for обернули в функцию", "\n")
+
 
 # Мой варриант: Факториал с циклом for обернули в функцию
 def fc(x):
@@ -139,4 +153,19 @@ def fc(x):
     for i in range(1, fact):
         fact *= i
     return fact
-print(fc(5), "Мой варриант: Факториал с циклом for обернули в функцию")
+
+
+print(fc(5), "Мой варриант: Факториал с циклом for обернули в функцию", "\n")
+
+
+# ФИБО с while
+a, b = 0, 1
+n = 0
+while n < 4:
+    n += 1
+    a, b = b, a + b
+print(b, "ФИБО с while", "\n")
+
+
+
+

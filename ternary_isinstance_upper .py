@@ -1,5 +1,7 @@
 a = 3
 b = -12
+
+
 var = 0 if a == b else 1 if a > b else -1
 c = a if a > b else b
 print(c)

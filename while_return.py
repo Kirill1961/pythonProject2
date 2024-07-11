@@ -178,3 +178,13 @@ while True:  # True - бесконечный цикл
         break
 
     print(x, "True в условии, останов по break")
+
+
+# while - коллекции или строки, останов по длинне коллекции
+s = "qwert"
+index = 0
+length = len(s)
+
+while index < length:
+    print(s[index])
+    index += 1

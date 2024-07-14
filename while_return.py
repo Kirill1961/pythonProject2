@@ -4,15 +4,15 @@
 
 a = 1
 while a < 4:
-    print('Цикл выполнился', a, 'раз(а)')
+    print("Цикл выполнился", a, "раз(а)")
     a = a + 1
-print('Цикл окончен')
+print("Цикл окончен")
 
 index = 0
 while index < 5:
-    print(index, 'index принт в теле цикла')
+    print(index, "index принт в теле цикла")
     index += 1
-print(index, 'index принт в конце цикла')
+print(index, "index принт в конце цикла")
 
 """ Вариант остановки цикла по условию с помощью return"""
 
@@ -22,22 +22,22 @@ a = [1, 2, 3, 4, 5]
 def w():
     while a:
         if len(a) > 3:
-            print('ok')
+            print("ok")
         return a
 
 
-print(w(), '**************')
+print(w(), "**************")
 
 """  ___________Else в цикле while______________
     В этом случае блок в else исполняется, когда условие цикла становится ложным."""
 b = 1
 
 while b < 5:
-    print('условие верно')
+    print("условие верно")
     b = b + 1
     print(b)
 else:
-    print('условие неверно')
+    print("условие неверно")
 
 """ ______________Прерывания цикла while с помощью Break _________________
     Break — ключевое слово break прерывает цикл и передает управление в конец цикла"""
@@ -47,7 +47,7 @@ while a < 5:
     a += 1
     if a == 3:
         break
-    print('break')  # 2
+    print("break")  # 2
 
 """ ______________Прерывания цикла while с помощью Continue _________________
     Continue — ключевое слово continue прерывает текущую итерацию и передает 
@@ -103,7 +103,7 @@ while not dayoff and sunrise <= worktime <= sunset:
     if sunset == worktime:
         print("Finally it's over!")
     else:
-        print('You have ', sunset - worktime, ' hours to work')
+        print("You have ", sunset - worktime, " hours to work")
     worktime += 1
 
 list = [10, 20, 30]
@@ -113,6 +113,7 @@ list = [10, 20, 30]
 #     list = ['1','2','3']
 #     print ("For checking purposes: in defineAList, list is",list)
 #     return list
+
 
 def useTheList(*args, **kwargs):
     print("For checking purposes: in useTheList, list is", *args, **kwargs)
@@ -138,6 +139,7 @@ print(fg)
 
 
 # Цикл в Цикле
+
 
 def out():
     m = 0
@@ -188,3 +190,16 @@ length = len(s)
 while index < length:
     print(s[index])
     index += 1
+
+
+# while -  вызывает функцию и крути до условия в теле функции
+def foo(x):
+    if x < 10:  # условие останова цикла
+        print(x, end=",")
+        return x
+    return  # останов функции
+
+
+x = 2  # инициал счётчика
+while foo(x):
+    x += 1  # логика вычисления

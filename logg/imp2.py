@@ -1,3 +1,4 @@
+import logging
 
 def s4l(phr: str, let: str) -> set:
     return set(let).intersection((set(phr)))
@@ -6,7 +7,7 @@ def s4l(phr: str, let: str) -> set:
 print(s4l("assddffgg", 'gf'), "\n")
 
 
-import logging
+
 import requests
 # logging.basicConfig(level="DEBUG", filename="asa45.log")
 

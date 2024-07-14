@@ -123,3 +123,15 @@ def max(ar):
     y=ar[0]               
     return (max(ar)) if (max(ar))<x else x if (max(ar))<y else y  
 print(max([56,2,31,15,4])) 
+
+
+# Рекурсия сложение чисел
+def foo():
+    x = input("enter : ")
+    if x == "":     # базовый случай
+        print(0.0)
+        return 0.0
+    else:
+        return float(x) + foo() # рекурсивный случай
+sum = foo()
+print(f" сумма = {sum}")

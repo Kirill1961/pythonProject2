@@ -72,3 +72,21 @@ Traceback (most recent call last):
            └ 1
 
 ZeroDivisionError: division by zero
+2024-07-15T09:17:14.200390+0300 INFO OK OK
+2024-07-15T09:17:14.201397+0300 ERROR An error has been caught in function '<module>', process 'MainProcess' (1604), thread 'MainThread' (7384):
+Traceback (most recent call last):
+
+> File "C:\Users\Kirill\PycharmProjects\pythonProject2\logg\log_uru.py", line 25, in <module>
+    m()
+    └ <function m at 0x000002885FE814E0>
+
+  File "C:\Users\Kirill\PycharmProjects\pythonProject2\logg\log_uru.py", line 24, in m
+    d(1, 0)
+    └ <function d at 0x0000028854413600>
+
+  File "C:\Users\Kirill\PycharmProjects\pythonProject2\logg\log_uru.py", line 20, in d
+    return a / b
+           │   └ 0
+           └ 1
+
+ZeroDivisionError: division by zero

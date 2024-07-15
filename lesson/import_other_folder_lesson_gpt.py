@@ -1,28 +1,10 @@
 import glob, re
+import os.path
 import runpy
 import subprocess
+import sys
+from logg import log_uru
 
-
-""" перевод числа в строку,2й аргумент это
-основание системы счисления, 16 это :
-0123456789abcdef, """
-
-print(int('4aa', 16))
-
-b = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
-a = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, ]
-
-result = [elem for elem in a if elem in b]
-
-resultt = set(a).intersection(set(b))
-
-resulttt = list(set(a) & set(b))
-
-print(result, resultt, resulttt)
-
-c = [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
-ress = [item for item in c if item < 5]
-print(ress)
 
 path = r"C:\Users\Kirill\PycharmProjects\pythonProject2\a_ae.py"
 print(glob.glob(path), "|||||")
@@ -58,7 +40,7 @@ with open(path, 'r') as file:
     code = file.read()
 
 # Выполняем код
-exec(code)
+print(exec(code), "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
 
 
 
@@ -73,10 +55,10 @@ runpy.run_path(path)
 sys.path.append(r"C:\Users\Kirill\PycharmProjects\pythonProject2")
 
 # Импортируем модуль (имя файла без расширения .py)
-import file
+import a_ae
 
 # Вызываем функции или используем переменные из модуля
-file.some_function()
+a_ae.ou(2)
 
 
 
@@ -90,3 +72,12 @@ result = subprocess.run(['python', path], capture_output=True, text=True)
 # Выводим результат
 print(result.stdout)
 print(result.stderr)
+
+
+path_1 = r"C:\Users\Kirill\PycharmProjects\pythonProject2\logg\log_uru.py"
+
+sys.path.append(os.path.join(os.getcwd(), "logg", "m"))
+
+print(sys.path)
+
+log_uru.m()

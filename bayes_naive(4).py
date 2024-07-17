@@ -137,7 +137,7 @@ class NaiveBayesClassifier:
 # cl = classifier.classify(for_classifier_message)
 # print(cl, " classifier.classify")
 
-bar
+
 
 # # Самопис, тк не было в учебнике
 def split_data(data, prob):   # prob - кол-во данных train в %

@@ -261,3 +261,12 @@ b = [9, 5, 2, 10, 10, 10, 10, 1, 9, 3]
 d = [[5, 9], [11, 10], [13, 4], [6, 10], [11, 12]]
 n = list(map(lambda x: [1 if j in x else 0 for j in b], d))
 print(n, " Преобразование в матрицу 1 / 0 по совпадению в списках", "\n")
+
+
+# самое длинное слово самый короткий код
+file_text = "That's an important role in everything from traditional computer science it comes close to providing one stop shopping for most statistical work "
+list_word_split = file_text.split(" ")
+max_len_word = max(list(map(lambda x: len(x), list_word_split)))
+long_words = list(filter(lambda x: len(x) == max_len_word, list_word_split))
+print(f"long lenght : {max_len_word}")
+print(f"long words : {long_words}")

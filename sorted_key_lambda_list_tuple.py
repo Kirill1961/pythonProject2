@@ -90,5 +90,15 @@ students = [
 students.sort(key=lambda x: x['grade'])
 print(students, "Сортировка по определенному полю в словарях")
 
+# Определение самого длинного слово с выводом max len и слов с max len
+doc = ("That's an important role in everything from traditional computer science it comes"
+       " close to providing one stop shopping for most statistical work ")
+doc_fram = doc.strip(" ").split(" ")
+doc_fram_sort = sorted(doc_fram, key=len)
+max_len = len(doc_fram_sort[-1])
+print(f"max len = {max_len}")
+for word in doc_fram:
+  if len(word) == max_len:
+    print(f"word have max lenght : {word}")
 
 

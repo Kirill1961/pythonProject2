@@ -2,6 +2,8 @@ import os
 import sys
 # import logg as lg
 from glob import glob
+import time
+
 a = [0.98, 0.14, 0.44, 0.13, 0.09, 0.19, 0.53, 0.7]
 
 
@@ -73,12 +75,21 @@ count_vs_while(2)
 
 
 
-lo = sys.path.append(os.path.join(os.getcwd()))
-print(lo)
-print(os.getcwd(), "\n")
-print(sys.path)
+# lo = sys.path.append(os.path.join(os.getcwd()))
+# print(lo)
+# print(os.getcwd(), "\n")
+# print(sys.path)
+#
+#
+# from logg import log_ging
+# print(log_ging.log_test(2))
 
+f = open("pass.txt", "w")
+f.write("ещё один текст")
+f.close()
+f = open("pass.txt", "r")
+print(f.read())
+print(f)
 
-from logg import log_ging
-print(log_ging.log_test(2))
-
+time_carent = time.asctime()
+print(f"текущее время :{time_carent}")

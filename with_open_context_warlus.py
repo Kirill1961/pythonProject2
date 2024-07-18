@@ -19,11 +19,11 @@ for i in range(5):
     fil.close()
 
 
-# with open('pass.txt','w') as fi:
-#     fi.write('1,5,9')
-#     fi.write('ok')
-# for i in fi:
-#     print(i)
+with open('pass.txt','w') as fi:
+    fi.write('1,5,9')
+    fi.write('ok')
+for i in fi:
+    print(i)
 
 
 def v_t_l():

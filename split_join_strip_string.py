@@ -1,4 +1,4 @@
-
+import glob
 # split() - преобразует строку в список разделённую на отд., слова (sep= ) или список где целиком строка
 
 s = 'Welcome, to, the, python, world' # строка с запятыми и с пробелами
@@ -153,4 +153,38 @@ for i in range(1, 11):
     print(i, end="")     # нумерация строк
     for j in range(1, 11):
         print(f"{i * j:>4}", end="")  # res умножения, j:>4 выводит значение таблицы с выравниванием вправо на 4 символа.
-    print()               # перенос строк res умножения
+    print("")               # перенос строк res умножения
+
+# Удаляем крайние символы и пустые строки
+lst = [
+    '\n',
+    'THE FREE BONUSES ALONE ARE WORTH ACTING NOW! \n ',
+    'THE CABLE DESCRAMBLER KIT COMES WITH A THIRTY DAY \n',
+    'MONEY BACK GUARANTEE! IF YOUR NOT COMPLETELY SATISFIED,\n',
+    'SEND THE CABLE DESCRAMBLER KIT BACK AND YOU KEEP \n',
+    'THE BONUSES FOR FREE. YOU HAVE NOTHING TO LOSE!! \n',
+    '\n',
+    '\n',
+    '\n',
+]
+# Крутим строки из rows, strip() удаляет по умолчанию крайние символы, if row != '\n' - фильтрует пустые строки
+cleaned_lst = [s.strip() for s in lst if s != '\n']
+print(cleaned_lst, "удаляем мусор")
+# Крутим строки из rows, strip() удаляет по умолчанию крайние символы, if s.strip() удаляет '\n' тк всё край-ие исмво-лы
+cleaned_lst1 = [s.strip() for s in lst if s.strip()]
+print(cleaned_lst1, "удаляем мусор", "\n")
+
+# Чтение и запись файла в одном блоке кода
+inpfr = glob.glob(rf"C:\Users\Kirill\Desktop\spamAsassian\ASS\13.txt")[0]
+inpfw = glob.glob(rf"C:\Users\Kirill\Desktop\spamAsassian\ASS\23.txt")[0]
+with open(inpfr, "r", encoding="cp1251") as fr:
+    rows = fr.readlines()
+    rows_fr = [
+        f"{enum} : " + row for enum, row in enumerate(rows, start=1)  # добавка к строке нумерации при чтении
+    ]
+    print(rows_fr)
+    with open(inpfw, "w", encoding="cp1251") as fw:
+        [fw.write(f" № {row.strip()}") for row in rows_fr]  # добавка к строке нумерации при записи
+    with open(inpfw, "r", encoding="cp1251") as wr:
+        write = wr.readlines()
+        print(write)

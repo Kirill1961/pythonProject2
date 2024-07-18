@@ -11,3 +11,21 @@ print(*a, " распаковали из списка")
 
 a = ([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
 print(*a, " распаковали из кортежа")
+
+def add_file(*args):
+    arg = args  # args уже является кортежем, так что дополнительная распаковка не нужна
+    for i in arg:
+        print(i)
+
+add_file("13", "14", "15")
+
+
+def add_file(*args):
+    arg1, arg2, arg3 = args  # Распаковываем кортеж в отдельные переменные
+    print(arg1)
+    print(arg2)
+    print(arg3)
+
+add_file("13", "14", "15")
+
+

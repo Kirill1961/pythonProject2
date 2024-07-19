@@ -264,3 +264,9 @@ print(
     " --> isinstance определение и фильтрация по типу данных",
     "\n",
 )
+
+# условие в левой части генератора только вместе с else, в правой одно if
+numbers = [1, 2, 3, 4, 5, 6]
+modified_numbers = [x**2 if x % 2 == 0 else x for x in numbers if x > 2]
+print(modified_numbers, "условие в левой части генератора только вместе с else, в правой одно if",
+    "\n")

@@ -2,6 +2,8 @@ import random
 import numpy as np
 from functools import reduce
 from collections import defaultdict
+import os
+
 
 counts = defaultdict(lambda: [1, 1])  # lambda передаёт в созданный словарь величину [1, 1]
 counts["asdf"].append(555)
@@ -269,4 +271,18 @@ list_word_split = file_text.split(" ")
 max_len_word = max(list(map(lambda x: len(x), list_word_split)))
 long_words = list(filter(lambda x: len(x) == max_len_word, list_word_split))
 print(f"long lenght : {max_len_word}")
-print(f"long words : {long_words}")
+print(f"long words : {long_words}", "\n")
+
+
+# фильтрация по расширению файла
+#os.path.splitext, чтобы разделить имя файла и его расширение
+files = ["13.txt", "23.txt", "25.pdf", " ", "14.txt", "xls_x.xlsx"]
+for file in files:
+    if os.path.splitext(file)[1] == ".txt":
+        print(file)
+
+# фильтрация по расширению файла
+files = ["13.txt", "23.txt", "25.pdf", " ","14.txt", "xls_x.xlsx"]
+for i in files:
+    if i[-4:] == ".txt":
+        print(i, "filter file extension")

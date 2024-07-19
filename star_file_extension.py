@@ -5,6 +5,8 @@
 Подробное объяснение использования *:
 * (звезда): Соответствует нулевому или более количеству любых символов.
 Примеры: file* найдет file, file1, file2.txt, file_xyz.jpg, и т. д."""
+import os
+
 
 a = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 print(*a, " распаковали из списка")
@@ -28,4 +30,15 @@ def add_file(*args):
 
 add_file("13", "14", "15")
 
+# фильтрация по расширению файла
+#os.path.splitext, чтобы разделить имя файла и его расширение
+files = ["13.txt", "23.txt", "25.pdf", " ", "14.txt", "xls_x.xlsx"]
+for file in files:
+    if os.path.splitext(file)[1] == ".txt":
+        print(file)
 
+# фильтрация по расширению файла
+files = ["13.txt", "23.txt", "25.pdf", " ","14.txt", "xls_x.xlsx"]
+for i in files:
+    if i[-4:] == ".txt":
+        print(i)

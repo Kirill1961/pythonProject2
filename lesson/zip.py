@@ -88,3 +88,13 @@ print((*zip(s), " вывод распакованных элементов из 
 b = [[10], [20]]
 a = [[1], [2], [3]]
 print([[i * j for i, j in zip(a[k], b[k])] for k, _ in enumerate(b)], " zip с LIST  разной длинны", "\n")
+
+# zip с LIST разной длинны + заполнение пустых мест
+
+list1 = [1, 2, 3]
+list2 = [1, 2, 3, 4]
+list3 = [1, 2, 3, 4, 5]
+from itertools import zip_longest
+for a, b, c in zip_longest(list1, list2, list3, fillvalue="&"):
+  print(a, b, c,)
+print("LIST разной длинны + заполнение пустых мест любым символом ", "\n")

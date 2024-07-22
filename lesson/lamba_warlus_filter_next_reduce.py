@@ -286,3 +286,13 @@ files = ["13.txt", "23.txt", "25.pdf", " ","14.txt", "xls_x.xlsx"]
 for i in files:
     if i[-4:] == ".txt":
         print(i, "filter file extension")
+
+# lambda без аргумента
+PI = 3.14
+num_pi = lambda : PI
+print(num_pi())
+
+
+# Сортировка по второму элементу
+persons = [["Kir", 53], ["Leo", 10], ["Bim", 25]]
+print(sorted(persons, key=lambda x: x[1]))

@@ -188,3 +188,28 @@ with open(inpfr, "r", encoding="cp1251") as fr:
     with open(inpfw, "r", encoding="cp1251") as wr:
         write = wr.readlines()
         print(write)
+
+
+# Удаление части строки с  split()
+
+s = "qwerty"
+index = s.find('qw')
+if index != -1:
+    result = s[:index]
+else:
+    result = s
+print(result)  # Output:
+
+
+s = "qwerty"
+result = s.split('qw')[0] + 'qw'
+print(result)  # Output: qw
+
+
+# splitlines()  разделениет строки на список строк,  по  символам новой строки (например, \n, \r\n и т. д.).
+text = """Hello, world!
+This is a test.
+Python is awesome!"""
+
+lines = text.splitlines()
+print(lines)

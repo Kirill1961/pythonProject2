@@ -1,3 +1,4 @@
+
 vowels = ['a', 'e', 'i', 'o', 'u']
 word = 'Provide a word to search for vowels:'
 # word=input('Provide a word to search for vowels:')
@@ -91,3 +92,9 @@ my_dict = {}  # Создание пустого словаря
 my_dict.update({'key1': 'value1', 'key2': 'value2'})
 
 print(my_dict, "update - добавление в словарь нескольких ключей и значений")
+
+
+# isinstance - Сортировка value словаря
+d ={'a': 555, 'b': "qwer", 'c': -33, 'd': 770}
+res = [i for i in d.values() if isinstance(i, str)]
+print(res, "isinstance - Сортировка value словаря ")

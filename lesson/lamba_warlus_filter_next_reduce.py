@@ -296,3 +296,11 @@ print(num_pi())
 # Сортировка по второму элементу
 persons = [["Kir", 53], ["Leo", 10], ["Bim", 25]]
 print(sorted(persons, key=lambda x: x[1]))
+
+# map - применяет через lambda - max к value словаря но выводит ключи
+dict = {1: {"a": 20, "b": 1, "c": 1000, "d": -5},
+2: {"a": 555, "b": 10, "c": -33, "d": 77},
+3: {"a": 0.01, "b": 17, "c": 0, "d": 840}}
+
+res = map(lambda x: max(x, key=x.get), dict.values())
+print(list(res), "map - применяет через lambda - max к value словаря но выводит ключи")

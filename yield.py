@@ -188,3 +188,15 @@ for k in (gen_req_ex(urls)):
     print(k, '///')
 
 
+# три подряд yield выполняются поочерёдно
+def foo(x):
+    while True:
+        x += 1
+        # print(x)
+        yield x         # первое действие
+        yield x * 10    # второе действие
+        yield x + 50    # третье действие
+        # print(x, "x2")
+f = foo(1)
+res = [next(f) for _ in range(3)]
+print(f"выполненые три действия: {res}")

@@ -75,3 +75,27 @@ print(sorted_rooms)
 dict_lamb = {'a': 2, 'j': 0, 'g': 9, 'b': 5}
 sort_lamb = dict(reversed(sorted(dict_lamb.items(), key=lambda ite_m: ite_m[1])))
 print(sort_lamb)
+
+
+# sorted из  GPT
+# По ключам (keywise):
+dictionary = {'apple': 3, 'banana': 1, 'cherry': 2}
+
+# По возрастанию (asc)
+sorted_by_keys_asc = dict(sorted(dictionary.items()))
+print(sorted_by_keys_asc)  # {'apple': 3, 'banana': 1, 'cherry': 2}
+
+# По убыванию (desc)
+sorted_by_keys_desc = dict(sorted(dictionary.items(), reverse=True))
+print(sorted_by_keys_desc)  # {'cherry': 2, 'banana': 1, 'apple': 3}
+
+# По значениям (valuewise):
+dictionary = {'apple': 3, 'banana': 1, 'cherry': 2}
+
+# По возрастанию (asc)
+sorted_by_values_asc = dict(sorted(dictionary.items(), key=lambda item: item[1]))
+print(sorted_by_values_asc)  # {'banana': 1, 'cherry': 2, 'apple': 3}
+
+# По убыванию (desc)
+sorted_by_values_desc = dict(sorted(dictionary.items(), key=lambda item: item[1], reverse=True))
+print(sorted_by_values_desc)  # {'apple': 3, 'cherry': 2, 'banana': 1

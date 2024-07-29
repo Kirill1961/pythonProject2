@@ -76,7 +76,7 @@ d = {30 : 33, 10 : 11, 20 : 22}
 dc = {k: [i] for k, i in d.items()}
 print((dc, " Замена просто value на список из value"))
 
-# Добавка в список к  value ещё 1го значения
+# Добавка в список к value ещё 1го значения
 dc_append = {k: i.append("a") for k, i in dc.items()}
 print(dc, " Добавка в список к  value ещё 1го значения")
 

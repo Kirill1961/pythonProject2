@@ -81,14 +81,25 @@ tup.sort(key=lambda row: row[1])
 print(tup, " sort списка кортежей по вторым элементам кортежей")
 
 
-# Сортировка по определенному полю в словарях
+# sort() - Сортировка по определенному полю в словарях
+# sort() - возвращает изменёную исходную структуру
 students = [
     {'name': 'Alice', 'grade': 90},
     {'name': 'Bob', 'grade': 82},
     {'name': 'Charlie', 'grade': 95}
 ]
 students.sort(key=lambda x: x['grade'])
-print(students, "Сортировка по определенному полю в словарях")
+print(students, "sort() - Сортировка по определенному полю в словарях")
+
+# sorted() - Сортировка по  полю
+# sorted() - возвращает новую структуру
+students = [
+    {'name': 'Alice', 'grade': 90},
+    {'name': 'Bob', 'grade': 82},
+    {'name': 'Charlie', 'grade': 95}
+]
+sort_stud = sorted(students, key=lambda x: x['grade'])
+print(sort_stud, "sorted() - Сортировка по определенному полю в словарях")
 
 # Определение самого длинного слово с выводом max len и слов с max len
 doc = ("That's an important role in everything from traditional computer science it comes"

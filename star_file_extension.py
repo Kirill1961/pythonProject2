@@ -42,3 +42,14 @@ files = ["13.txt", "23.txt", "25.pdf", " ","14.txt", "xls_x.xlsx"]
 for i in files:
     if i[-4:] == ".txt":
         print(i)
+
+
+l = [1, 2, 3, 4]
+a, b, c, d = l
+print(a, b, c, d)
+
+a_, *d_ = l
+print(a_, *d_)
+
+a1, *b1, c1 = l
+print(a1, *b1, c1)

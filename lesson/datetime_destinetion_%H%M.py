@@ -62,7 +62,7 @@ ts = datetime.timestamp(dt)
 print(ts, "strptime")
 
 # Первод обратно метки времени в дату
-print(datetime.fromtimestamp(ts), " Обратный перевод из метки времени в дату")
+print(f"Обратный перевод из метки времени в дату : {datetime.fromtimestamp(ts)}")
 
 # pytz.all_timezones - Временные пояса
 all_time = pytz.all_timezones

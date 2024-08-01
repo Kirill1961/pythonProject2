@@ -51,3 +51,10 @@ f = foo(2)
 print(next(f))
 print(next(f))
 print(next(f))
+
+flag = False
+for i in range(10):
+    if i == 5:
+        flag = True  # Устанавливаем флаг, если i равно 5
+    if flag:
+        print(f"Флаг установлен на {i}")

@@ -52,9 +52,14 @@ print(next(f))
 print(next(f))
 print(next(f))
 
-flag = False
-for i in range(10):
-    if i == 5:
-        flag = True  # Устанавливаем флаг, если i равно 5
-    if flag:
-        print(f"Флаг установлен на {i}")
+start = 0
+max_length = 0
+max_substring = ""
+seen_chars = set()
+s = "abcddefgjfd"
+for end in range(len(s)):
+        while s[end] in seen_chars:
+            seen_chars.remove(s[start])
+            start += 1
+        seen_chars.add(s[end])
+print(seen_chars)

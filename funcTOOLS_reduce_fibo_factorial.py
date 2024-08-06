@@ -118,3 +118,10 @@ print(result, "Применение reduce с начальным значени�
 strings = ["one", " ", "two", " ","three"]
 result = reduce(lambda x, y: x + y, strings, "Start: ")
 print(result)  # Выведет "Start: onetwothree"
+
+
+# reduce - сумма квадратов
+lst = [1, 2, 3]
+def sum_of_squares(nums):
+    return reduce(lambda x, y: x + y**2, nums, 10)
+print(f"reduce - сумма квадратов = {sum_of_squares(lst)}")

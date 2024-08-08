@@ -64,6 +64,12 @@ r_abc_2_4 = r"[a-zA-Z]{3}\d{2}(\d{2})|[a-zA-Z]{3}\d{2}"
 
 r_abc_2_4_1 = "[\w+]{3}\d{2,4}"
 
+r_month_separ = r"([A-Z]\w{2}[a-zA-z]?\d{2,4})"
+
+r_word_togeth_my = r"(?:[A-Z]\w{2}[a-zA-z]?\d{2}[A-Z]\w{2}[a-zA-z]?\d{4})"
+
+r_word_togeth_gpt = r"[A-Z][a-zA-Z]{2}\d{2}[A-Z][a-zA-Z]{2,3}\d{2}(?:\d{2})?"
+
 rgpt = r'\b[a-zA-Z]{3}\d{2}(\d{2})?\b'
 
 rgpt2 = r'\b\w{3}\d{2,4}\b'
@@ -78,9 +84,10 @@ Delivered-To: zzzz@localhost.example.com"""
 # Delivered-Tozzz22z@localhostexamplecom"""
 
 text = """
-Subject: Pla5478ns for cab75le
-Date: Mon, 26 Aug 2002 16:26:01 -Truk1700
-Delivered-To: zzz122 z@localhost2440.example.com"""
+Subject: Sat54, Nov 1981for cab75le
+Date: tMon, 26 Aug 2002 16:26:01 -Truk1700
+DeliverTuert15o: July2024 z@localhost2440.example.com Thu26 June2023
+"""
 
 
 # text ="""
@@ -92,21 +99,74 @@ Delivered-To: zzz122 z@localhost2440.example.com"""
 
 
 # text = "Date: Mon, 26 Aug 2002 16:26:01 -1700"
-def find_dates_in_text(text):
+# text = """
+# Subject: Pla5478ns for cab75le
+# Date: tMon, 26 Aug 2002 16:26:01 -Truk1700
+# DeliverTue15o: July2024 z@localhost2440.example.com"""
+
+
+def find_dates_in_text_1(text):
+    dw = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+    mnt = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November',
+           'December']
+
     lst = []
     pcl = r"[^a-zA-Z0-9]"
-    pt = r"\w{3}\d{2,4}"
-    # for tx in text.split(" "):
-    # print(tx)
+    pt = r"[A-Z]\w{2}[a-zA-z]?\d{2,4}"
+
     cl_tx = re.sub(pcl, "", text)
-    print(cl_tx)
-    # lst.append(re.findall(pt, cl_tx))
+
     res = re.findall(pt, cl_tx)
-    print(res, "..")
+
+    return res
+
+
+print(list(find_dates_in_text_1(text)))
+
+
+def find_dates_in_text_2(text):
+    dw = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+    mnt = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November',
+           'December']
+
+    lst = []
+    pcl = r"[^a-zA-Z0-9]"
+    pt = r"([A-Z]\w{2}[a-zA-z]?\d{2}[A-Z]\w{2}[a-zA-z]?\d{4})"
+    # gpt = r"[A-Z][a-zA-Z]{2}\d{2}[A-Z][a-zA-Z]{2,3}\d{2}(?:\d{2})?"
+    cl_tx = re.sub(pcl, "", text)
+    res = re.findall(pt, cl_tx)
+
+    return res
+
+
+print(list(find_dates_in_text_2(text)))
+
+
+def find_dates_in_text_3(text):
+    dw = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+    # mnt = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    mnt = {'January': '01', 'February': '02', 'March': '03', 'April': '04', 'May': '05', 'June': '06', 'July': '07',
+           'August': '08', 'September': '09', 'October': '10', 'November': '11', 'December': '12'}
+    day_week = {'Mon': '01',
+                'Tue': '02',
+                'Wed': '03',
+                'Thu': '04',
+                'Fri': '05',
+                'Sat': '06',
+                'Sun': '07'}
+
+    lst = []
+    pcl = r"[^a-zA-Z0-9]"
+    pt = r"([A-Z]\w{2}[a-zA-z]?\d{2}[A-Z]\w{2}[a-zA-z]?\d{4})"
+    # gpt = r"[A-Z][a-zA-Z]{2}\d{2}[A-Z][a-zA-Z]{2,3}\d{2}(?:\d{2})?"
+    p_num = r"([a-zA-Z]+)"
+    comp = re.compile(r"([a-zA-Z]+)")
+    cl_tx = re.sub(pcl, "", text)
+    res = re.findall(pt, cl_tx)
     for i in res:
-        print(i)
-        # lst_dt = lst.append(i)
-        yield i, ">>"
+        data = re.findall(p_num, i)
+        print(day_week[data[0]], data[1])
+    return res
 
 
-list(find_dates_in_text(text))
+print(list(find_dates_in_text_3(text)))

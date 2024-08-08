@@ -200,3 +200,7 @@ def foo(x):
 f = foo(1)
 res = [next(f) for _ in range(3)]
 print(f"выполненые три действия: {res}")
+
+
+
+

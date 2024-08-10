@@ -1,5 +1,5 @@
 import re
-from datetime import date, datetime
+from datetime import  datetime
 
 
 m = """January — Jan.
@@ -260,7 +260,7 @@ def find_dates_in_text_5(text):
         # конвертация названия месяца в номер месяца
         for key, value in month.items():
             if month_prefix in key:
-                yield  matched.group(3), value, matched.group(1)
+                yield matched.group(3), value, matched.group(1)
 
 
 

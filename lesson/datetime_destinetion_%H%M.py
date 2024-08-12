@@ -8,6 +8,8 @@ import time
 datetime - конвертирует из строки объект дату"""
 
 def convert24_12(time24):
+    print(time24)
+
     return datetime.strptime(time24, '%H:%M').strftime('%I:%M%p')
 
 

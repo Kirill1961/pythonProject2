@@ -6,6 +6,31 @@ import random
 import pprint
 
 
+
+# Два способа Извлечения схемы доступа URL
+web_url = "https://academy-data-science.eduson.tv/ru"
+
+def extract_url_without_scheme(web_url):
+    # паттерн для изъятия схемы доступа
+    r = r"(^[a-zA-Z]+://)"
+    scheme = re.findall(r, web_url)
+    pat_for_trim_sub = re.compile(r)
+    # паттерн для удаления схемы доступа
+    pat_for_trim_pattern = r"([a-zA-Z:]+//)(.*)"
+    # 1й способ удаление схемы доступа с помощью sub
+    fetch_sheme = pat_for_trim_sub.sub("", web_url)
+    # 2й способ удаление схемы доступа с помощью regex
+    trim_scheme = re.match(pat_for_trim_pattern, web_url)
+
+    return (f"схема доступа {scheme}, \n"
+            f"удаление схемы доступа: \n"
+            f"1й способ trim_scheme = {trim_scheme.group(2)} \n"
+            f"2й способ  fetch_sheme = {fetch_sheme}")
+
+
+print(extract_url_without_scheme(web_url))
+
+
 def fix_unicode(text):
     return text.replace(u"\u2019", "'")  # изменение кодировки
 
@@ -94,3 +119,5 @@ def exempl(x):
         return s
 
 # print(exempl('H_T_M_L.html'))
+
+

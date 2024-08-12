@@ -58,11 +58,11 @@ Delivered-To: zzzz@localhost.example.com"""
 # DateMon26Aug2002162601Truk1700
 # Delivered-Tozzz22z@localhostexamplecom"""
 
-text = """
-Subject: Sat54, Nov 1981for cab75le
-Date: tMon, 26 Aug 2002 16:26:01 -Truk1700
-DeliverTuert15o: July2024 z@localhost2440.example.com Thu26 June2023
-"""
+# text = """
+# Subject: Sat54, Nov 1981for cab75le
+# Date: tMon, 26 Aug 2002 16:26:01 -Truk1700
+# DeliverTuert15o: July2024 z@localhost2440.example.com Thu26 June2023
+# """
 
 # text = """
 # Sat54Nov1981
@@ -85,153 +85,18 @@ DeliverTuert15o: July2024 z@localhost2440.example.com Thu26 June2023
 # DeliverTue15o: July2024 z@localhost2440.example.com"""
 
 
-def find_dates_in_text_1(text):
-    dw = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-    mnt = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November',
-           'December']
-
-    lst = []
-    pcl = r"[^a-zA-Z0-9]"
-    pt = r"[A-Z]\w{2}[a-zA-z]?\d{2,4}"
-
-    cl_tx = re.sub(pcl, "", text)
-
-    res = re.findall(pt, cl_tx)
-
-    return res
 
 
-# print(list(find_dates_in_text_1(text)))
+text = """
+Sub1200ject: Sat10, Nov 1981for 10Cab75l7
+Date: tMon, 26 Aug 2002 16:26:01 -Truk1700
+DeliverTuert15o: July2024 z@localhost2440.example.com Thu26 June2023
+"""
 
-
-def find_dates_in_text_2(text):
-    dw = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-    mnt = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November',
-           'December']
-
-    lst = []
-    pcl = r"[^a-zA-Z0-9]"
-    pt = r"([A-Z]\w{2}[a-zA-z]?\d{2}[A-Z]\w{2}[a-zA-z]?\d{4})"
-    # gpt = r"[A-Z][a-zA-Z]{2}\d{2}[A-Z][a-zA-Z]{2,3}\d{2}(?:\d{2})?"
-    cl_tx = re.sub(pcl, "", text)
-    res = re.findall(pt, cl_tx)
-
-    return res
-
-
-# print(list(find_dates_in_text_2(text)))
-
-
-def find_dates_in_text_3(text):
-    dw = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-    # mnt = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-    mnt = {'January': '01', 'February': '02', 'March': '03', 'April': '04', 'May': '05', 'June': '06', 'July': '07',
-           'August': '08', 'September': '09', 'October': '10', 'November': '11', 'December': '12'}
-
-    day_week = {'Mon': '01',
-                'Tue': '02',
-                'Wed': '03',
-                'Thu': '04',
-                'Fri': '05',
-                'Sat': '06',
-                'Sun': '07'}
-
-    lst = []
-    pcl = r"[^a-zA-Z0-9]"
-    pt = r"([A-Z]\w{2}[a-zA-z]?\d{2}[A-Z]\w{2}[a-zA-z]?\d{4})"
-    # gpt = r"[A-Z][a-zA-Z]{2}\d{2}[A-Z][a-zA-Z]{2,3}\d{2}(?:\d{2})?"
-    p_num = r"([a-zA-Z]+)"
-    comp = re.compile(r"([a-zA-Z]+)")
-    cl_tx = re.sub(pcl, "", text)
-    res = re.findall(pt, cl_tx)
-    for i in res:
-        data = re.findall(p_num, i)
-        print(day_week[data[0]], data[1])
-    return res
-
-
-# print(list(find_dates_in_text_3(text)))
-
-
-
-
-def find_dates_in_text_4(text):
-    dw = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-    # mnt = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-    mnt = {'January': '01', 'February': '02', 'March': '03', 'April': '04', 'May': '05', 'June': '06', 'July': '07',
-           'August': '08', 'September': '09', 'October': '10', 'November': '11', 'December': '12'}
-
-    # day_week = {'Mon': '01',
-    #             'Tue': '02',
-    #             'Wed': '03',
-    #             'Thu': '04',
-    #             'Fri': '05',
-    #             'Sat': '06',
-    #             'Sun': '07'}
-
-    lst = []
-    pcl = r"[^a-zA-Z0-9]"
-    # p_date для отбора вхождений date
-    p_date = r"\d{2}[A-Z][a-zA-Z]{2,4}\d{2}(?:\d{2})?"
-    # p_word_fethc шаблон для групп
-    p_word_fethc = r"(\d+)([a-zA-Z]+)(\d+)"
-    comp = re.compile(p_word_fethc)
-    # cl_tx очищенная единая строка
-    cl_tx = re.sub(pcl, "", text)
-    res = re.findall(p_date, cl_tx)
-
-    for date in res:
-        print(date)
-        matched = comp.match(date)
-        lst.append(matched.group(2))
-        # month_select = [[i for j in mnt.keys() if i in j] for i in matched.group(2)]
-        month_select = [[i for j in mnt.keys() if i in j] for i in lst]
-        print(month_select)
-        yield matched.group(2)
-
-
-# print(list(find_dates_in_text_4(text)))
-
-
-
-def find_dates_in_text_7(text):
-    dw = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-    # mnt = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-    mnt = {'January': '01', 'February': '02', 'March': '03', 'April': '04', 'May': '05', 'June': '06', 'July': '07',
-           'August': '08', 'September': '09', 'October': '10', 'November': '11', 'December': '12'}
-
-    # day_week = {'Mon': '01',
-    #             'Tue': '02',
-    #             'Wed': '03',
-    #             'Thu': '04',
-    #             'Fri': '05',
-    #             'Sat': '06',
-    #             'Sun': '07'}
-
-    lst = []
-    pcl = r"[^a-zA-Z0-9]"
-    # p_date для отбора вхождений date
-    p_date = r"\d{2}[A-Z][a-zA-Z]{2,4}\d{2}(?:\d{2})?"
-    # p_word_fethc шаблон для групп
-    p_word_fethc = r"(\d+)([a-zA-Z]+)(\d+)"
-    comp = re.compile(p_word_fethc)
-    # cl_tx очищенная единая строка
-    cl_tx = re.sub(pcl, "", text)
-    res = re.findall(p_date, cl_tx)
-
-    for date in res:
-        print(date)
-        matched = comp.match(date)
-        month = matched.group(2)
-        yield matched.group(2)
-
-
-# print(list(find_dates_in_text_7(text)))
 
 def find_dates_in_text_5(text):
-
     month = {'January': '01', 'February': '02', 'March': '03', 'April': '04', 'May': '05', 'June': '06', 'July': '07',
-           'August': '08', 'September': '09', 'October': '10', 'November': '11', 'December': '12'}
+             'August': '08', 'September': '09', 'October': '10', 'November': '11', 'December': '12'}
 
     # day_week = {'Mon': '01',
     #             'Tue': '02',
@@ -260,8 +125,45 @@ def find_dates_in_text_5(text):
         # конвертация названия месяца в номер месяца
         for key, value in month.items():
             if month_prefix in key:
-                yield matched.group(3), value, matched.group(1)
+                s = "".join((matched.group(3), "-", value, "-", matched.group(1)))
+                time_format_date = datetime.strptime(s, "%Y-%m-%d").date()
 
+                yield time_format_date.strftime("%Y-%m-%d")
 
 
 print(list(find_dates_in_text_5(text)))
+
+text1 = """
+Sub1200ject: Sat10, Nov 1981for 10Cab75l7
+Date: tMon, 2013-01-01 16:26:01 -Truk1700
+DeliverTuert15o: July2024 z@localhost2440.example.com Thu26 June2023
+"""
+
+# Флаг re.X -  допускает шаблон с комментария, комментарии игнорируются
+def find_dates_in_text(text1):
+
+    r = r"""
+            # Ищем начало слова, в том числе YYYY-MM-DD  
+            \b
+
+            # Варианты YYYY от 0000 до 9999
+            [0-9]{4}
+
+            # Разделитель
+            -
+
+            # Варианты MM от 01 до 12: 01-09, 10-12
+            (?:0[1-9]|1[0-2])
+
+            # Разделитель
+            -
+
+            # Варианты DD от 01 до 31: 01-09, 10-19, 20-29, 30-31
+            (?:0[1-9]|[12][0-9]|3[01])
+
+            # Ищем конец слова, в том числе YYYY-MM-DD   
+            \b
+        """
+
+    return re.findall(re.compile(r, re.X), text1)
+print(find_dates_in_text(text1))

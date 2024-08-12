@@ -7,7 +7,7 @@ import pprint
 
 
 
-# Два способа Извлечения схемы доступа URL
+# Два способа извлечения схемы доступа URL
 web_url = "https://academy-data-science.eduson.tv/ru"
 
 def extract_url_without_scheme(web_url):

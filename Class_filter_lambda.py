@@ -1,3 +1,26 @@
+# self.x - аргумент от __init__ , определяется при создании ОБ a = A(55)
+# x - аргумент определяется при вызове метода
+class A:
+    def __init__(self, x):
+        self.x = x
+
+    def one(self, x):
+        return x
+
+    def two(self):
+        return self.x
+
+    def three(self, x):
+        return self.x, x
+
+
+a = A(55)
+
+print(f"аргумент только метода {a.one(11)}")
+print(f"аргумент только экземпляра {a.two()}")
+print(f"аргументы экземпляра и метода {(a.three(77))}")
+
+
 class Per:
     # атрибуты класса
     name = ""

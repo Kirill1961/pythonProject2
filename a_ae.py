@@ -65,3 +65,30 @@ for end in range(len(s)):
 print(seen_chars)
 
 
+class C:
+    def __init__(self, x):
+        self.__x = x
+    def get_x(self):
+        return self.__x
+    def set_x(self, x):
+        self.__x == x
+        print(self.__x)
+c = C(5)
+c.set_x(111)
+print(c.get_x())
+
+class Person:
+    def __init__(self, age):
+        self.__age = age
+
+    def get_age(self):
+        return self.__age
+
+    def set_age(self, age):
+        self.__age = age
+        print(self.__age)
+
+p = Person(15)
+
+p.set_age(25)
+print(p.get_age())

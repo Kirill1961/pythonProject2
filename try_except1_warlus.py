@@ -108,6 +108,12 @@ def foo(b):
 print(foo(lista), "warlus - это действие с действием")
 
 
+# warlus - простое и понятное применение
+def foo(x):
+    return x ** 2
+print(f := foo(5), "warlus - простое и понятное применение")
+
+
 """try, except - каскад"""
 
 try:

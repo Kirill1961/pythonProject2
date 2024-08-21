@@ -24,6 +24,24 @@ print(o.multi_ply(), " o.multi_ply")
 
 # @classmethod
 
+class A:
+    x = 10
+
+    def __init__(self, x):
+        self.x = x
+
+    @classmethod
+    def moo(cls):
+        return cls.x ** 2
+
+
+a = A(5)
+# вызов через экземпляр
+print(f"вызов через экземпляр  {a.moo()}")
+# вызов напрямую
+print(f"вызов напрямую  {A.moo()}")
+
+
 class D:
     PAR1 = 100
     PAR2 = 50
@@ -47,8 +65,24 @@ print(D.multi_ply(o), " D.multi_ply(o)")
 print(o.multi_ply(), " o.multi_ply()")
 
 
-
 #  @staticmethod
+
+class D:
+    def __init__(self, x):
+        self.x = x
+
+    @staticmethod
+    def pow(x):
+        return x ** 2
+
+    def add(self):
+        return self.x + 1000
+
+
+d = D(2)
+# pow() вызывается напрямую тк является статическим методом
+print(f"pow() вызывается напрямую -> {D.pow(7)}")
+
 
 class P:
     PAR1 = 10

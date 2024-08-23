@@ -180,4 +180,5 @@ dict = {1: {"a": 20, "b": 1, "c": 1000, "d": -5},
 3: {"a": 0.01, "b": 17, "c": 0, "d": 840}}
 
 res = map(lambda x: max(x, key=x.get), dict.values())
-print(list(res), "map - применяет через lambda - max к value словаря но выводит ключи")
+print(list(res), "map - применяет через"
+                 " lambda - max к value словаря но выводит ключи")

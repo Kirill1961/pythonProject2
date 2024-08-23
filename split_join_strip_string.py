@@ -206,10 +206,16 @@ result = s.split('qw')[0] + 'qw'
 print(result)  # Output: qw
 
 
-# splitlines()  разделениет строки на список строк,  по  символам новой строки (например, \n, \r\n и т. д.).
+# splitlines()  разделениет строки на список строк, по символам новой строки (например, \n, \r\n и т. д.).
 text = """Hello, world!
 This is a test.
 Python is awesome!"""
 
 lines = text.splitlines()
 print(lines)
+
+#  использование методов is....... (isalpha, isnumeric, isalnum и тд)
+n = "Kirill1971Sh"
+print("".join(list(filter(lambda x: x.isnumeric(), n))))
+
+

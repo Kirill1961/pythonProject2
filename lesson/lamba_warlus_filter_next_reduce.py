@@ -304,3 +304,8 @@ dict = {1: {"a": 20, "b": 1, "c": 1000, "d": -5},
 
 res = map(lambda x: max(x, key=x.get), dict.values())
 print(list(res), "map - применяет через lambda - max к value словаря но выводит ключи")
+
+# фильтруем буквы , цыфры с  filter
+n = "Kirill53"
+filtr = "".join(filter(lambda x: x if x.isalpha() else None, n))
+print(f"фильтруем буквы , цыфры с  filter:  {n} - > {filtr}")

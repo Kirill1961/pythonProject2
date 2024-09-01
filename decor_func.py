@@ -1,19 +1,22 @@
 from functools import wraps
 
+
 # классический декоратор
 def decor(func):
     def wrap(num):
 
-      #  аргументы func и num должны быть в обёртке
+        #  аргументы func и num должны быть в обёртке
         return num * func()
 
     # возврат обёртки без скобок для дальнейшено использования
     return wrap
 
+
 # после навески @decor, тело foo() помещается в обёртку
 @decor
 def foo():
     return 55
+
 
 # аргумент обёртки задаётся при вызове foo
 print(f"классический декоратор с пояснениями -> -> {foo(10)}")
@@ -21,17 +24,20 @@ print(f"классический декоратор с пояснениями ->
 
 def g(f):  # g(f) - сюда передали адрес ячейки ф-ции р(с)
     def l(x):  # сюда передали адрес ячейки аргумента ф-ции р(с)
-        print(x ** 2, "before")
+        print(x**2, "before")
         f(x)  # обратились к ячейкам ф-ции и аргумента
-        print(x ** 2, "after")
-        return x ** 3  # возвращаем res ф-ции l(x)
+        print(x**2, "after")
+        return x**3  # возвращаем res ф-ции l(x)
 
     return l  # возвращаем ячейку ф-ции l
 
 
 @g  # этот декоратор передаёт ф-цию р(с) в аргумент ф-ции g(f)
-def p(c):  # Вызов p(c) активизирует декоратор @g который передаёт адреса ячеек ф-ции p() и её аргумента c в g(f) и l(x)
-    print(c ** 2)
+def p(
+    c,
+):  # Вызов p(c) активизирует декоратор @g который передаёт
+    # адреса ячеек ф-ции p() и её аргумента c в g(f) и l(x)
+    print(c**2)
 
 
 print(p(2), " печать вызова", "\n")
@@ -54,7 +60,10 @@ def b(z):
     return z
 
 
-b("NN")  # Вызов b(z) активизирует декоратор @a который передаёт адреса ячеек ф-ции b() и её аргумента z в a(x) и в c(y)
+b(
+    "NN"
+)  # Вызов b(z) активизирует декоратор @a который передаёт
+# адреса ячеек ф-ции b() и её аргумента z в a(x) и в c(y)
 
 print(" Структура декоратора с декорированием через переменную", "\n")
 
@@ -69,11 +78,12 @@ def a(u):
 
 
 af = a(b)  # af = a(b) Играет роль декоратора
-af("MM")    # передача аргумента декорируемой ф-ции b(z)
+af("MM")  # передача аргумента декорируемой ф-ции b(z)
 
 
 def b(z):
     print(z)
+
 
 print(" Структура декоратора c переменной", "\n")
 
@@ -82,10 +92,10 @@ print(" Структура декоратора c переменной", "\n")
 
 def f_d(fun):
     def wr(x):
-        print('befor')
+        print("befor")
         fun(x)  # тело ф-ции s_f(x)
         print(x, " xxxxxx")
-        print('after', "\n")
+        print("after", "\n")
         # return x
 
     return wr  # возврат результ ф-ции wr
@@ -93,7 +103,7 @@ def f_d(fun):
 
 @f_d
 def s_f(x):
-    print(f'{x}', " 1-й заброс в декоратор'")
+    print(f"{x}", " 1-й заброс в декоратор'")
 
 
 f_d(s_f(" OK NO OK NO"))
@@ -186,11 +196,11 @@ f_d(s_f(" OK NO OK NO"))
 
 
 def outer(fu_nc):
-    """ decorator """
+    """decorator"""
 
     @wraps(fu_nc)
     def inner(*args, **kwargs):
-        print('six/' * 3)
+        print("six/" * 3)
         return fu_nc(*args, **kwargs)
 
     return inner
@@ -199,7 +209,7 @@ def outer(fu_nc):
 def outer_2(func):
     @wraps(func)
     def inner_1(*args, **kwargs):
-        print('V' * 10)
+        print("V" * 10)
         return func(*args, **kwargs)
 
     return inner_1
@@ -218,7 +228,7 @@ def oter(func):
     def inr(*x):
         for y in x:
             func()
-            print(f'{y}')
+            print(f"{y}")
 
         return x
 
@@ -226,11 +236,11 @@ def oter(func):
 
 
 def work():
-    print('num = ', end='')
+    print("num = ", end="")
 
 
 f = oter(work)
-print('nums = ', f(10, 100, 1000))
+print("nums = ", f(10, 100, 1000))
 
 
 def oter(func):
@@ -275,7 +285,7 @@ def oter(func):
         nod = func(*args)
         df = time.time()
         dw = df - ds
-        print('Time work code  ', dw)
+        print("Time work code  ", dw)
         return nod
 
     return inr
@@ -291,17 +301,19 @@ def get_nod(a, b):
 
 
 f = oter(get_nod)
-print(f(70, 84), 'наибольший ОД')
+print(f(70, 84), "наибольший ОД")
 
 
 # ф-цию degree(k) через переменную function_from_list закидываем в список res для действий с генерируемой " k "
 def degree(k):
-    return k ** 2
+    return k**2
 
 
 def make(a, function_from_list):
-    res = [function_from_list(k) for k in range(a)]  # каждый цикл res вызывает degree(k), return k**2 возвращает в res
-    print(res, ' res res res')
+    res = [
+        function_from_list(k) for k in range(a)
+    ]  # каждый цикл res вызывает degree(k), return k**2 возвращает в res
+    print(res, " res res res")
 
 
 make(5, degree)

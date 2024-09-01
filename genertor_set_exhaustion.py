@@ -23,3 +23,12 @@ for p in [x*3 for x in (1,2,3,4,5)]:
 for p in (x * 3 for x in (1, 2, 3, 4, 5)):
     print(p)
 
+# Истощение итерируемой коллекции в случае использование set-генератора
+a = [1, 2, 3]
+condition = True
+while condition:
+    print(f"collection ->{a}")
+    g = (i*10 for i in a)
+    print(f"result from generator -> {list(g)}")
+    print(f"exhaustion collection -> {list(g)}")
+    condition = bool(list(g))

@@ -44,4 +44,7 @@ else:
     print("False, фильтрация списка содержащего только True, мой самопис")
 
 
-
+# Среднее для списка bool, учтём что False=0, True=1
+x = [False, False, True, True, True]
+mean = sum(x) / len(x)
+print(mean, "Среднее для списка bool, учтём что False=0, True=1")

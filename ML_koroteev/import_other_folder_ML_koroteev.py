@@ -1,8 +1,7 @@
 import os
 import sys
 import bbb as b
-import a_ae as o
-
+from ML_koroteev import koroteev_open_py_xl as o
 
 print(os.getcwd(), " Р а с п о л о ж е н и е данного файла ", "\n")  # os.getcwd() - место расположение файла где мы находимся
 # print(os.path.join(os.getcwd()))
@@ -16,7 +15,7 @@ print(sys.path)
 print(k)
 
 print(b.f() , "функция из файла map.py")
-print(o.count_vs_while(2), "> > > функция из файла a_ae.py > > >")
+print(o.count_vs_while(2), "> > > функция из файла koroteev_open_py_xl.py > > >")
 from lesson import map
 map.app_end([90, 80, 70])
 

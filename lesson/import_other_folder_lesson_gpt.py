@@ -1,4 +1,4 @@
-import glob, re
+import glob
 import os.path
 import runpy
 import subprocess
@@ -6,16 +6,16 @@ import sys
 from logg import log_uru
 
 
-path = r"C:\Users\Kirill\PycharmProjects\pythonProject2\a_ae.py"
+path = r"/koroteev_open_py_xl.py"
 print(glob.glob(path), "|||||")
 
-path = r"C:\Users\Kirill\PycharmProjects\pythonProject2\a_ae.py"
+path = r"/koroteev_open_py_xl.py"
 files = glob.glob(path)
 
 print(files, "*******")
 
 # Указываем путь к файлу
-path = r"C:\Users\Kirill\PycharmProjects\pythonProject2\a_ae.py"
+path = r"/koroteev_open_py_xl.py"
 
 # Находим файл
 files = glob.glob(path)
@@ -33,7 +33,7 @@ else:
 
 
 # Указываем путь к файлу
-path = r"C:\Users\Kirill\PycharmProjects\pythonProject2\a_ae.py"
+path = r"/koroteev_open_py_xl.py"
 
 # Читаем содержимое файла
 with open(path, 'r') as file:
@@ -46,7 +46,7 @@ print(exec(code), "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
 
 
 # Указываем путь к файлу
-path = r"C:\Users\Kirill\PycharmProjects\pythonProject2\a_ae.py"
+path = r"/koroteev_open_py_xl.py"
 
 # Выполняем код в файле
 runpy.run_path(path)
@@ -55,16 +55,16 @@ runpy.run_path(path)
 sys.path.append(r"C:\Users\Kirill\PycharmProjects\pythonProject2")
 
 # Импортируем модуль (имя файла без расширения .py)
-import a_ae
+from ML_koroteev import koroteev_open_py_xl
 
 # Вызываем функции или используем переменные из модуля
-a_ae.ou(2)
+koroteev_open_py_xl.ou(2)
 
 
 
 
 # Указываем путь к файлу
-path = r"C:\Users\Kirill\PycharmProjects\pythonProject2\a_ae.py"
+path = r"/koroteev_open_py_xl.py"
 
 # Выполняем файл
 result = subprocess.run(['python', path], capture_output=True, text=True)

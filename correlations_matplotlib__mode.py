@@ -24,7 +24,7 @@ from math import sqrt
 
 # movies = ['Entony', 'Ben', 'Kasablanka', 'Handy', 'West']
 # num_oscars = [5, 11, 3, 8, 10]
-
+#
 # xs = [i + 0.1 for i, _ in enumerate(movies)]
 # plt.bar(xs, num_oscars)
 # plt.xticks([i + 0.5 for i,_ in enumerate(movies)], movies)
@@ -32,10 +32,10 @@ from math import sqrt
 # plt.xlabel('FILMS')
 # plt.show()
 
-# grades = [91, 15, 20, 74, 30, 40, 0, 58, 63, 87, 112]
-# decil = lambda grade: grade // 10 * 10  # деление без остатка и оставили десятую часть числа
-# histogramm = Counter(decil(grade) for grade in grades)
-# print(histogramm)
+grades = [91, 15, 20, 74, 30, 40, 0, 58, 63, 87, 82,  112]
+decil = lambda grade: grade // 10 * 10  # деление без остатка и оставили десятую целую часть числа
+histogramm = Counter(decil(grade) for grade in grades)
+print({f"histogramm  {histogramm}"})
 
 
 # num_friends = [3]
@@ -90,11 +90,11 @@ num_friends_two = [100, 92, 87, 74, 74, 56, 37, 21, 12, 12, 2]
 def mode(x):
     counts = Counter(x)
     max_count = max(counts.values())
-    print(max_count, ' max_count')
+    print(max_count, ' max_count', "\n")
     return [(x_i, count) for x_i, count in counts.items() if count == max_count]
 
 
-print(mode(num_friends_two), ' mode, модальный интервал - определяет значение встречающееся наиболее часто', "\n")
+print("\t" * 4, f" mode, модальный интервал - определяет значение встречающееся наиболее часто ->  {mode(num_friends_two)}", "\n")
 
 
 # ВАРИАЦИИ - отражают меру изменчивости данных, ближе к 0 ВАР., меньше,у больших знач - больше.
@@ -137,7 +137,8 @@ def variance(x):  # ДИСПЕРСИЯ Или variance
     print(sum(sum_of_squares), '       сумма квадратов')
     print('  ')
     variance_su_sq = (sum(sum_of_squares)) / (n - 1)
-    print(variance_su_sq, '   ДИСПЕРСИЯ (variance) - это сумма квадратов отклонения / (n - 1) для', num_friends)
+    print(variance_su_sq, '   ДИСПЕРСИЯ (variance) - это сумма квадратов отклонения / (n - 1) для', num_friends, "\n")
+    print("\t"*4, f"ДИСПЕРСИЯ (variance) -> {variance_su_sq}", "\n")
     # print('  ')
     # std = math.sqrt(variance_su_sq)
     # print(std, '    std вычисление в теле ф-ции')
@@ -155,7 +156,7 @@ def standart_deviations(x):
     return math.sqrt((variance(x)))  # вызов ф-ции variance(x)
 
 
-print(standart_deviations(num_friends), '  std, среднеквадратичное отклонение - знач дисперсии из variance(x)')
+print("\t"*4, f"st (среднеквадратичное отклонение) -> {standart_deviations(num_friends)}", "\n")
 
 print('////////////////////////////////////  ')
 
@@ -166,7 +167,10 @@ def interquantil_range(x):
     return quantile(x, 0.75) - quantile(x, 0.25)
 
 
-print(interquantil_range(num_friends), ' Интерквантильный размах')
+print("\t"*4, f"Интерквантильный размах в % -> {interquantil_range(num_friends)}", '\n')
+print("\t"*4, f"Интерквантильный размах в абсолюте -> {num_friends[int(len(num_friends)*0.25) : int(len(num_friends)*0.75)]}", '\n')
+
+
 
 print('  ')
 
@@ -187,7 +191,7 @@ def covar(x):
 
 
 print('  ')
-print(covar(data_for_covar), '     ->    CVar в %   для  ', num_friends_three)
+print("\t"*4, f" V (Коэффициент вариации) -> {covar(data_for_covar)}", "\n")
 
 print('  ')
 print(' КОВАРИАЦИЯ, КОРЕЛЯЦИЯ  ')
@@ -203,7 +207,7 @@ def mean_x_y(x_):
     return sum(x_) / len(x_)
 
 
-print(mean_x_y(num_friends_three), ' среднее варриационного ряда')
+print("\t"*4, f"среднее варриационного ряда -> {mean_x_y(num_friends_three)}", '\n')
 print('  ')
 
 
@@ -256,7 +260,7 @@ def covariance(x_, y_):
     return dot(sum(sum_mult), n)   # dot сумма произведений пар x_dev , y_dev
 
 print('  ')
-print("\t" * 5, covariance(num_friends, daily_minutes), ' K О В А Р И А Ц И Я для x_, y_', "\n")
+print("\t" * 5, f"covariance (Парная дисперсия) -> {covariance(num_friends, daily_minutes)}", "\n")
 
 print(num_friends, daily_minutes, ' вариационные ряды для Ковариации')
 

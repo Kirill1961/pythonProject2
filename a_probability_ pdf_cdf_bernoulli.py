@@ -2,7 +2,7 @@ import random
 import math
 import matplotlib.pyplot as plt
 from collections import Counter
-
+from scipy.stats import binom
 
 # наступление события, что оба ребёнка девочки
 def random_kid():
@@ -155,7 +155,7 @@ def bernoulli_trial(p):
 def binominal(n, p):
     return sum(bernoulli_trial(p) for _ in range(n))
 
-
+# n - кол-во опытов, p - вероятность успеха
 print(binominal(100, 0.5), ' binominal')
 
 
@@ -182,8 +182,9 @@ make_hist(0.75, 100, 1000)
 # Апроксимация биноминальной случайной величины Х к нормальному распределению
 
 def normal_aproxim_to_binominal(n, p):
-    # Находит mu и sigma соотвующие binominal(n, p)
+    # mu - среднее, вероятность * на общее число опытов
     mu = p * n
+    # sigma - это  sd
     sigma = math.sqrt(p * (1 - p) * n)
     print(mu, sigma, ' normal_aproxim_to_binominal(n, p)')
     return mu, sigma
@@ -341,3 +342,17 @@ def beta_pdf(x, alfa, beta):
 
 
 print(beta_pdf(0.2, 4, 16), ' beta_pdf')
+
+
+# Биномиальное распределение scipy.stats import binom
+# n - количество испытаний, p - вероятность успеха
+n = 10
+p = 0.7
+
+# Вероятность получить ровно 5 успехов из 10 испытаний
+prob_5_successes = binom.pmf(5, n, p)
+print(f"Вероятность 5 успехов из 10 испытаний: {prob_5_successes:.4f}")
+
+# Генерация случайного числа успехов из 10 испытаний
+binom_rv = binom.rvs(n, p, size=10)  # Генерация 10 испытаний
+print(binom_rv)

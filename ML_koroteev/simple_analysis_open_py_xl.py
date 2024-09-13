@@ -1,8 +1,9 @@
 import pandas as pd
 import openpyxl
 import glob
+import matplotlib.pyplot as plt
 
-path = r"D:\downloads\SPAM Assassian\data_koroteev\*"
+path = r"D:\downloads\SPAM Assassian\data_koroteev\data3.xlsx"
 # path = r"D:\downloads\price_cena4_2024-03-28.xlsx"
 
 files = glob.glob(path)
@@ -19,14 +20,18 @@ sheet = wb.active
 
 # Чтение значения из определённой ячейки (например, A1)
 value = sheet['A10'].value
-print(value)
+print(value, "\n")
 
 # Чтение файла Excel
-tabl = pd.read_excel(files[0], engine='openpyxl')
+tabl = pd.read_excel(files[0], engine='openpyxl', skiprows=2)
 df = pd.DataFrame(tabl)
 
+# количество строк и столбцов, ненулевых значений, объем памяти, используемый вашим DataFrame.
+info = df.info()
+print(info)
+
 # Вывести имена всех колонок
-print(df.columns)
+print(df.columns, "\n")
 
 # Извлечение столбцов по именам
 column_scores = df['Балл']
@@ -36,14 +41,14 @@ failed_score = df['Минимальный балл'][0]
 # Извлечение столбца по индексу (нумерация начинается с 0)
 # column_data_ind = df.iloc[:, 9]
 
+#  Статистики колонки 'Балл'
+print(column_scores.describe(), "\n")
+
+
+" Задача 2 "
 # Статистики всего DataFrame
-print(df.describe())
+print(df.describe().head(8), "\n")
 
-#  Статистики колонки
-print(column_scores.describe())  # Статистики total
-
-
-""" Задание """
 # средний балл 52
 mean_score = column_scores.mean()
 
@@ -56,10 +61,31 @@ below_average = len(column_scores[column_scores < 52])
 # размер выборки total
 total_score = len(column_scores)
 
+"Задача 3"
 # % учащихся до среднего балла
 fraction_below_average = below_average / total_score
 print(f"% учащихся ниже среднего среднего балла: {fraction_below_average*100:.2f}")
 
+"Задача 4"
 # % учащихся не сдавших экзамен
-failed = (column_scores < int(failed_score) ).mean()*100
-print(f"% учащихся не сдавших экзамен: {failed:.2f}")
+failed_exam = (column_scores < int(failed_score) ).mean()*100
+print(f"% учащихся не сдавших экзамен: {failed_exam:.2f}", "\n")
+
+"Задача 5"
+# % учащихся сдавших экзамен
+passed_exam = 100 - failed_exam
+print(passed_exam, "\n")
+
+# Создаём DataFrame с двумя значениями x и y
+data = {'Values': [92.29, 7.71]}
+
+# Разметка значений 'Values'
+df_chart = pd.DataFrame(data, index=['passed_exam', 'failed_exam'])
+
+# Строим круговую диаграмму
+df_chart.plot.pie(y='Values', labels=df_chart.index, autopct='%1.1f%%', startangle=90)
+
+# Отображаем диаграмму
+plt.ylabel('')  # Убираем название оси для чистого отображения
+# plt.show()
+

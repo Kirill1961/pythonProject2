@@ -1,6 +1,6 @@
 import os
 import sys
-import a_safe as b
+import a_safe_bernoulli as b
 from ML_koroteev import simple_analysis_open_py_xl as o
 
 print(os.getcwd(), " Р а с п о л о ж е н и е данного файла ", "\n")  # os.getcwd() - место расположение файла где мы находимся

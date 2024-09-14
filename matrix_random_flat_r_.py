@@ -1,4 +1,5 @@
 
+
 import numpy as np
 from numpy.random import default_rng
 from io import StringIO
@@ -161,5 +162,7 @@ print(adjacency_1, "adjacency_matrix - вариант Грасса + моё до
 a = np.eye(4, 4)  # единичная матрица
 print(np.array([[(i, j)for i in a]for j in a]), "передружили i vs j")  # передружили i vs j
 
-
+# Короткий arange
+print(np.r_[1:11], "Короткий arange шаг 1")
+print(np.r_[1:11:2], "Короткий arange шаг 2")
 

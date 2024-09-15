@@ -2,9 +2,15 @@ import pandas as pd
 import openpyxl
 import glob
 import matplotlib.pyplot as plt
+import os
 
+
+
+print(os.getcwd(), " Р а с п о л о ж е н и е данного файла ", "\n")
 path = r"D:\downloads\SPAM Assassian\data_koroteev\data3.xlsx"
 # path = r"D:\downloads\price_cena4_2024-03-28.xlsx"
+
+print(os.path.exists(path))  # Проверить, существует ли файл по этому пути
 
 files = glob.glob(path)
 print(files)

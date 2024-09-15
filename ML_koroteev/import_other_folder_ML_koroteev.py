@@ -14,8 +14,8 @@ print(sys.path)
 
 print(k)
 
-print(b.f() , "функция из файла map.py")
-print(o.count_vs_while(2), "> > > функция из файла simple_analysis_open_py_xl.py > > >")
+# print(b.f() , "функция из файла map.py")
+# print(o.count_vs_while(2), "> > > функция из файла simple_analysis_open_py_xl.py > > >")
 from lesson import map
 map.app_end([90, 80, 70])
 

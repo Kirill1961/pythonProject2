@@ -184,7 +184,7 @@ data = []  # Словарь кортежей (words : lable)
 for fn in glob.glob(path):
 
     is_spam = "ham" not in fn
-    print("\t" * 7, is_spam)
+    # print("\t" * 7, is_spam)
     with open(fn, "r") as file:
         for line in file:
 

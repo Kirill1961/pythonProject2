@@ -15,7 +15,7 @@ kde = gaussian_kde(data)
 # kde_str = repr(kde)
 # print(kde_str)
 x = [0, 0.00001, 0.05,  0.1, 0.2, 0.3, 0.4, 0.5, 10]  # 10 - выброс который увеличивает std
-print("PDF", kde.pdf(x))  # плотность вероятности в точке Х из данной выборки
+print(f"PDF{kde.pdf(x)}")  # плотность вероятности в точке Х из данной выборки
 print("Размер выборки:", kde.n)
 print("Фактор сглаживания (bandwidth):", kde.factor)  # Ширина ядра
 # print("Ядро:", kde.__dir__())  # все атрибуты из gaussian_kde
@@ -44,10 +44,10 @@ kde = gaussian_kde(data)
 
 # Генерируем точки для вычисления значения PDF для всех значений из выборки x_values
 x_values = np.linspace(-3, 3, 10)
-print(x_values)
+print(f"x_values-> сгенерированные значения с linespace {x_values}")
 # Вычисляем значения функции плотности вероятности в этих точках
 pdf_values = kde.pdf(x_values)
 
 # Выводим значения PDF на печать
-print(pdf_values)
+print(f"вероятность для сгенерированных значений x_values -> {pdf_values}")
 

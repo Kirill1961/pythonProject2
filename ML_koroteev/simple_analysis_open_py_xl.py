@@ -3,16 +3,18 @@ import openpyxl
 import glob
 import matplotlib.pyplot as plt
 import os
-import sys
+import re
 
 
-path = r"D:\downloads\Spam_Asassians\data_koroteev\data3.xlsx"
+
+print(os.getcwd(), " Р а с п о л о ж е н и е данного файла ", "\n")
+path = r"D:\downloads\SPAM Assassian\data_koroteev\data3.xlsx"
 # path = r"D:\downloads\price_cena4_2024-03-28.xlsx"
 
 print(os.path.exists(path))  # Проверить, существует ли файл по этому пути
 
 files = glob.glob(path)
-# print(files)
+print(files)
 
 pd.set_option("display.max_columns", None) # Показывать все столбцы
 pd.set_option("display.width", 1000)  # Установить ширину вывода
@@ -38,10 +40,12 @@ print(info)
 # Вывести имена всех колонок
 print(df.columns, "\n")
 
+#TODO initial data
+
 # Извлечение столбцов по именам
 column_scores = df['Балл']
 failed_score = df['Минимальный балл'][0]
-
+sex = df['Пол']
 
 # Извлечение столбца по индексу (нумерация начинается с 0)
 # column_data_ind = df.iloc[:, 9]
@@ -79,9 +83,9 @@ print(f"% учащихся не сдавших экзамен: {failed_exam:.2f}
 "Задача 5"
 # % учащихся сдавших экзамен
 passed_exam = 100 - failed_exam
-print(passed_exam, "\n")
+print(f"% passed exam {passed_exam:.2f}", "\n")
 
-# Создаём DataFrame с двумя значениями x и y
+# Создаём DataFrame с двумя значениями x-сдавшие и y-не сдавшие
 data = {'Values': [92.29, 7.71]}
 
 # Разметка значений 'Values'
@@ -94,3 +98,30 @@ df_chart.plot.pie(y='Values', labels=df_chart.index, autopct='%1.1f%%', startang
 plt.ylabel('')  # Убираем название оси для чистого отображения
 # plt.show()
 
+"Task 6"
+# KDE распределения баллов
+column_scores.plot.kde()
+# plt.show()
+
+"Task 7"
+# % соотношения «отлично», «хорошо», «удовлетворительно», «неудовлетворительно»
+
+one_percent = (100 / total_score)
+excellent = len(column_scores[column_scores >= 35]) * one_percent
+bad = len(column_scores[column_scores <= 10]) * one_percent
+middle = (len(column_scores[column_scores <= 22]) - bad ) * one_percent
+good = (len(column_scores[column_scores <= 34]) - middle - bad) * one_percent
+
+print(f"отлично {excellent:.2f}%, хорошо {good:.2f}%, удовлетворительно {middle:.2f}%, плохо  {bad:.2f}%")
+
+"Task 8"
+# % ratio man and women
+
+# Разные способы подсчёта уникальных символов "М" и "Ж"
+man = sum(sex.values == "М")
+people_sex = sex.value_counts()
+people_sex_percent = sex.value_counts(normalize=True)
+
+print(f"man {man}")
+print(f"{people_sex}")
+print(f"{people_sex_percent}")

@@ -166,3 +166,30 @@ print(np.array([[(i, j)for i in a]for j in a]), "передружили i vs j")
 print(np.r_[1:11], "Короткий arange шаг 1")
 print(np.r_[1:11:2], "Короткий arange шаг 2")
 
+
+# ???????
+n = 3
+x = np.array((1, 2, 6))
+y = np.array((-2, 3, 2))
+a = np.zeros(shape=(n, n))
+b = np.zeros(shape=(n, n))
+for i in range(n):
+    for j in range(i + 1, n):
+        a[i, j] = abs(x[i] - x[j])
+        b[i, j] = abs(y[i] - y[j])
+print(a)
+print(b)
+
+# Автоматический подбор размера матрицы с помощью reshape(-1, 1)
+import numpy as np
+
+# Одномерный массив с 6 элементами
+arr = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9])
+
+# Преобразование в двумерный массив с 9 строками и 1 столбцом
+reshaped_arr = arr.reshape(-1, 1)
+# Преобразование в двумерный массив с 3 строками и 3 столбцом
+reshaped_arr_ = arr.reshape(-1, 3)
+
+print(reshaped_arr)
+print(reshaped_arr_)

@@ -6,6 +6,7 @@ def measure(n):
     "Measurement model, return two coupled measurements."
     m1 = np.random.normal(size=n)
     m2 = np.random.normal(scale=0.5, size=n)
+
     return m1+m2, m1-m2
 m1, m2 = measure(2000)
 xmin = m1.min()
@@ -31,4 +32,4 @@ ax.imshow(np.rot90(Z), cmap=plt.cm.gist_earth_r,
 ax.plot(m1, m2, 'k.', markersize=2)
 ax.set_xlim([xmin, xmax])
 ax.set_ylim([ymin, ymax])
-# plt.show()
+plt.show()

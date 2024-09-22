@@ -40,7 +40,8 @@ print(data.describe().round(2))  # статистические параметр
 
 
 y = data["Price"]
-X = data.drop("Price", axis=1)  # вырезаем из dataframe целевую переменную target value
+# вырезаем из dataframe целевую переменную(ЦП) target value что бы отделить ЦП от остального df
+X = data.drop("Price", axis=1)
 
 print(data.Price.values, "Price", "\n")
 print(X.shape, y.shape, "\n")

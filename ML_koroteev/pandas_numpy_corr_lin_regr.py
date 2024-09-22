@@ -2,6 +2,9 @@ import numpy as np
 import pandas as pd
 from sklearn.linear_model import LinearRegression
 import statsmodels.api as sm
+import matplotlib.pyplot as plt
+from scipy.stats import gaussian_kde
+
 
 print(" Создание data")
 
@@ -141,3 +144,29 @@ print(model_make.summary())
 
 print('\nРегрессия для prog:')
 print(model_prog.summary())
+
+# PDF
+# kde сгладила гистограмму
+kde = gaussian_kde(data["make"])
+min_max = np.linspace(min(data["make"]), max(data["make"]), 20)
+# на основе kde строим  pdf
+pdf = kde.pdf(min_max)
+plt.hist(data["make"], bins=10, density=True, alpha=0.5, label='Histogram')
+plt.plot(min_max, pdf)
+plt.show()
+
+
+# KDE
+# Данные для сетки
+data_kde = np.random.normal(loc=15, scale=30, size=100)
+# предали выборку в класс gaussian_kde
+kde_key = gaussian_kde(data["time"])
+# Задаём шкалу для kde графика
+scale_rang = np.linspace(-5, 20, 100)
+# Считаем плотность
+density = kde_key(scale_rang)
+# Строим гистограмму
+plt.hist(data_kde, bins=8, density=True)
+# plt.plot(scale_rang, density)
+# plt.show()
+

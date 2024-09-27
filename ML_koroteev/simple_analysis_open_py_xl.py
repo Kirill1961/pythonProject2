@@ -39,6 +39,8 @@ print(info)
 
 # Вывести имена всех колонок
 print(df.columns, "\n")
+print(df.keys(), ">>", "\n")
+print(df.head())
 
 #TODO initial data
 
@@ -46,6 +48,10 @@ print(df.columns, "\n")
 column_scores = df['Балл']
 failed_score = df['Минимальный балл'][0]
 sex = df['Пол']
+num_school = df["№ школы"]
+task_brief = df["Задания с кратким ответом"]
+task_expand = df["Задания с развёрнутым ответом"]
+
 
 # Извлечение столбца по индексу (нумерация начинается с 0)
 # column_data_ind = df.iloc[:, 9]
@@ -115,13 +121,44 @@ good = (len(column_scores[column_scores <= 34]) - middle - bad) * one_percent
 print(f"отлично {excellent:.2f}%, хорошо {good:.2f}%, удовлетворительно {middle:.2f}%, плохо  {bad:.2f}%")
 
 "Task 8"
-# % ratio man and women
+# % ratio male and female
 
 # Разные способы подсчёта уникальных символов "М" и "Ж"
-man = sum(sex.values == "М")
+# считаем количество unic через True = 1
+male = sum(sex.values == "М")
+# считаем количество unic М и Ж
 people_sex = sex.value_counts()
 people_sex_percent = sex.value_counts(normalize=True)
 
-print(f"man {man}")
+print(f"man {male}")
 print(f"{people_sex}")
 print(f"{people_sex_percent}")
+
+"Task 9"
+# Сколько школ принимало участия в экзаменах
+
+# dropna() - Удаление nan из колонки
+num_school = num_school.dropna()
+
+# Множеством оставляем уникальные номера школ для подсчёта
+total_school = len(set(num_school))
+print(f"количество школ учавствующих в экзаменах {total_school}")
+
+"Task 10"
+# Сколько всего заданий с кратким ответом? С развернутым ответом?
+
+# replace - по шаблону удаляем символ "(3)", ! ставить экран обеих скобок "\( \)"
+df_clean = task_expand.str.replace(r"\(3\)", "", regex=True)
+
+# extractall - извлекаем все цифры из очищенных строк
+task_expand_total = df_clean.str.extractall(r"(\d)")
+
+# тк символ в очищенной строке это одна задача, то число символов = числу задач
+num_tasks = len(task_expand_total)
+print(f"число задач С развернутым ответом {num_tasks}")
+
+
+# value_counts - счёт количества уникальных символов
+task_expand_total_count = task_expand_total.value_counts(ascending=True)
+print(f"число решённых заданий с развёрнутым ответом: \n{task_expand_total_count}")
+

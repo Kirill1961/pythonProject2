@@ -5,6 +5,8 @@ import statsmodels.api as sm
 import matplotlib.pyplot as plt
 from scipy.stats import gaussian_kde
 import random
+import itertools
+
 
 """Сетка x_vals - определяет, в каких точках будет оцениваться плотность для выборки b. 
 Чем больше точек (в данном случае 100), 
@@ -16,6 +18,7 @@ random.seed(0)
 mu, sigma = 0, 1
 sample = np.random.normal(loc=mu, scale=sigma, size=1000)
 
+print(list(itertools.chain(sample[0:5], sample[-5: -1])))
 # Для примера случайная ненормальная выборка
 # sample = [random.random() for _ in range(1000)]
 

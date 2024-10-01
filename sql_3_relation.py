@@ -3,6 +3,8 @@ import sqlite3
 con = sqlite3.connect("delta.db")
 cur = con.cursor()
 
+# Таблица Shop, UNIQUE - ограничения на одинаковые значения
+
 cur.execute('''
 CREATE TABLE IF NOT EXISTS Shop (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -10,8 +12,11 @@ CREATE TABLE IF NOT EXISTS Shop (
 )
 ''')
 
-# shop = cur.execute("""INSERT INTO Shop (data_event) VALUES ("30.09.2024")""")
-# con.commit()
+
+# INSERT OR IGNORE, в случае попытки вставки дубликата,
+# ✅ SQL просто игнорирует команду вставки вместо того, чтобы выбрасывать ошибку
+shop = cur.execute("""INSERT OR IGNORE INTO Shop (data_event) VALUES ("30.09.2024")""")
+con.commit()
 
 cur.execute('''
 CREATE TABLE IF NOT EXISTS Manager (
@@ -19,6 +24,9 @@ CREATE TABLE IF NOT EXISTS Manager (
     manager_name TEXT
 )
 ''')
+
+manager = cur.execute("""INSERT INTO Manager ( manager_name) VALUES ("U")""")
+con.commit()
 
 cur.execute('''
 CREATE TABLE IF NOT EXISTS Orders (
@@ -49,8 +57,15 @@ print(res_1.fetchall())
 
 
 # Проверка структуры таблицы
-cur.execute("PRAGMA table_info(Shop)")
+cur.execute("PRAGMA table_info(Manager)")
 print(cur.fetchall())
+
+cur.execute("SELECT * FROM Manager")
+rows = cur.fetchall()
+
+# Вывод строк
+for row in rows:
+    print(row)
 
 cur.close()
 con.close()

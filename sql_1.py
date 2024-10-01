@@ -92,9 +92,17 @@ print(cur.fetchall())
 
 
 # Вывод всех таблиц в базе
-cur.execute("SELECT name FROM sqlite_master WHERE type='table'")
+cur.execute("SELECT name FROM sqlite_master WHERE type='table';")
 print(cur.fetchall())
 
-
+# Красивый Вывод всех таблиц в базе
+cur.execute("SELECT name FROM sqlite_master WHERE type='table';")
+tables = cur.fetchall()
+if tables:
+    print("База данных существует и содержит следующие таблицы:")
+    for table in tables:
+        print(table[0])
+else:
+    print("База данных создана, но не содержит таблиц.")
 cur.close()
 con.close()

@@ -56,6 +56,7 @@ cur.execute("INSERT OR IGNORE INTO Manager (manager_name) VALUES (?)", ("U",))
 # Получение ID только что вставленных записей
 shop_id = cur.execute("SELECT id FROM Shop WHERE data = ?", ("01.10.24",)).fetchone()[0]
 manager_id = cur.execute("SELECT id_manager FROM Manager WHERE manager_name = ?", ("U",)).fetchone()[0]
+print(shop_id, manager_id, ">>>")
 
 # Вставка данных в таблицу Orders
 cur.execute("INSERT INTO Orders (data_id, manager_id, cost_orders) VALUES (?, ?, ?)",

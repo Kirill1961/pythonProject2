@@ -52,8 +52,8 @@ print(cur.fetchall())
 # Удаление таблиц
 # for table in tables:
 #     table_name = table[0]
-# cur.execute(f"DROP TABLE IF EXISTS {'tab'}")
-# print(f"Таблица {'tab'} удалена.")
+cur.execute(f"DROP TABLE IF EXISTS {'tab'}")
+print(f"Таблица {'tab'} удалена.")
 
 
 # Закрытие курсора и соединения

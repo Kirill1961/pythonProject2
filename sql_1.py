@@ -1,3 +1,8 @@
+"""
+- Красивый Вывод всех таблиц в базе
+- Метаданные колонок
+"""
+
 import sqlite3
 
 # Создаём ОБ Connection
@@ -9,9 +14,10 @@ cur = con.cursor()
 cur.execute("""
 CREATE TABLE IF NOT EXISTS tab3(
 id INTEGER PRIMARY KEY AUTOINCREMENT,
-Data_event TEXT,
-Orders INTEGER, 
-Sales INTEGER)
+Data_event TEXT UNIQUE,
+Orders INTEGER UNIQUE, 
+Sales INTEGER UNIQUE
+)
 """)
 
 # Добавим колонку
@@ -26,11 +32,11 @@ print(cur.fetchall())
 
 # sqlite_master - Проверяем создание таблицы, WHERE name - поиск по имени
 res = cur.execute("SELECT name FROM sqlite_master WHERE name='tab3'")
-print(res.fetchall())
+print(res.fetchall(), ">>>>>>>")
 
 # Вставляем строки в таблицу, число элементов строки равны числу столбов
 cur.execute("""
-INSERT INTO tab3 (Data_event, Manager, Orders, Sales) VALUES 
+INSERT OR IGNORE INTO tab3 (Data_event, Manager, Orders, Sales) VALUES 
             ("24.09.24", "U", 15000, 250000),
             ("25.09.24", "A", 11000, 270000)
 """)
@@ -51,7 +57,7 @@ data = [
 
 # (?, ?, ?, ?) - заполнители, executemany - автоматически подставляет значения из строки НА место вопроса ?
 # Явно указать имена колонок так как неправильно расставлены при вводе
-cur.executemany("INSERT INTO tab3 (Data_event, Manager, Orders, Sales) VALUES  (?, ?, ?, ?)", data)
+cur.executemany("INSERT OR IGNORE INTO tab3 (Data_event, Manager, Orders, Sales) VALUES  (?, ?, ?, ?)", data)
 con.commit()
 
 
@@ -70,19 +76,19 @@ print(list(avereg))
 # * это имена всех колонок,
 for row in cur.execute("SELECT * FROM tab3"):
     ...
-    # print(row)
+    print(row)
 
 
 # Вывести все колонки, последние 5 строк из таблицы tab3, сортируя по id в обратном порядке
 # ORDER BY id DESC сортирует записи по убывающей, начиная с самой последней
-cur.execute("SELECT * FROM tab3 ORDER BY id DESC LIMIT 5")
-rows = cur.fetchall()
+# cur.execute("SELECT * FROM tab3 ORDER BY id DESC LIMIT 5")
+# rows = cur.fetchall()
 
 # Вывод строк
-for row in rows:
-    print(row)
+# for row in rows:
+#     print(row)
 
-#
+# Метаданные для одной таблицы
 column_names = [description[0] for description in cur.description]
 print(f"Метаданные tab3: {column_names}")
 

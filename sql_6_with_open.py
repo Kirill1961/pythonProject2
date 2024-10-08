@@ -26,7 +26,7 @@ query = ("""
 )
 """)
 
-
+# cur.executescript(query)
 
 # Удаляем все строки из таблицы base_orders.db
 # cur.execute("DELETE FROM Orders")

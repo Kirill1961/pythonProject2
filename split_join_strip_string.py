@@ -1,4 +1,3 @@
-
 import glob
 # split() - преобразует строку в список разделённую на отд., слова (sep= ) или список где целиком строка
 
@@ -214,11 +213,6 @@ Python is awesome!"""
 
 lines = text.splitlines()
 print(lines)
-
-
-
-n = "Kirill1971"
-print("".join(filter(lambda x: x.isnumeric(), n)))
 
 #  использование методов is....... (isalpha, isnumeric, isalnum и тд)
 n = "Kirill1971Sh"

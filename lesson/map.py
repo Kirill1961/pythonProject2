@@ -1,5 +1,5 @@
 import random
-
+import pandas as pd
 
 """ если есть какой-то список list,tupl,dict и тд и какая-то функция fun то
  map() может применить эту функцию ко всем элементам списка,
@@ -46,7 +46,7 @@ lis_str = ['1', '5', '9']
 a = (int(x) for x in lis_str)
 print(list(a),'////')
 
-m_ap = map(type, ['1', '5', '9'])
+m_ap = map(type, ['1', 5, '9'])
 for ilis in m_ap:
     print(ilis, '||||')
 
@@ -136,6 +136,9 @@ i = [1,2,100]
 print([x for x in map(sum, zip(i, u)) ], " Поэлементное сложение 2х списков")
 
 
+# Поэлементное умножение 2х списков
+print(list(map(lambda x, y: x * y, u, i)), 'Поэлементное умножение/вычитание/ и тд 2х списков')
+
 # Маркировка ОБ по условию
 v =  [5, 10, 3, 8, 12, 7]
 print(list(map(lambda x : 1 if x > 5 else 0, v)), "Маркировка ОБ по условию")
@@ -173,7 +176,7 @@ print(list(map(len, l)), "Len вложенных списков")
 if __name__ == "__mane__":
     print('UNPACK')
 
-
+# Вывод ключа с мах значением value словаря с вложенными словарями
 # map - применяет через lambda - max к value словаря но выводит ключи
 dict = {1: {"a": 20, "b": 1, "c": 1000, "d": -5},
 2: {"a": 555, "b": 10, "c": -33, "d": 77},
@@ -184,3 +187,55 @@ dict = {1: {"a": 20, "b": 1, "c": 1000, "d": -5},
 res = map(lambda x: max(x, key=x.get), dict.values())
 print(list(res), "map - применяет через"
                  " lambda - max к value словаря но выводит ключи")
+
+# Вывод ключа  с мах значением value простого словаря
+dict = {"a": 20, "b": 1, "c": 1000, "d": -5}
+print(f"Ключ с мах значением value: {max(dict, key=dict.get)}")
+
+
+# Добавляем столбец со значениями из словаря category_map, к имеющемуся столбцу  "Category"
+__doc__ = '''Создали DF со столбцом "Category"'''
+df = pd.DataFrame({"Category": ["A", "B", "C", "A", "D"]})
+
+# Задаём соответствие категорий и чисел
+__doc__ = '''Задаём values для значений из "Category"'''
+category_map = {"A": 100, "B": 200, "C": 300}
+
+# Применяем PANDAS MAP,
+__doc__ = '''Создаём столбец "Mapped" в котором отображены values для соответствующих значений из "Category"'''
+df["Mapped"] = df["Category"].map(category_map)
+print(df)
+
+
+
+# Подсчёт Пропусков через сравнивание столбцов из DF c их средними из группировки
+import pandas as pd
+
+df11 = pd.DataFrame({
+    "A": [2, 2, 3, 2, 3],
+    "B": [10, 20, pd.NA, 40, 50],
+    "C": [pd.NA, 200, 300, 400, pd.NA]
+})
+
+# Среднее столбцов по сгруппированному 'A'
+group_mean = df11.groupby(['A']).mean()
+print(group_mean, '\n')
+
+# Копирем и изменяем копию
+df11_cp = df11.copy()
+
+
+__doc__ = '''
+* Через  df11[col] -> прокручиваем столбцы
+* df11['A'].map(mean[col]) -> Заменяет значения в столбце 'A' на средние значения остальных столбцов из group_mean
+* df11[col] != df11['A'].map(group_mean[col]) -> Сравниваем оригинальные столбцы  из DF и их Средние из group_mean
+'''
+for col in df11.columns[1:]:
+
+    avrg = df11['A'].map(group_mean[col])  # Замена значений в столбце 'A' на средние значения остальных столбцов из group_mean
+    column_df = df11[col]  # Столбец оригинальный из DF
+
+    df11_cp['NEW'+'_' + col] = column_df != avrg  # Сравниваем оригинальные столбцы  из DF и их Средние из group_mean
+
+    print(df11[col], avrg, '\n') # Для информации о процессе вывели оригинальные столбцы  из DF и их Средние из group_mean
+print(df11_cp, '\n')

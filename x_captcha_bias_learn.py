@@ -386,25 +386,25 @@ def patch(x, y, hatch, color):
     )
 
 
-# for i in range(5):
-#     for j in range(5):
-#         print(i, j)
-#         # ax.add_patch(matplotlib.patches.Rectangle((j- 0.5, i - 0.5 ), 0.7, 0.5, hatch='o', fill=False, color='red'))
-#         if weights[5 * i + j] < 0:
-#             ax.add_patch(patch(j, i, '/', "red"))
-#             ax.add_patch(patch(j, i, '\\', "black"))
+for i in range(5):
+    for j in range(5):
+        print(i, j)
+        # ax.add_patch(matplotlib.patches.Rectangle((j- 0.5, i - 0.5 ), 0.7, 0.5, hatch='o', fill=False, color='red'))
+        if weights[5 * i + j] < 0:
+            ax.add_patch(patch(j, i, '/', "red"))
+            ax.add_patch(patch(j, i, '\\', "black"))
 
 
-# for i in range(5):
-#     for j in range(5):
-#         print(weights)
-#         # ax.add_patch(matplotlib.patches.Rectangle((j- 0.5, i - 0.5 ), 0.7, 0.5, hatch='o', fill=False, color='red'))
-#         if weights[5 * i + j] < 0:
-#             ax.add_patch(patch(j, i, '/', "red"))
-#             ax.add_patch(patch(j, i, '\\', "black"))
+for i in range(5):
+    for j in range(5):
+        print(weights)
+        # ax.add_patch(matplotlib.patches.Rectangle((j- 0.5, i - 0.5 ), 0.7, 0.5, hatch='o', fill=False, color='red'))
+        if weights[5 * i + j] < 0:
+            ax.add_patch(patch(j, i, '/', "red"))
+            ax.add_patch(patch(j, i, '\\', "black"))
 n = [weights[i] for i in range(25)]
-# n = [(ax.add_patch(patch(j, i, '*', "red")), ax.add_patch(patch(j, i, '\\', "black"))) for j in range(5)  for i in range(5)]
+n = [(ax.add_patch(patch(j, i, '*', "red")), ax.add_patch(patch(j, i, '\\', "black"))) for j in range(5)  for i in range(5)]
 print(n)
 
 
-# plt.show()
+plt.show()

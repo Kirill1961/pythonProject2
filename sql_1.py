@@ -20,6 +20,14 @@ Sales INTEGER UNIQUE
 )
 """)
 
+cur.execute("""
+CREATE TABLE IF NOT EXISTS tab4(
+id INTEGER PRIMARY KEY,
+Name TEXT,
+Age INTEGER
+)
+""")
+
 # Добавим колонку
 # cur.execute("ALTER TABLE tab3 ADD COLUMN Manager TEXT")
 
@@ -27,8 +35,8 @@ Sales INTEGER UNIQUE
 con.commit()
 
 # Проверка структуры таблицы
-cur.execute("PRAGMA table_info(tab3)")
-print(cur.fetchall())
+cur.execute("PRAGMA table_info(tab4)")
+print(f"Структура -> {cur.fetchall()}")
 
 # sqlite_master - Проверяем создание таблицы, WHERE name - поиск по имени
 res = cur.execute("SELECT name FROM sqlite_master WHERE name='tab3'")
@@ -40,6 +48,13 @@ INSERT OR IGNORE INTO tab3 (Data_event, Manager, Orders, Sales) VALUES
             ("24.09.24", "U", 15000, 250000),
             ("25.09.24", "A", 11000, 270000)
 """)
+
+cur.execute("INSERT INTO tab4 (Name, Age) VALUES('Kirill', 53)" )
+print(cur.execute("SELECT * FROM tab4").fetchall())
+
+# cur.execute("""
+# INSERT INTO tab4 (id, Name, Age) VALUES(NULL, "Kirill", 53)
+# """)
 
 # commit() - Коммитим, Фиксируем транзакцию
 con.commit()
@@ -76,7 +91,7 @@ print(list(avereg))
 # * это имена всех колонок,
 for row in cur.execute("SELECT * FROM tab3"):
     ...
-    print(row)
+    # print(row)
 
 
 # Вывести все колонки, последние 5 строк из таблицы tab3, сортируя по id в обратном порядке

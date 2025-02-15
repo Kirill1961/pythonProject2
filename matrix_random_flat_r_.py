@@ -158,7 +158,7 @@ adjacency_1 = np.array([1 if t in friendships or t in friendships else 0 for t i
 print(adjacency_1, "adjacency_matrix - вариант Грасса + моё дополнение")
 
 
-# friend user vs user - передружить всех юзеров
+# friend user vs user - передружить всех юзеров, аналог crossjoin в SQL
 a = np.eye(4, 4)  # единичная матрица
 print(np.array([[(i, j)for i in a]for j in a]), "передружили i vs j")  # передружили i vs j
 
@@ -193,3 +193,15 @@ reshaped_arr_ = arr.reshape(-1, 3)
 
 print(reshaped_arr)
 print(reshaped_arr_)
+
+# Матрица из букв alphabet
+print(np.array([chr(i) for i in range(97, 109)]), 'Одномерный массив', '\n')
+print(np.array([chr(i) for i in range(97, 109)]).reshape(3, 4), 'Двухмерный массив', '\n')
+print(np.array([chr(i) for i in range(97,115)]).reshape(3, 2, 3), 'Трёхмерный массив', '\n')
+
+# Уменьшение размерности массива, order='C', 'F', 'A', 'K'
+print(np.arange(1, 13).reshape(2, 2, 3), 'Исходный массив', '\n')
+print(f"C-order, строковой порядок, стоит по умолчанию: {np.arange(1, 13).reshape(2, 2, 3).ravel(order='C')} Выход (идёт по строкам внутри блоков)")
+print(f"F-order, Fortran-order, столбцовый порядок: {np.arange(1, 13).reshape(2, 2, 3).ravel(order='F')}  Выход (идёт по столбцам)")
+print(f"A-order, Any-order, сохраняет исходный: {np.arange(1, 13).reshape(2, 2, 3).ravel(order='A')} ")
+print(f"K-order, Keep-order, сохраняет физический порядок: {np.arange(1, 13).reshape(2, 2, 3).ravel(order='A')} ")

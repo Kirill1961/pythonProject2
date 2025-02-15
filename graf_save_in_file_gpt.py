@@ -10,3 +10,4 @@ nx.draw(G, with_labels=True)
 
 # Сохранение изображения в файл
 plt.savefig("graph.png")
+# plt.show()

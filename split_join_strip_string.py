@@ -1,4 +1,7 @@
 import glob
+from itertools import permutations as prm
+from collections import Counter
+
 # split() - преобразует строку в список разделённую на отд., слова (sep= ) или список где целиком строка
 
 s = 'Welcome, to, the, python, world' # строка с запятыми и с пробелами
@@ -216,6 +219,83 @@ print(lines)
 
 #  использование методов is....... (isalpha, isnumeric, isalnum и тд)
 n = "Kirill1971Sh"
-print("".join(list(filter(lambda x: x.isnumeric(), n))))
+print("".join(list(filter(lambda x: x.isnumeric(), n))), '\n')
 
 
+#  Все варианты перестановок символов строки
+string = 'abcd'
+
+# Вывод групп с комбинациями равных размеру строки
+string_perm = list(prm(string))
+
+
+# Длина слов после очистки
+res_len = [len(i.strip('. , ')) for i in s.split()]
+print(res_len, 'Длина слов после очистки')
+
+# Вывод групп с комбинациями ограниченного размера len(string_perm_limit)=2
+string_perm_limit = list(prm(string, r=2))
+
+
+print([''.join(row) for row in string_perm], '\n')
+
+print([''.join(row) for row in string_perm_limit])
+
+# Субстрока заданной длинны
+def longest_substring_vs_k_limit(s):
+    start = 0
+    for i, j in enumerate(s):
+        sub_string = s[start: i + 1]
+        print(len(sub_string), dict(Counter(sub_string)))
+        if len(sub_string) >= 3:
+            start += 1
+
+    return len(sub_string), dict(Counter(sub_string))
+
+longest_substring_vs_k_limit('aacidfgrrty')
+
+
+# Убираем запятые пробелы точки, оставляем одни слова
+
+s = 'Hi all, my... name.'
+
+res = [(i.strip('. , ')) for i in s.split()]
+print(res,  'Убираем запятые пробелы точки, оставляем одни слова')
+
+
+# Для заданного предложения вернуть среднюю длину слова
+__doc__ = '''MY'''
+
+s1 = "Hi all, my name is Tom...I am originally from Australia."
+s2 = "I need to work very hard to learn more about algorithms in Python!"
+s = 'Hi all, my... name.'
+
+def avereg_lenght_word(str):
+    clean_word = [i.strip("!?',;.") for i in str.split()]
+    lenght_words = map(len, clean_word)
+    lenght_list = len(list(lenght_words))
+    lenght_total = sum(map(len, clean_word))
+    avereg_lenght = lenght_total / lenght_list
+    print(clean_word)
+    print(lenght_list)
+    print(lenght_total)
+    return avereg_lenght
+print(avereg_lenght_word(s))
+
+
+__doc__ = '''Eduson'''
+
+sentence1 = "Hi all, my name is Tom...I am originally from Australia."
+sentence2 = "I need to work very hard to learn more about algorithms in Python!"
+
+def solution(sentence):
+    for p in "!?',;.":
+        sentence = sentence.replace(p, '')
+
+    words = sentence.split()
+    print(words)
+    print([len(word) for word in words])
+    print(sum([len(word) for word in words]),len(words))
+    return round(sum(len(word) for word in words)/len(words),2)
+
+solution(sentence1)

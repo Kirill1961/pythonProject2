@@ -1,4 +1,4 @@
-
+import random
 
 a = 3
 b = -12
@@ -54,3 +54,7 @@ print(new_data)
 
 new_data = [num for num in dsta if isinstance(num, str)]
 print(new_data)
+
+""" Генератор Female / Male"""
+gen = ["F" if (random.randint(0, 1)) == 0 else "M" for i in range(4)]
+print(f" Генерируем для pandas F и M: {gen}")

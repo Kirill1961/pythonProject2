@@ -70,8 +70,10 @@ def feed_forward():
             input_with_bias = input_vector + [1]  # добавив 1 к [x, y] сравняем LEN вх с LEN скрытого слоя
             # [0, 0, 1], [[20, 20, -30]
             # logger.debug((layer[0:2], input_with_bias, "neuron, input_with_bias"))
-            output_hide_without_bias = [neuron_output(neuron, input_with_bias) for neuron in layer[0:2]]  # выходы
-            # из hide  для last_neuron без bias:
+
+            # выходы   из hide  для last_neuron без bias:
+            output_hide_without_bias = [neuron_output(neuron, input_with_bias) for neuron in layer[0:2]]
+
 
             #     logger.debug((neuron, input_with_bias, "neuron_input_with_bias")ы
             outputs.append(output_hide_without_bias[0:2])
@@ -119,10 +121,12 @@ while n < N:
 
     # print("вход - ", input_separate, " , выход - ", wraps_feed(xor_network, input_separate))
     def backprpogate(network, input_vektor, wrap_feed_forward):
-        # logger.debug((network, "network"))
+        #  wrap_feed_forward - вызов прямого распространения
+        #  network - Веса слоёв: [1, 1, -3] и [1, 1, -1] Среднего и [-6, 6, -3] выходного слоя
+        #  input_vektor - Входной вектор в перцептрон, сгенерированный
 
         global hidden_deltas, n
-        args_from_feed_forward = wrap_feed_forward(network, input_vektor)
+        args_from_feed_forward = wrap_feed_forward(network, input_vektor)  # Запуск Прямого распространения
         hidden_outputs = args_from_feed_forward[0] + [1]  # выход скрытого слоя
         outputs = args_from_feed_forward[-2]  # выход последнего слоя
         t = args_from_feed_forward[-1]  # целевое значение

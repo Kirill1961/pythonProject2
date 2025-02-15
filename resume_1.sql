@@ -315,3 +315,26 @@ FROM
     GROUP BY  an_id
     ORDER BY an_id) as t1
 ;
+
+-- Необходимо вывести количество людей из Тулы, которые покупали телефоны с разбивкой по месяцам.
+-- Примечание. Телефоны - это товары с категорей 2 из таблицы skus.
+-- DISTINCT - Если один человек купил несколько раз за месяц, считаем это за одну покупку.
+-- Важно: Месяца должны быть представлены не в виде цифр, а в виде английских слов с нижнем регистром.
+-- Важно: Обратите внимание, что название столбцов в вашем ответе должно в точности совпадать с условием.
+-- Результат должен быть отсортирован по убыванию значений в столбце people
+ select LOWER(mn) as month,
+         COUNT(DISTINCT(id_customer)) as people
+   FROM customer c
+   RIGHT JOIN
+            (SELECT user_id,
+                     to_char(created_at, 'Month') as mn,
+                     sku_id
+             FROM purchases p
+             LEFT join skus s
+             on s.id = p.sku_id
+             WHERE category = 2) as cat
+    ON cat.user_id = c.id_customer
+    WHERE town = 'Tula'
+    GROUP BY month
+    ORDER BY people DESC
+;

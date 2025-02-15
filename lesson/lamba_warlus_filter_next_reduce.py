@@ -309,3 +309,9 @@ print(list(res), "map - применяет через lambda - max к value сл
 n = "Kirill53"
 filtr = "".join(filter(lambda x: x if x.isalpha() else None, n))
 print(f"фильтруем буквы , цыфры с  filter:  {n} - > {filtr}")
+
+# Фильтр вложенных списков содержащих тип str
+a = [[4], ['qwer'], [5, 1], [555, 'abc'], [12, 10, 7, 5]]
+
+f = list(filter(lambda x: any(isinstance(y, str) for y in x), a))
+print(f"Фильтр вложенных списков содержащих тип str -> {f}")

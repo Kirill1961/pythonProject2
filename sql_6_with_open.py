@@ -26,7 +26,7 @@ query = ("""
 )
 """)
 
-# cur.executescript(query)
+
 
 # Удаляем все строки из таблицы base_orders.db
 # cur.execute("DELETE FROM Orders")
@@ -57,11 +57,11 @@ def data():
     print(f"Метаданные : {column_names}")
 
     row_customer = cur.execute("SELECT id_customer, name_custom FROM Customers").fetchall()
-    print(row_customer, "Customers")
+    # print(row_customer, "Customers")
 
     # Извелечение id для определённого name_custom
     row_order = cur.execute("SELECT id_customer, order_num FROM Orders").fetchall()
-    print(row_order, "Orders")
+    # print(row_order, "Orders")
 
 
     # Совместный вывод двух таблиц Orders и Customers, извлекаем по условию совпадения id_customer
@@ -74,4 +74,4 @@ def data():
 
 data()
 
-cur.executescript(query)
+

@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS Manager (
 )
 ''')
 
-manager = cur.execute("""INSERT INTO Manager ( manager_name) VALUES ("U")""")
+manager = cur.execute("""INSERT INTO Manager (id_manager, manager_name) VALUES (NULL, "U")""")
 con.commit()
 
 cur.execute('''
@@ -52,8 +52,9 @@ cur.execute("SELECT name FROM sqlite_master WHERE type='table'")
 print(cur.fetchall())
 
 
-res_1 = cur.execute("SELECT data_event FROM Shop")
-print(res_1.fetchall())
+res_1 = cur.execute("SELECT id, data_event FROM Shop")
+print(res_1.fetchone(), "res_1")
+
 
 
 # Проверка структуры таблицы

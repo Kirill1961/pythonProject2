@@ -113,3 +113,5 @@ for word in doc_fram:
     print(f"word have max lenght : {word}")
 
 
+alphabet = [chr(i) for i in range(97, 123)]
+print(alphabet)

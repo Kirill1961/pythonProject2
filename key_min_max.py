@@ -1,3 +1,4 @@
+import math as mt
 a = [1, 2, 3, 0.5]
 b = [0, 2, 7]
 
@@ -26,3 +27,4 @@ limit = 5
 result = max([num for num in nums if num < limit], default=-1)
 # Output: -1, потому что все числа в `nums` больше или равны `limit`
 print(f"если не найдено число меньше limit то возвращается число {result}")
+

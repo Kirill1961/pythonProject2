@@ -21,10 +21,10 @@ cur = con.cursor()
 cur.execute("""
 CREATE TABLE IF NOT EXISTS tab3 (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    Data_event TEXT UNIQUE, 
-    Manager TEXT UNIQUE,
-    Orders INTEGER UNIQUE, 
-    Sales INTEGER UNIQUE
+    Data_event TEXT, 
+    Manager TEXT,
+    Orders INTEGER, 
+    Sales INTEGER
 )
 """)
 
@@ -41,7 +41,7 @@ data = [
 ]
 
 # Вставка данных без указания id
-cur.executemany("INSERT OR IGNORE INTO tab3 (Data_event, Manager, Orders, Sales) VALUES (?, ?, ?, ?)", data)
+cur.executemany("INSERT INTO tab3 ( Data_event, Manager, Orders, Sales) VALUES (?, ?, ?, ?)", data)
 con.commit()
 
 # Выводим первые пять строк, включая id

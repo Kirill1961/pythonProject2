@@ -8,7 +8,7 @@ p = os.path.relpath(path='vsearch.py',start='aaa.py')
 print(p)
 
 
-# ml = os.path.join(os.getcwd(), "..", "ML_koroteev", "pandas_numpy_corr_lin_regr.py", "data")
+# ml = os.path.join(os.getcwd(), "..", "ML_koroteev", "pandas_series_numpy_corr_lin_regr.py", "data")
 ml = os.path.join(os.getcwd(), "..", "ML_koroteev")
 
 

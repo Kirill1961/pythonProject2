@@ -1,3 +1,14 @@
+'''
+var = "равны" if a == b else "больше" if a > b else "меньше"
+var = a + b if a > 0 else a - b if b > 0 else a * b
+var = [a, b] if a > b else [b, a] if a < b else [a]
+var = True if a % 2 == 0 else False if b % 2 == 0 else None
+var = max(a, b) if a * b > 0 else min(a, b) if a + b > 0 else 0
+var = a if a is not None else b if b is not None else 0
+var = "A > B" if a > b else "A < B" if a < b else "A == B"
+
+'''
+
 import random
 
 a = 3

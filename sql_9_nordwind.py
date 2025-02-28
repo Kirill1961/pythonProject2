@@ -37,17 +37,4 @@ for i in cur_fetch:
     print (i)
 
 
-# Подсоединение через try/except
-# def f_connect(db, us, pas, hst, prt):
-#     try:
-#         conn = psycopg2.connect(
-#             dbname=db,  # имя базы данных
-#             user=us,  # ваш логин
-#             password=pas,  # ваш пароль
-#             host=hst,  # хост, например, localhost
-#             port=prt)  # порт, стандартный для PostgreSQL
-#         cur = conn.cursor()
-#         print('Соединение произведено')
-#     except:
-#         print('Ошибка соединения')
 # f_connect("Eduson", "student", "QweAsd1234567890!", "185.86.147.205", 5432)

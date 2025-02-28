@@ -338,3 +338,17 @@ FROM
     GROUP BY month
     ORDER BY people DESC
 ;
+
+-- Необходимо вывести сотрудников и дни, когда они находились на рабочем месте менее 8 часов.
+SELECT employee,
+       check_time,
+       is_entered
+from gate
+;
+-- из GPT
+SELECT
+    EXTRACT(epoch FROM (end_time - start_time)) / 3600 AS hours,
+    EXTRACT(epoch FROM (end_time - start_time)) / 60 AS minutes
+FROM
+    (SELECT '2020-11-25 08:00:00'::timestamp AS start_time,
+            '2020-11-25 15:59:00'::timestamp AS end_time) AS event;

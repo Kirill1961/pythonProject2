@@ -299,3 +299,7 @@ def solution(sentence):
     return round(sum(len(word) for word in words)/len(words),2)
 
 solution(sentence1)
+
+# TODO ''.join(generator) - Преобразует ссылку на генератор в строку!!!
+generator = (i for i in ['asdf', 'qwer', 'lk'] )
+print(f"Преобразует ссылку на генератор в строку -> {' '.join(generator)}")

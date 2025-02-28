@@ -1,8 +1,18 @@
-""" COLLECTION пакет для обработки словарей,списков,множеств и тд"""
+"""
+dataclasses – удобный способ создавать классы данных.
+heapq – работа с очередями с приоритетами.
+bisect – поиск вставки и бинарный поиск.
+deque (из collections) – для эффективной работы с двусторонними очередями.
+statistics – базовые статистические вычисления.
+math и cmath – стандартные математические операции и комплексные числа.
+timeit – измерение времени выполнения кода.
+"""
+
+__doc__ = """ COLLECTION пакет для обработки словарей,списков,множеств и тд"""
+
 import csv
 from collections import defaultdict, deque, OrderedDict, Counter, namedtuple, ChainMap
 from itertools import islice
-
 
 # defaultdic нужен для создания словаря со значением по умолчанию, значение подставляется
 # при обращении к несуществующему ключу.То есть можно наклепать ключей без значений с последующей вставкой значений
@@ -44,7 +54,7 @@ g[77] = 'aa'
 g.default_factory = int  # default_factory  структура/тип данных указанная в аргументе defaultdict - int, set, list и тд
 g[500] = [1, 2]
 
-print(g, ' ////  defaultdict(int)')
+print(g, ' ////  defaultdict(int)', '\n')
 
 a = [(50, 'Hadoop'), (50, 'Python'), (50, 'HBase'), (50, 'Java'), (50, 'Spark'), (50, 'Storm'),
      (10, 'NoSQL'), (10, 'MongoDB'), (10, 'HBase'), (10, 'data science'), (10, 'Java'), (10, 'Storm'),
@@ -58,7 +68,7 @@ b = ((50, 'Hadoop'), (50, 'Python'), (50, 'HBase'), (50, 'Java'), (50, 'Spark'),
      (40, 'Java'), (40, 'Python'), (40, 'Storm'), (40, 'numpy'), (40, 'HBase'), (40, 'NoSQL'))
 
 print(a.__sizeof__(), ' //// a.__sizeof__')
-print(b.__sizeof__(), ' //// b.__sizeof__')
+print(b.__sizeof__(), ' //// b.__sizeof__', '\n')
 
 # По факту создание нового словаря, с ключами из символов строки и значениями
 # создаваемые циклом a_dict[char] += 1
@@ -67,7 +77,7 @@ a_dict = defaultdict(int)
 s = 'hellowword'
 for char in s:
     a_dict[char] += 1
-print(a_dict, '  //// a_dict')
+print(a_dict, '  //// a_dict', '\n')
 
 d = defaultdict(list)
 
@@ -88,7 +98,7 @@ for k, v in c:
     # d[v] += k # суммирует значения, при  defaultdict(int)
     # d[v] += [k] # добавляет ОБ в  значение в виде списка, при defaultdict(list)
     d[v].append(k)  # то же что и " d[v] += [k] "  при defaultdict(list)
-print(d, ' //// d[v].append(k)')
+print(d, ' //// d[v].append(k)', '\n')
 
 v = {'g': 45, "c": 14, 'd': 88, 'a': 2, }
 print(sorted(v.items(), key=lambda x: x[0]), '  //// key=lambda x: x[1]')
@@ -108,13 +118,13 @@ a_deque.appendleft("9595959")
 a_deque.popleft()  # забираем значения и слева и справа. здесь удалено "9595959"
 a_deque.appendleft("888888888888888888888")
 # a_deque = deque(a_deque, maxlen=4)
-print(a_deque, '  //// a_deque')
+print(a_deque, '  //// a_deque', '\n')
 
 with open('c_in_data.csv') as file:
     a_deque = deque(file, maxlen=3)
     for line in a_deque:
         # print( '//// a_deque CSV    ', line, end='')
-        print(line.rstrip())
+        print(line.rstrip(), '\n')
 
 # OrderedDict, упорядоченный словарь. Нужен для действий со словарём, где необходим порядок элементов,
 # например, сравнение с учётом порядка или перестановки элементов с сохранением порядка, но платим памятью
@@ -129,12 +139,12 @@ order1 = OrderedDict(first)
 order2 = OrderedDict(second)
 order3 = OrderedDict(third)
 
-print(order1 == order2, ' //// OrderedDict сравниваем порядок словарей')  # сравниваем порядок словарей
+print(order1 == order2, ' //// OrderedDict сравниваем порядок словарей', '\n')  # сравниваем порядок словарей
 
-print(order2.popitem(last=False))  # дёргаем первый или последний элемент
+print(order2.popitem(last=False), '\n')  # дёргаем первый или последний элемент
 
 order3.move_to_end(2, last=False)  # перемещаем i-й элемент в конец или начало
-print(order3, ' //// OrderedDict')
+print(order3, ' //// OrderedDict', '\n')
 
 # ChainMap, Нужен для логического объединения словарей и для поиска информации,
 # но при изменениях меняется только 1-й словарь.
@@ -167,11 +177,9 @@ for k in range(len(documents)):
 
 # Создание объекта Counter для подсчета слов из файла
 with open('cdata.csv', 'r') as file:
-
     word_counter = Counter(file.read().split())
 
 print(word_counter, "Создание объекта Counter для подсчета слов из файла", "\n")
-
 
 # Сложение и вычитание объектов Counter
 counter1 = Counter(['a', 'b', 'c', 'a', '123'])
@@ -180,13 +188,26 @@ counter3 = Counter(['123'])
 
 print(counter1 + counter2 + counter3, "Сложение и вычитание объектов Counter", "\n")
 
-
 # Сложение словарей с Counter
 dict1 = {'a': 1, 'b': 2}
 dict2 = {'b': 3, 'c': 4}
 
 merged_dict = dict(Counter(dict1) + Counter(dict2))
-print(merged_dict, "Сложение словарей с Counter")
+print(merged_dict, "Сложение словарей с Counter", '\n')
+
+
+#  Поиск первого неповторяющегося символа в строке
+def foo(s):
+    cnt_s = Counter(s)  # Ставим Counter(s) перед циклом → код быстрее (O(n))
+    for n, i in enumerate(s):
+        if cnt_s[i] == 1:  # cnt_s - словарь, по ключу фиоьтруем value == 1
+            return n, s[n]
+    return -1
+
+s1 = 'aabbcdderr'
+print(f'Поиск первого неповторяющегося символа в строке -> {foo(s1)}', '\n')
+
+
 
 # namedtuple нужен для создания структуры данных, нечто среднее между стандартными типами
 # и самописанным классом, неизменный, позволяет обращаться по имени атрибута,
@@ -204,7 +225,6 @@ with open('point.csv') as file:
         point = Point._make(line)
         print(point, '\n')
 
-
 d2 = defaultdict(list)
 # [d2[i].append(j) for i, j in zip(['a', 'f', 'w'], [11, 205, 0.3])]
 for i, j in zip(['a', 'f', 'w'], [11, 205, 0.3]):
@@ -213,6 +233,8 @@ print(d2, '\n')
 
 # Скользящее окно, n - ширина окна
 a = 'asdqwer'
+
+
 def sliding_window(iterable, n):
     it = iter(iterable)
     window = deque(islice(it, n), maxlen=n)
@@ -221,4 +243,6 @@ def sliding_window(iterable, n):
     for x in it:
         window.append(x)
         yield tuple(window)
+
+
 print(list(sliding_window(a, 3)), '\n')

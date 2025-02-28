@@ -100,11 +100,18 @@ def exempl(x):
 # print(exempl('H_T_M_L.html'))
 
 
-""" получение  data из сайта deltaks"""
+# TODO """ получение  data из сайта deltaks"""
 
-HEADERS = {"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+# HEADERS = {"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+#            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0"}
+
+HEADERS = {"Accept": "product/smazka-pronikayushchaya-mnogotselevaya-universalnaya-rc-40-650-ml-4046-wd-590041638/?at=J8tgo4B6GF2Gk5y5cG4NYw3iM8159KIX5QPNNH8E9ZMz&from_sku=590041638&oos_search=false",
            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0"}
-HOST = "https://deltaks.ru/"  # вытащить можно только data из url передано в BS, HOST всегда оканчивается "/"
+
+
+# HOST = "https://deltaks.ru/"  # вытащить можно только data из url передано в BS, HOST всегда оканчивается "/"
+
+HOST = "https://www.ozon.ru/"
 
 URL_ABOUT = "https://deltaks.ru/Shop/About/"  # url для EX сведений о компании
 
@@ -115,6 +122,7 @@ URL_ARTIKLE = "https://deltaks.ru/Shop/Article"  # url для extract(ЕХ) ст
 def ask_soup(url, params=" "):  # передали сайт в аргумент
     html = requests.get(url, headers=HEADERS,
                         params=params)  # requests.get - запрос сайта по адресу из переменной url, text - запрос текста
+# TODO очистка от тегов непосредственно при передачи аргумента html
     soup = BeautifulSoup(html.text, 'html.parser')  # soup - ЭКЗ класса BS, 'lxml' - парсер которым будем пользоваться
 
     # print("HTML: {0}, name:{1}, text: {2}".format(soup.div, soup.div.name, soup.div.text), "\n")  # вывод тега и его содержимого

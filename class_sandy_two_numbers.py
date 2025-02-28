@@ -210,7 +210,7 @@ print((t_n.nums_targ(nums, target=7), 'nums_targ 2'))
 print((t_m.nums_targ([6, 5, 4, 2, 9], target=3), 'nums_targ 3'))
 
 
-class dog():
+class dog:
     def __init__(self, name='dog', age=1, breed=' dnt know'):
         self.name = name
         self.age = age

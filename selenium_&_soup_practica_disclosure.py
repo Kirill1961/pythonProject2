@@ -7,8 +7,6 @@ from webdriver_manager.chrome import ChromeDriverManager
 from urllib.parse import urlparse, parse_qs
 
 
-# TODO Настройки Chrome
-#  Options() - это тот же ChromeOptions, но импортированный напрямую.
 options = Options()
 options.add_argument("--headless")  # Убираем графический интерфейс (можно убрать)
 options.add_argument("--disable-blink-features=AutomationControlled")  # Маскируем Selenium
@@ -20,7 +18,6 @@ driver = webdriver.Chrome(service=service, options=options)
 
 
 # Открываем страницу
-url = "https://e-disclosure.ru/portal/company.aspx?id=402"
 # url = "https://e-disclosure.ru/portal/company.aspx?id="
 driver.get(url)
 
@@ -67,36 +64,15 @@ soup = BeautifulSoup(html, "html.parser")
 # #     print(i)
 #
 # # TODO просмотр всех тегов 'a'
-# for i in soup.find_all("a"):
-#     print(i)
 #
 # # TODO извлекаем Даты Событий
 # dt = soup.find_all('span', class_='date')
 # print(dt)
 
 # TODO Вывод содержимого из тегов "а"
-a_tag = soup.find_all("a", href=True)
-href_val = [link.get('href') for link in a_tag]
 # print(href_val)
 
 # TODO Вывод только ссылок только https из тегов "а"
-# a_tag = soup.find_all("a", href=True)
-# href_link = [link['href'] for link in a_tag if link['href'].startswith('https')]
-# print(href_link)
-
-# TODO Извлекаем заданные тексты
-event = soup.find_all('a', href=True)
-
-for link in event:
-    # if link.text == 'Решения, принятые советом директоров (наблюдательным советом)'in link.get('href'):
-    print(link.text)
-
-
-# for text_event in event:
-#     if text_event.text == 'Решения общих собраний участников (акционеров)':
-#         print(text_event)
-
-
 
 
 # Закрываем браузер

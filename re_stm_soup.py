@@ -7,6 +7,7 @@ import requests
 import re
 
 url = "https://stmgroup.ru/?ysclid=m7k9au82m338007291"
+
 headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0"
 }
@@ -78,12 +79,12 @@ link_href = [i['href'] for i in name_and_reference]
 
 # TODO text_vs_category - подготовка для удаления html символов
 text_vs_category = [i.text for i in categories]
-# print(text_vs_category)
+print(text_vs_category[0:2])
 
 # TODO Удаление html символов -> \n \r \t с помощью re.sub
 clean_list_text = [re.sub(r'\s+', ' ', item).strip() for item in text_vs_category]
-# print(clean_list_text)
+print(clean_list_text[0:2])
 
 # TODO Итогова обработка, Вывод текста + ссылка. Преобразование генератора с " ".join
 result = [{" ".join(item.stripped_strings): item['href']}for item in name_and_reference]
-print(result)
+# print(result)

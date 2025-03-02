@@ -6,8 +6,8 @@ from bs4 import BeautifulSoup
 
 # TODO Открываем браузер
 driver = webdriver.Chrome()  # Запускает Chrome
-# driver.get("https://www.google.com")  # Открывает страницу
-driver.get('http://radar.oreilly.com/2010/06/what-is-data-science.html')  # Открывает страницу
+driver.get("https://www.google.com")  # Открывает страницу
+# driver.get('http://radar.oreilly.com/2010/06/what-is-data-science.html')  # Открывает страницу
 
 # TODO Находим элемент на странице
 search_box = driver.find_element(By.NAME, "q")  # Поле поиска Google
@@ -22,6 +22,6 @@ WebDriverWait(driver, 10).until(
 # TODO Парсим содержимое (с помощью BeautifulSoup)
 html = driver.page_source  # Получаем HTML
 soup = BeautifulSoup(html, "html5lib")  # Создаём объект BeautifulSoup
-
+print(soup)
 # TODO Закрываем браузер
 driver.quit()

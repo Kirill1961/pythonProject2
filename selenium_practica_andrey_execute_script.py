@@ -12,7 +12,7 @@ years_company_urls = []
 driver = webdriver.Chrome()
 # driver = webdriver.Firefox()
 
-for u in range(401, 402):
+for u in range(401, 404):
     url0 = "https://e-disclosure.ru/portal/company.aspx?id=" + str(u)
     driver.get(url0)
     driver.implicitly_wait(30)  # Время ожидания открытия сайта 30сек.

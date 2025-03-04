@@ -19,7 +19,7 @@ driver = webdriver.Chrome(service=service, options=options)
 
 
 # Открываем страницу
-url = "https://e-disclosure.ru/portal/company.aspx?id=400"
+url = "https://e-disclosure.ru/portal/company.aspx?id=402"
 # url = "https://e-disclosure.ru/portal/company.aspx?id="
 driver.get(url)
 
@@ -74,14 +74,14 @@ soup = BeautifulSoup(html, "html.parser")
 # print(dt)
 
 # TODO Вывод содержимого из тегов "а"
-# a_tag = soup.find_all("a", href=True)
-# href_val = [link.get('href') for link in a_tag]
-# print(href_val)
+a_tag = soup.find_all("a", href=True)
+href_val = [link.get('href') for link in a_tag]
+print(href_val)
 
 # TODO Вывод только ссылок только https из тегов "а"
-a_tag = soup.find_all("a", href=True)
-href_link = [link['href'] for link in a_tag if link['href'].startswith('https')]
-print(href_link)
+# a_tag = soup.find_all("a", href=True)
+# href_link = [link['href'] for link in a_tag if link['href'].startswith('https')]
+# print(href_link)
 
 
 # Закрываем браузер

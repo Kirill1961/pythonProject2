@@ -66,8 +66,8 @@ soup = BeautifulSoup(html, "html.parser")
 # #     print(i)
 #
 # # TODO просмотр всех тегов 'a'
-# # for i in soup.find_all("a"):
-# #     print(i)
+# for i in soup.find_all("a"):
+#     print(i)
 #
 # # TODO извлекаем Даты Событий
 # dt = soup.find_all('span', class_='date')
@@ -76,12 +76,26 @@ soup = BeautifulSoup(html, "html.parser")
 # TODO Вывод содержимого из тегов "а"
 a_tag = soup.find_all("a", href=True)
 href_val = [link.get('href') for link in a_tag]
-print(href_val)
+# print(href_val)
 
 # TODO Вывод только ссылок только https из тегов "а"
 # a_tag = soup.find_all("a", href=True)
 # href_link = [link['href'] for link in a_tag if link['href'].startswith('https')]
 # print(href_link)
+
+# TODO Извлекаем заданные тексты
+event = soup.find_all('a', href=True)
+
+for link in event:
+    # if link.text == 'Решения, принятые советом директоров (наблюдательным советом)'in link.get('href'):
+    print(link.text)
+
+
+# for text_event in event:
+#     if text_event.text == 'Решения общих собраний участников (акционеров)':
+#         print(text_event)
+
+
 
 
 # Закрываем браузер

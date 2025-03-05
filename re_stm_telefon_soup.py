@@ -96,3 +96,9 @@ print(texts)
 # print(adr2)
 
 
+respons_js = requests.get(url)
+try:
+    js = respons_js.json()
+    print(js)
+except:
+    print('Error')

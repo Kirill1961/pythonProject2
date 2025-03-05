@@ -177,7 +177,7 @@ with open('c_from_data.csv', 'r') as da_ta:
             writer.writerow(i_dict)
             print(i_dict)
 
-""" Тоже самое читаем из 'c_from_data.csv' пишем в 'c_in_data.csv' но убираем дну колонку
+""" Тоже самое читаем из 'c_from_data.csv' пишем в 'c_in_data.csv' но убираем одну колонку
     с помощью  del i_dict ['addresses users /']
     ВНИМАНИЕ! убрав колонку 'addresses users /' - fieldnames убирать можно только
      в записывающем блоке"""
@@ -202,7 +202,7 @@ with open('c_s_v.csv', 'w', newline='') as fi_le:
     writer.writerow({'names': 'user1', 'addresses': 'address1', 'N_o': '1'})
     writer.writerow({'names': 'user2', 'addresses': 'address2', 'N_o': '2'})
 
-"""______________________Использование restval= и extrasaction= """
+# TODO"""Использование restval= и extrasaction= """
 
 with open('c_from_data.csv', 'r') as da_ta:
     reader = csv.DictReader(da_ta)

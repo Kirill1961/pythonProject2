@@ -22,6 +22,7 @@ response = requests.get(url, headers=headers)
 if response.status_code == 200:
     try:
         data = response.json()
+        print(data, 'n')
         for event in data:
             print(f"Событие: {event['eventName']}, Дата: {event['eventDate']}")
     except requests.exceptions.JSONDecodeError:

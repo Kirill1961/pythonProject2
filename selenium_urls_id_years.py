@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-url = "https://e-disclosure.ru/portal/company.aspx?id=403"
+url = "https://e-disclosure.ru/portal/company.aspx?id=401"
 
 headers = {
     "accept": "*/*",
@@ -18,7 +18,14 @@ headers = {
     "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
 }
 
+# TODO Метод .json() в response.json() используется в requests,
+#  чтобы преобразовать JSON-ответ сервера в Python-объект (обычно dict или list).
 response = requests.get(url, headers=headers)
+
+# TODO Тип Contents из ответа сервера
+type_response = response.headers.get("Content-Type")
+print(f'Тип Contents из ответа сервера ->  {type_response}')
+
 
 if response.status_code == 200:
     soup = BeautifulSoup(response.text, "html.parser")

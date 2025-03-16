@@ -1,6 +1,8 @@
 import numpy as np
 from scipy import stats
 import matplotlib.pyplot as plt
+from scipy.stats import norm
+
 
 def measure(n):
     "Measurement model, return two coupled measurements."
@@ -32,4 +34,12 @@ ax.imshow(np.rot90(Z), cmap=plt.cm.gist_earth_r,
 ax.plot(m1, m2, 'k.', markersize=2)
 ax.set_xlim([xmin, xmax])
 ax.set_ylim([ymin, ymax])
-plt.show()
+# plt.show()
+
+
+
+mu, sigma = 5, 2  # Среднее и стандартное отклонение
+data_int = np.round(norm.rvs(loc=mu, scale=sigma, size=20)).astype(int)
+
+print(data_int[:10])
+

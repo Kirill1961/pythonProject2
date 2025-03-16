@@ -32,3 +32,14 @@ while condition:
     print(f"result from generator -> {list(g)}")
     print(f"exhaustion collection -> {list(g)}")
     condition = bool(list(g))
+
+
+# TODO Генератор нормально-распределённого dataset с помощью рекурсии
+data1 = []
+def foo(x):
+    data1.append(x)
+    foo(x + 1) if x < 5 else 1
+    data1.append(x)
+    return
+foo(0)
+print(data1, 'Генератор нормально-распределённого dataset')

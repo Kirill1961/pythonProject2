@@ -7,7 +7,8 @@ from webdriver_manager.chrome import ChromeDriverManager
 from urllib.parse import urlparse, parse_qs
 
 
-# Настройки Chrome
+# TODO Настройки Chrome
+#  Options() - это тот же ChromeOptions, но импортированный напрямую.
 options = Options()
 options.add_argument("--headless")  # Убираем графический интерфейс (можно убрать)
 options.add_argument("--disable-blink-features=AutomationControlled")  # Маскируем Selenium

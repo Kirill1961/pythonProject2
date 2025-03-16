@@ -42,10 +42,14 @@ headers = {
 #
 # years_company_urls
 
+
+options = webdriver.ChromeOptions()
+options.headless = False
+
 # Создаем пустой список для хранения URL
 years_company_urls = []
 # Создаем экземпляр веб-драйвера для браузера Chrome
-driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
 # Перебираем диапазон значений
 for u in range(400, 403):
     url0 = "<https://e-disclosure.ru/portal/company.aspx?id=> " + str(u)

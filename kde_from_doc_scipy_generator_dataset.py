@@ -37,7 +37,7 @@ ax.set_ylim([ymin, ymax])
 # plt.show()
 
 
-# TODO Генератор dataset
+
 mu, sigma = 5, 2  # Среднее и стандартное отклонение
 data_int = np.round(norm.rvs(loc=mu, scale=sigma, size=20)).astype(int)
 

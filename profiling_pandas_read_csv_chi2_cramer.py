@@ -8,7 +8,6 @@ import scipy.stats as stats
 
 
 
-
 print(pd.__version__)
 
 # TODO Читаем файл heart.csv по указанному пути
@@ -34,7 +33,7 @@ print(profile)
 #  (chi2) — значение статистики хи-квадрат....
 
 
-# Crosstab - Таблица сопряжённости
+# Таблица сопряжённости
 table = pd.DataFrame({
     "First": [136, 80],
     "Second": [87, 97],
@@ -53,5 +52,3 @@ cramers_v = np.sqrt(chi2 / (n * (k - 1)))
 
 print(f"Хи-квадрат p-value: {p:.4f}")
 print(f"Cramér's V: {cramers_v:.4f}")
-
-

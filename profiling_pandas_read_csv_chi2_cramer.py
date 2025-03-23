@@ -8,6 +8,7 @@ import scipy.stats as stats
 
 
 
+
 print(pd.__version__)
 
 # TODO Читаем файл heart.csv по указанному пути
@@ -52,3 +53,5 @@ cramers_v = np.sqrt(chi2 / (n * (k - 1)))
 
 print(f"Хи-квадрат p-value: {p:.4f}")
 print(f"Cramér's V: {cramers_v:.4f}")
+
+

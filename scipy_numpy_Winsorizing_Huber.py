@@ -5,6 +5,8 @@ import scipy.stats as stats
 import seaborn as sns
 import matplotlib.pyplot as plt
 from scipy.stats.mstats import winsorize
+from sklearn.linear_model import HuberRegressor
+from scipy.special import huber
 
 puth = 'D:\Eduson_data\Analisys_data_Eduson.csv'
 
@@ -54,5 +56,40 @@ print(len(df["Sales"]))
 arr = np.array([7, 7, 7, 7, 7, 1, 2, 2, 3, 3, 3, 4, 4, 4, 4])
 
 mode_np = np.bincount(arr).argmax()
-print("Мода (NumPy):", mode_np)  # 4
+print("Мода (NumPy):", mode_np)  # 7
+
+
+
+
+# TODO веса для взвешенного среднего по Хьюберу
+X = np.array([10, 12, 13, 15, 20, 1000, 2000]).reshape(-1, 1)
+y = np.array([10, 12, 13, 15, 20, 1000, 2000])  # Целевая переменная (та же самая)
+
+# Вычисляем IQR для определения выбросов
+q1, q3 = np.percentile(y, [25, 75])
+iqr = q3 - q1
+delta = 1.5 * iqr  # Порог отсечения
+
+# Применяем Huber loss (она даёт усечённые потери)
+weights = huber(delta, y - np.median(y))
+
+# Переводим потери в веса
+weights = 1 / (1 + weights)
+
+print("Веса для каждого значения:", weights)
+print("Взвешенное среднее:", np.average(y, weights=weights))
+
+# Обучаем модель
+huber = HuberRegressor()
+huber.fit(X, y)
+
+# Получаем веса
+# weights = huber.outliers_
+
+# Взвешенное среднее - предсказанное значение
+weighted_mean = huber.predict(X).mean()
+
+# print(f'Веса выбросов : {weights}')
+# print("Вес каждого наблюдения:", 1 - weights)
+print(f"Взвешенное среднее (по Хьюберу): {weighted_mean:.2f}")
 

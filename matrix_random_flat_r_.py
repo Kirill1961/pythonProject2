@@ -205,3 +205,35 @@ print(f"C-order, строковой порядок, стоит по умолча
 print(f"F-order, Fortran-order, столбцовый порядок: {np.arange(1, 13).reshape(2, 2, 3).ravel(order='F')}  Выход (идёт по столбцам)")
 print(f"A-order, Any-order, сохраняет исходный: {np.arange(1, 13).reshape(2, 2, 3).ravel(order='A')} ")
 print(f"K-order, Keep-order, сохраняет физический порядок: {np.arange(1, 13).reshape(2, 2, 3).ravel(order='A')} ")
+
+
+
+arr_2d = np.array([[1.11111111e-01],
+                   [3.33333333e-01],
+                   [6.66666667e-01],
+                   [6.66666667e-01],
+                   [5.26315789e-02],
+                   [1.04526316e-04]])
+
+# 1. Метод
+arr_1d = arr_2d.flatten()
+
+print(f'1. Метод уменьшения размерности : {arr_1d}')
+
+print(arr_1d.shape)  # (6,)
+
+# 2. Метод
+arr_1d_2 = arr_2d.ravel()
+print(f'2. Метод уменьшения размерности : {arr_1d_2}')
+
+# 3. Метод
+arr_1d_3 = arr_2d.reshape(-1)
+print(f'3. Метод уменьшения размерности : {arr_1d_3}')
+
+# 4. Метод
+arr_1d_4 = arr_2d.ravel()
+print(f'4. Метод уменьшения размерности : {arr_1d_4}')
+
+# 4. Метод
+arr_1d_5 = arr_2d.flatten()
+print(f'5. Метод уменьшения размерности : {arr_1d_5}')

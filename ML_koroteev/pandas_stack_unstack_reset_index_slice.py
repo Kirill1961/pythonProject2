@@ -126,4 +126,3 @@ print(f"Датасрез df777 : {df777[(df777['A'] > 30 ) & (df777['A'] < 40)]}
 # TODO percentile quantile
 print(f"percentile 25%, 75% : {np.percentile(df777['A'], [25, 75])}")
 print(f"quantile 25%, 75% : {np.quantile(df777['A'], [0.25, 0.75])}")
-

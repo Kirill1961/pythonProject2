@@ -126,3 +126,9 @@ print(f"Датасрез df777 : {df777[(df777['A'] > 30 ) & (df777['A'] < 40)]}
 # TODO percentile quantile
 print(f"percentile 25%, 75% : {np.percentile(df777['A'], [25, 75])}")
 print(f"quantile 25%, 75% : {np.quantile(df777['A'], [0.25, 0.75])}")
+
+# TODO ▶ Отбор по заданной частоте повторов значений в заданном столбце
+df44_counts = (df44.value_counts()> 1).reset_index()
+res = (df44_counts.loc[df44_counts['count'] == True, 'A'])
+# print(res)
+print(f'Значение столбца А : {res.values} повторяются больше одного раза ')

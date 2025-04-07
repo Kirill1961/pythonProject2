@@ -1,5 +1,7 @@
 import numpy as np
 from scipy.stats import mannwhitneyu
+from statsmodels.stats.multicomp import pairwise_tukeyhsd
+import pandas as pd
 
 '''
 Задача:
@@ -23,3 +25,20 @@ if p_value < 0.05:
     print("Есть статистически значимая разница между группами")
 else:
     print("Нет статистически значимой разницы между группами")
+
+
+# TODO Тьюки, Tukey's Honest Significant Difference (HSD) test.
+
+# Примерные данные
+data = pd.DataFrame({
+    'value': [12, 13, 15, 10, 9, 8, 17, 18, 16],
+    'group': ['A', 'A', 'A', 'B', 'B', 'B', 'C', 'C', 'C']
+})
+
+# Tukey HSD
+tukey_result = pairwise_tukeyhsd(endog=data['value'],
+                                 groups=data['group'],
+                                 alpha=0.05)
+
+print(tukey_result)
+

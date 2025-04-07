@@ -56,6 +56,12 @@ df44 = pd.DataFrame({"A": [5, 2, 2, 4, 5],
 df22 = pd.DataFrame({"A": [0, "no", "no"], "B": [0, 0 , 0], "C": [0, 0, 1]})
 
 
+df111 = pd.DataFrame({
+    "A": ["Avrg", "Bin", "Cnt", "Foo", "Dt"],
+    "B": ['M', 'F', 'F', 'F', 'M'],
+    "C": ['Male', 'Female', 'Male', 'Female', 'Male']
+})
+
 df11 = pd.DataFrame({
     "A": [2, 2, 3, 2, 3],
     "B": [10, 20, pd.NA, 40, 50],
@@ -132,3 +138,9 @@ df44_counts = (df44.value_counts()> 1).reset_index()
 res = (df44_counts.loc[df44_counts['count'] == True, 'A'])
 # print(res)
 print(f'Значение столбца А : {res.values} повторяются больше одного раза ')
+
+# TODO Это не просто конкатенация, а создание нового столбца в DataFrame путём объединения
+#  (через сложение или любую другую операцию) данных из уже существующих столбцов.
+
+df7['new_column'] = df7.Sex + ' ' + 'is' + ' ' + df7.Age.astype(str)
+print(df7)

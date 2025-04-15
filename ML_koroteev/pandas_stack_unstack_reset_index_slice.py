@@ -2,8 +2,8 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-
-
+from scipy.stats import shapiro
+from scipy.stats import f
 
 
 
@@ -139,8 +139,24 @@ res = (df44_counts.loc[df44_counts['count'] == True, 'A'])
 # print(res)
 print(f'Значение столбца А : {res.values} повторяются больше одного раза ')
 
-# TODO Это не просто конкатенация, а создание нового столбца в DataFrame путём объединения
-#  (через сложение или любую другую операцию) данных из уже существующих столбцов.
 
-df7['new_column'] = df7.Sex + ' ' + 'is' + ' ' + df7.Age.astype(str)
+
+# TODO Это не просто конкатенация, а создание нового столбца в DataFrame путём объединения
+#  (через сложение или любую другую операцию) данных из уже существующих столбцов
+#  Например:
+#  df['sum'] = df['math'] + df['science']        # числовая сумма
+#  df['flag'] = df['passed'] & df['attended']    # логическая операция
+#  df['age_group'] = df['age'].astype(str) + ' лет'  # строка + число
+#  df['combo'] = df['city'] + ', ' + df['country']   # строка + строка.
+
+df7['new_column'] = df7.Sex + ' ' + '/' + ' ' + df7.Age.astype(str)
 print(df7)
+
+
+
+# TODO p-value от F вручную
+#  F_value — это значение F-статистики, которое мы получаем при проведении F-теста
+
+F_value = 0.1
+p_value = 1 - f.cdf(F_value, df1.A, df1.B)
+print(p_value)

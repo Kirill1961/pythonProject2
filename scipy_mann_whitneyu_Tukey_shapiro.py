@@ -2,6 +2,7 @@ import numpy as np
 from scipy.stats import mannwhitneyu
 from statsmodels.stats.multicomp import pairwise_tukeyhsd
 import pandas as pd
+from scipy.stats import shapiro
 
 '''
 Задача:
@@ -42,3 +43,15 @@ tukey_result = pairwise_tukeyhsd(endog=data['value'],
 
 print(tukey_result)
 
+
+# TODO тест shapiro-wilk на нормальность распределения
+arr_random = np.random.random_sample(100)
+arr_normal = np.random.normal(0, 1, size=100)
+data = [1.2, 1.5, 1.8, 2.1, 3.5]
+
+stat, p = shapiro(arr_normal)
+print(f"p-value: {p:.3f}")
+if p > 0.05:
+    print("Данные похожи на нормальное распределение")
+else:
+    print("Распределение не является нормальным")

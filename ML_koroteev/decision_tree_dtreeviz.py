@@ -14,7 +14,7 @@ import numpy as np
 RANDOM_SEED = 0
 
 # TODO Генерация двух прихнаков распределённых по трём классам
-X, y =  make_blobs(n_samples=10, centers=[(0, 3), (3, 3), (3, 0)],
+X, y =  make_blobs(n_samples=100, centers=[(0, 3), (3, 3), (3, 0)],
                    n_features=2, random_state=RANDOM_SEED,
                    cluster_std=(0.9, 0.9, 0.9),)
 
@@ -23,18 +23,18 @@ X, y =  make_blobs(n_samples=10, centers=[(0, 3), (3, 3), (3, 0)],
 df = pd.DataFrame(X.astype(int), columns=['X_0', 'X_1'])
 df['target'] = y  # добавляем в df целевую переменную
 
-print(df[['X_0', 'X_1']], df['target'])
+# print(df[['X_0', 'X_1']], df['target'])
 
-clf_tree = DecisionTreeClassifier(criterion='gini', max_depth=7, random_state=0).fit(X, y)
+clf_tree = DecisionTreeClassifier(criterion='gini', max_depth=15, random_state=0).fit(X, y)
 
 
 # TODO Визуализвция Дерева
 # plot_tree(clf_tree)
 # plt.show()
 
-# y = y.astype(int)
-print(X.shape)
-print(type(y))
+
+# print(X.shape)
+# print(type(y))
 
 print("X type:", type(X), "shape:", X.shape)
 print("y type:", type(y), "shape:", y.shape)
@@ -50,7 +50,7 @@ print("y_ type:", type(y_), "shape:", y_.shape)
 print("y_ dtype:", y_.dtype)
 print("Unique classes:", np.unique(y_))
 
-print(X_)
+# print(X_)
 # viz = dtreeviz_model(clf_tree, X, y,
 #                target_name='target',
 #                feature_names=['X_0', 'X_1'],
@@ -71,14 +71,16 @@ viz = dtreeviz_model(clf_tree,
 # # Выделим интересующий экземпляр по индексу
 # viz.highlight_instance(3)
 
-# # Теперь отрисуем пространство признаков с учётом выделенного экземпляра
-viz.ctree_feature_space()
-plt.show()
+
 
 # Возьмём 4-ю строку из X (индекс 3)
 sample_point = df.loc[2, ['X_0', 'X_1']].tolist()
 
-print(sample_point)
+# print(sample_point)
 
+# TODO Отрисовка  пространства признаков с учётом распределения по классам и диаграммы листьев
+viz.ctree_feature_space()
+viz.leaf_sizes()
+plt.show()
 # viz.ctree_feature_space(features=sample_point)
 # viz.ctree_feature_space(features=df.loc[0, ['X_0', 'X_1']].tolist())

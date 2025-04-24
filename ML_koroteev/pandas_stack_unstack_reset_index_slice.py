@@ -24,6 +24,9 @@ df33 = pd.DataFrame({"A": ["F", "F", "W","F", "W"], "B": [10, 20, 30, 40, 50], "
 df4 = pd.DataFrame({"A": [5, 2, 2, 4, 5], "B": [50, 20, 50, 40, 50], "C": [300, 300, 300, 400, 300]})
 df5 = pd.DataFrame({"A": [50, 20, 2, 4, 5], "B": [50, 20, 300, 40, 5], "C": [50, 300, 300, 400, 5]})
 df55 = pd.DataFrame({"A": ["F", "F", "G", "G", "W"], "B": [20, 20, 300, 20, 5], "C": [5, 300, 300, 400, 5]})
+df555 = pd.DataFrame({"A": ["F", "F", "G", "F", "W"],
+                      "B": [20, 20, 300, 20, 5],
+                      "C": [5, 5, 300, 5, 5]})
 df333 = pd.DataFrame({"A": ["F", "F", "W","F", "W"],
                       "B": [20, 20, 30, 40, 50],
                       "C": [300, 200, 300, 300, 500]})
@@ -160,3 +163,11 @@ print(df7)
 F_value = 0.1
 p_value = 1 - f.cdf(F_value, df1.A, df1.B)
 print(p_value)
+
+# TODO Выявление, Удаление и Просмотр дубликатов Дубликатов
+dubl_quantity = df555.duplicated().sum()
+print(f'Выявление дубликатов : {dubl_quantity} duplicates', '\n')
+dubl_viewing = df555[df555.duplicated()]
+print(f'Просмотр дубликатов{dubl_viewing}', '\n')
+dubl_drop = df555.drop_duplicates()
+print(f'Удаление дубликатов{dubl_drop}', '\n')

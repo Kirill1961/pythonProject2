@@ -3,7 +3,10 @@ import pandas as pd
 # from patsy import dmatrices
 from patsy.highlevel import dmatrices  # highlevel - явный импорт
 
-
+# TODO patsy — это библиотека Python, которая:
+#  * преобразует формулы в стиле R ('y ~ x1 + x2 + x1:x2')
+#  * в матрицы признаков (X) и целевые значения (y)
+#  * для моделей из statsmodels, scikit-learn, xgboost, и других
 
 df = pd.DataFrame({
     'Segmentation': ['A', 'B', 'A', 'C', 'B', 'D'],

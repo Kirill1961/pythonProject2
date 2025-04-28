@@ -5,29 +5,22 @@ import matplotlib.pyplot as plt
 from scipy.stats import shapiro
 from scipy.stats import f
 
-
-
-
-
-
-
-
 df = pd.DataFrame({
     "A": [1, 2, pd.NA],
     "B": [4, None, pd.NA],
     "C": [7, 8, 9]
 })
 df1 = pd.DataFrame({"A": [1, 2, 3, 4, 5], "B": [10, 20, 30, 40, 50], "C": [100, 200, 300, 400, 500]})
-df2 = pd.DataFrame({"A": ["yes", "no", "no"], "B": [10, "20" , "30"], "C": ["0", 0, 1]})
+df2 = pd.DataFrame({"A": ["yes", "no", "no"], "B": [10, "20", "30"], "C": ["0", 0, 1]})
 df3 = pd.DataFrame({"A": [2, 2, 3, 2, 3], "B": [10, 20, 30, 40, 50], "C": [100, 200, 300, 400, 500]})
-df33 = pd.DataFrame({"A": ["F", "F", "W","F", "W"], "B": [10, 20, 30, 40, 50], "C": [100, 200, 300, 400, 500]})
+df33 = pd.DataFrame({"A": ["F", "F", "W", "F", "W"], "B": [10, 20, 30, 40, 50], "C": [100, 200, 300, 400, 500]})
 df4 = pd.DataFrame({"A": [5, 2, 2, 4, 5], "B": [50, 20, 50, 40, 50], "C": [300, 300, 300, 400, 300]})
 df5 = pd.DataFrame({"A": [50, 20, 2, 4, 5], "B": [50, 20, 300, 40, 5], "C": [50, 300, 300, 400, 5]})
 df55 = pd.DataFrame({"A": ["F", "F", "G", "G", "W"], "B": [20, 20, 300, 20, 5], "C": [5, 300, 300, 400, 5]})
 df555 = pd.DataFrame({"A": ["F", "F", "G", "F", "W"],
                       "B": [20, 20, 300, 20, 5],
                       "C": [5, 5, 300, 5, 5]})
-df333 = pd.DataFrame({"A": ["F", "F", "W","F", "W"],
+df333 = pd.DataFrame({"A": ["F", "F", "W", "F", "W"],
                       "B": [20, 20, 30, 40, 50],
                       "C": [300, 200, 300, 300, 500]})
 df7 = pd.DataFrame({
@@ -49,15 +42,13 @@ df7777 = pd.DataFrame({
     'B': ['M', 'W', 'W', 'F', 'M', 'F', 'W', 'F', 'W', 'M', 'M', 'S', 'S', 'F', 'F', 'F', 'M', 'M', 'F', 'S']
 })
 
-
 df44 = pd.DataFrame({"A": [5, 2, 2, 4, 5],
                      "B": [50, 20, 50, 40, 50],
                      "C": [300, 300, 300, 400, 300]},
                     index=["Avrg", "Bin", "Cnt", "Foo", "Dt"]
                     )
 
-df22 = pd.DataFrame({"A": [0, "no", "no"], "B": [0, 0 , 0], "C": [0, 0, 1]})
-
+df22 = pd.DataFrame({"A": [0, "no", "no"], "B": [0, 0, 0], "C": [0, 0, 1]})
 
 df111 = pd.DataFrame({
     "A": ["Avrg", "Bin", "Cnt", "Foo", "Dt"],
@@ -71,7 +62,6 @@ df11 = pd.DataFrame({
     "C": [pd.NA, 200, 300, 400, pd.NA]
 })
 
-
 # Долевое распределение столбцов А и В
 grouped = df333.groupby(["A", "B"]).size()
 percent = grouped.groupby(level=0).apply(lambda x: x * 100 / float(x.sum()))
@@ -84,15 +74,13 @@ encod_zero_one = encod_categor.astype(int)  # Преобразование False
 print(encod_categor)
 print(encod_zero_one)
 
-
 # Сравнение Индекса Группировки и Средного
 mean_a = df11.groupby(['A']).mean()
 print(mean_a)
 df11_cop = df11.copy()
 for col in df11.columns[1:]:
-    df11_cop['NEW'+'_' + col] = df11[col] != df11['A'].map(mean_a[col])
+    df11_cop['NEW' + '_' + col] = df11[col] != df11['A'].map(mean_a[col])
     print(df11_cop)
-
 
 # Столбикова Частотная Диаграмма без hue='B' все столбцы подписаны
 ax = sns.countplot(x='B', data=df7777)
@@ -109,7 +97,6 @@ for contain in ax.containers:
 
 # TODO Фильтруем весь df777, выводим строки df777 заданному значению в колонке 'B'
 print(df777[df777['B'] == 'F'], 'Вывод DF со строками фильтрованных по заданному значению в нужной колонке')
-
 
 # TODO Выводим строки/значения столбца 'B' по заданному значению в колонке 'А'
 print(df11['B'][df11['A'] == 3], 'значения столбца B по заданному значению в колонке A')
@@ -130,19 +117,17 @@ print(d_multi_index.xs(4))
 print(d_multi_index.xs(key=50, level=1))
 
 # TODO Датасрез
-print(f"Датасрез df777 : {df777[(df777['A'] > 30 ) & (df777['A'] < 40)]}")
+print(f"Датасрез df777 : {df777[(df777['A'] > 30) & (df777['A'] < 40)]}")
 
 # TODO percentile quantile
 print(f"percentile 25%, 75% : {np.percentile(df777['A'], [25, 75])}")
 print(f"quantile 25%, 75% : {np.quantile(df777['A'], [0.25, 0.75])}")
 
 # TODO ▶ Отбор по заданной частоте повторов значений в заданном столбце
-df44_counts = (df44.value_counts()> 1).reset_index()
+df44_counts = (df44.value_counts() > 1).reset_index()
 res = (df44_counts.loc[df44_counts['count'] == True, 'A'])
 # print(res)
 print(f'Значение столбца А : {res.values} повторяются больше одного раза ')
-
-
 
 # TODO Это не просто конкатенация, а создание нового столбца в DataFrame путём объединения
 #  (через сложение или любую другую операцию) данных из уже существующих столбцов
@@ -154,8 +139,6 @@ print(f'Значение столбца А : {res.values} повторяются
 
 df7['new_column'] = df7.Sex + ' ' + '/' + ' ' + df7.Age.astype(str)
 print(df7)
-
-
 
 # TODO p-value от F вручную
 #  F_value — это значение F-статистики, которое мы получаем при проведении F-теста
@@ -171,3 +154,35 @@ dubl_viewing = df555[df555.duplicated()]
 print(f'Просмотр дубликатов{dubl_viewing}', '\n')
 dubl_drop = df555.drop_duplicates()
 print(f'Удаление дубликатов{dubl_drop}', '\n')
+
+# TODO Метод .squeeze() преобразует:
+#  * DataFrame с одной колонкой → в Series
+#  * DataFrame с одной строкой и одной колонкой → в скаляр
+
+
+df_one = pd.DataFrame({'Age': [25, 30, 35]})
+
+# Выборка как DataFrame
+df_onecol = df_one[['Age']]  # <-- DataFrame
+print(type(df_onecol))  # <class 'pandas.core.frame.DataFrame'>
+
+# Преобразуем в Series
+s = df_onecol.squeeze()
+print(type(s), '\n')  # <class 'pandas.core.series.Series'>
+
+# TODO Итерация Одного Группированного cat_feat
+for name, data in df7.groupby('Sex'):
+    print(name, '\n')
+
+# TODO Итерация Двух и более Группированных cat_feat
+df_7 = pd.DataFrame({
+    'Test': ['Yes', 'No', 'Yes', 'No', 'No', 'Yes', 'No', 'No', 'Yes', 'No', 'Yes', 'No'],
+    'Age': [23, 45, 45, 23, 45, 23, 23, 45, 45, 23, 45, 25],
+    'Sex': ['Male', 'Female', 'Male', 'Female', 'Female', 'Female',
+            'Male', 'Female', 'Male', 'Female', 'Female', 'Female']
+})
+
+for name, data in df_7.groupby((['Sex', 'Age', 'Test'])):
+    print(name)  # Имена сгруппированных данных
+
+    # print(data, '\n')  # Все группы после группировки

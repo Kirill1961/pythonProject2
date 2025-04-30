@@ -88,7 +88,7 @@ def map_reduce(inputs, mapper, reducer):  # mapper / reducer - выбранны�
     return [output for key, values in collector.items()
             for output in reducer(key, values)]
 
-
+print('>>>>>>>>')
 # pprint.pprint(map_reduce(input_value, mapp, rdsr))
 pprint.pprint(map_reduce(input_value, wc_mapper, wc_reducer))
 

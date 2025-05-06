@@ -104,3 +104,4 @@ for i in range(len(x)):
     print(
         f"Вход: {x[i]}, Взвешенный вход: {x_weight:.3f}, Выход: {neuron_output:.3f}, Округленный: {round(neuron_output)}")
 
+

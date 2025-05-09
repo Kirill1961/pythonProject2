@@ -237,3 +237,13 @@ print(f'4. Метод уменьшения размерности : {arr_1d_4}')
 # 4. Метод
 arr_1d_5 = arr_2d.flatten()
 print(f'5. Метод уменьшения размерности : {arr_1d_5}')
+
+
+# TODO вектор столбец n умножить на вектор строку m = матрица shape(n x m)
+
+a = np.random.randint(1, 10, size=5)
+b = np.round(np.random.random(3), 1)
+
+a_T = a.reshape(-1, 1)  # TODO транспонирование вектора а
+
+print(a_T * b)

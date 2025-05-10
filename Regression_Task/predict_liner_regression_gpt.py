@@ -1,6 +1,11 @@
 # Пример кода для прогноза с использованием обученной модели
 import numpy as np
+from sklearn.datasets import load_iris, make_regression
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LinearRegression
+from sklearn.metrics import accuracy_score, mean_squared_error
+
 
 # Обучающие данные
 X_train = np.array([[1], [2], [3], [4], [5]])
@@ -37,12 +42,7 @@ y_pred = model.predict(X_new)
 print(f'Предсказанное значение для X_new={X_new.tolist()[0]}: {y_pred[0]:.2f}')
 
 
-from sklearn.datasets import load_iris, make_regression
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import accuracy_score, mean_squared_error
-
+# TODO IRIS
 # Классификация
 # Загрузка данных
 data = load_iris()

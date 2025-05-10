@@ -15,7 +15,7 @@ data = pd.DataFrame(
 
 # Обучающие данные
 X_train = data
-y_train = np.random.rand(len(data)  )
+y_train = np.random.rand(len(data))
 
 # Предобработка
 preprocessor = ColumnTransformer(

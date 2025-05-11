@@ -15,8 +15,8 @@ import numpy as np
 
 RANDOM_SEED = 0
 
-# TODO Генерация двух прихнаков распределённых по трём классам
-X, y =  make_blobs(n_samples=1000, centers=[(0, 3), (3, 3), (3, 0)],
+# TODO Генерация двух признаков распределённых по трём классам
+X, y = make_blobs(n_samples=1000, centers=[(0, 3), (3, 3), (3, 0)],
                    n_features=2, random_state=RANDOM_SEED,
                    cluster_std=(0.9, 0.9, 0.9),)
 

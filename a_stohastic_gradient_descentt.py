@@ -19,7 +19,7 @@ v_theta_for_sgd = 0.1 * v_theta if v_theta > 0 else v_theta * -1 # вектор 
 x_for_sgd = [0.1 * i_x for i_x in v]     # из генератора v берём Х
 y_for_sgd = [i_y ** 2 for i_y in x_for_sgd] # из У = Х**2
 print(v, v_theta, ' theta_0')
-toleerance = 0.00001 # константа точности расчёта
+toleerance = 0.00001  # константа точности расчёта
 
 
 

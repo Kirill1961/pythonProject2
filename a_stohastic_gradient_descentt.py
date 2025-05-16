@@ -8,7 +8,7 @@ def square(x_x, y_y, t):
     return (y_y - t * x_x)**2 # Loss function целевая функция - квадратичное отклонение  / Loss function
 
 def derivative(x_x, y_y, t):    # производная целевой ф-ции Loss function по theta - (y_y - (t * x_x))**2
-    return -2 * x_x * (y_y - t * x_x)   # " t " - это theta - оценочный коэфф
+    return -2 * x_x * (y_y - t * x_x)   # " t " - это theta - регрессионный коэфф, угол наклона
 
 
 
@@ -30,7 +30,7 @@ toleerance = 0.00001  # константа точности расчёта
 def in_random_order(data):
     indexes = [i for i,_ in enumerate(data)]
     # print(indexes, ' indexes')
-    random.shuffle(indexes) # перемешивание индексов данных для случайного выбора
+    random.shuffle(indexes)  # перемешивание индексов данных для случайного выбора
     for i in indexes:
         print(i, data[i], '  <-> i, data[i]')
         yield data[i]

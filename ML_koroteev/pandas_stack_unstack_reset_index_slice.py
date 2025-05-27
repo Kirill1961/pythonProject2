@@ -192,3 +192,8 @@ for name, data in df_7.groupby((['Sex', 'Age', 'Test'])):
 
 df77_scaler = df77 - (df77.A.mean(), df77.B.mean())
 print('Центрирование в ручную, вычитание среднего из значений колонок', '\n', f'{df77_scaler[:5]}')
+
+# TODO Создание через list - index и columns в DF
+df_list = pd.DataFrame([[1, 2], [10, 20], [100, 200]], columns=[list('AB')], index=list('abc'))
+
+print('\n', 'Создание через list - index и columns в DF :', '\n', f'{df_list}')

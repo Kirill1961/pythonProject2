@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.model_selection import cross_val_score
 from sklearn.linear_model import LogisticRegression
+from sklearn.feature_selection import mutual_info_classif
 from sklearn.metrics import classification_report
 from sklearn.tree import export_text
 import numpy as np
@@ -20,6 +21,9 @@ X, y = make_blobs(n_samples=1000, centers=[(0, 3), (3, 3), (3, 0)],
                    n_features=2, random_state=RANDOM_SEED,
                    cluster_std=(0.9, 0.9, 0.9),)
 
+
+# TODO Взаимная Информация
+print('\n', 'Взаимная Информация, по количеству признаков : ', '\n', mutual_info_classif(X, y), '\n')
 
 # TODO Псстроение scatter с seaborn, только через преобразование в df
 df = pd.DataFrame(X, columns=['X_0', 'X_1'])

@@ -3,6 +3,7 @@ import itertools as it
 import operator
 import numpy as np
 import random
+from itertools import combinations
 
 a = [[0, 1], [0, 0], [1, 0], [1, 1]]
 
@@ -74,4 +75,9 @@ lst = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
        84, 85, 86, 87, 88, 89, 90, 91, 92,
        93, 94, 95, 96, 97, 98, 99, 100]
 
-print(list(itertools.chain(lst[9: 15], lst[49: 55])))
+print(list(itertools.chain(lst[9: 15], lst[49: 55])), '\n')
+
+# TODO Комбинации Неповторяющиеся  из заданных значений
+
+print('Комбинации из Неповторяющиеся  3x значений :  \n', f'{list(combinations([0, 1, 2, 3], 3, ))}')
+print('Комбинации из Неповторяющиеся  2x значений  : \n', f'{list(combinations([0, 1, 2], 2, ))}')

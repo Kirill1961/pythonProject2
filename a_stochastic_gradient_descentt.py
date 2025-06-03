@@ -73,6 +73,7 @@ def minimize_stohastic(target_fn, gradient_fn, x, y,  theta_0, alfa_0 = 0.01):
             iterration_whith_no_improvement += 1
             print('\t' * 6, '<<',iterration_whith_no_improvement, '>>')
             alfa *= 0.9  # Стартовый оценочный коэфф (slope)
+            # TODO  batch - случайным образом выбираем пару Х и У
             for x_i, y_i in in_random_order(data):
                 print('\t'*10, alfa, ' alfa ')
                 print('\t' * 2, value, ' value  <-->', min_value, ' min_value ')

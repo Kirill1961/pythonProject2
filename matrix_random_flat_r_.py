@@ -243,12 +243,16 @@ print(f'5. Метод уменьшения размерности : {arr_1d_5}')
 
 
 # TODO вектор столбец n умножить на вектор строку m = матрица shape(n x m)
-
+np.random.seed(0)
+arr = np.round(np.random.normal(scale=2, loc=1.5, size=(5, 2)), 2)
 a = np.random.randint(1, 10, size=5)
 b = np.round(np.random.random(3), 1)
 
 a_T = a.reshape(-1, 1)  # TODO транспонирование вектора а
 
+print('Вектор строка "a" : \n', f'{a}')
+print('Массив 2 х 5 : \n', f'{arr}')
+print('Скалярное умножение arr.T @ a : \n', f'{arr.T @ a_T}')
 print('Вектор столбец : \n', f'{a_T}')
 print('Вектор строка : \n', f'{b}')
 print('Произведение векторов : \n', f'{a_T * b}')

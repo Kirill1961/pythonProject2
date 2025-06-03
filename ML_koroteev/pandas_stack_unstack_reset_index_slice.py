@@ -77,7 +77,7 @@ print(encod_zero_one)
 # Сравнение Индекса Группировки и Средного
 mean_a = df11.groupby(['A']).mean()
 print(mean_a)
-df11_cop = df11.copy()
+df11_cop = df11
 for col in df11.columns[1:]:
     df11_cop['NEW' + '_' + col] = df11[col] != df11['A'].map(mean_a[col])
     print(df11_cop)

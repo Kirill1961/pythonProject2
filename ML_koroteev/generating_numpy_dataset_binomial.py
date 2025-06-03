@@ -15,3 +15,6 @@ print(np.random.random_sample(10))
 
 # TODO Выборка из нормального распределения
 print(np.random.normal(0, 1, size=10))
+
+# TODO генерирует случайные числа на интервале [low, high) из равномерного распределения
+print(np.random.uniform(-2, 2, size=10))

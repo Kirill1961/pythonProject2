@@ -315,3 +315,15 @@ a = [[4], ['qwer'], [5, 1], [555, 'abc'], [12, 10, 7, 5]]
 
 f = list(filter(lambda x: any(isinstance(y, str) for y in x), a))
 print(f"Фильтр вложенных списков содержащих тип str -> {f}")
+
+# TODO Фильтр с использованием np.inf - бесконечности
+ls = [9, 11, 7, 4, 15, 5, 5, 8, 6, 8]
+def foo(b):
+    best = float('inf')  # Инициализация "бесконечностью" или np.inf
+    best_value = None
+    for i in b:
+        if i < best:
+            best = i
+            best_value = i  # "Переопределяем", только если нашли лучше
+    return best_value
+print('Фильтр с использованием np.inf - бесконечности : \n ', f'{foo(ls)}')

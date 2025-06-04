@@ -257,7 +257,7 @@ print('Вектор столбец : \n', f'{a_T}')
 print('Вектор строка : \n', f'{b}')
 print('Произведение векторов : \n', f'{a_T * b}')
 
-# TODO Пирсон / ФИ для двух классов и двух бинарных признаков
+# TODO Пирсон / ФИ для двух классов (0, 1) и двух бинарных признаков
 
 # Две бинарные переменные
 A = [1, 0, 1, 0, 1, 0, 1, 0]
@@ -271,12 +271,17 @@ a, b, c, d = cm[1, 1], cm[1, 0], cm[0, 1], cm[0, 0]
 phi = (a * d - b * c) / np.sqrt((a + b)*(c + d)*(a + c)*(b + d))
 
 print('confusion matrix (таблица сопряжённости) : \n', f'{cm}')
-print(f"ϕ = {phi:.3f}")
+print(f"phi = {phi:.3f}")
 
-# # TODO confusion_matrix для 3-х классов и 2-х бинарных признаков
-
+# TODO confusion_matrix для 3-х классов (0, 1, 2) и 2-х бинарных признаков
+#  * Строка в итоговой матрице - это класс
 y_true = [0, 1, 2, 2, 0, 1, 2]
 y_pred = [0, 0, 2, 2, 0, 2, 1]
 
+# y_true = [2, 2, 2, 2, 3]
+# y_pred = [3, 2, 2, 1, 2]
+
 cm = confusion_matrix(y_true, y_pred)
 print('confusion_matrix для 3-х классов : \n', f'y_true : {y_true} \n', f'y_pred : {y_pred} \n', f'{cm}')
+for i, j in enumerate(cm):
+    print(f'Частота совпадений для класса {i} : {j}')

@@ -52,4 +52,9 @@ a_, *d_ = l
 print(a_, *d_)
 
 a1, *b1, c1 = l
-print(a1, *b1, c1)
+print(*b1)
+
+
+a2, b1, *c2 = l
+print(*c2)
+

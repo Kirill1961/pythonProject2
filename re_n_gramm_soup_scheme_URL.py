@@ -100,11 +100,7 @@ trigram_transitions = defaultdict(
     list
 )  # словарь по умолчанию, values - тип list позволяет использовать методы списков
 starts = []
-for (
-    prev,
-    current,
-    next,
-) in trigrams:  # пользуем тройку слов "предыдущее-текущее-следующее"
+for prev, current, next in trigrams:  # пользуем тройку слов "предыдущее-текущее-следующее"
     if prev == ".":  # выбор слов для текста начинается с ОБ указанного в кавычках
         starts.append(current)  # в starts = [] пишем "текущее"
     trigram_transitions[(prev, current)].append(

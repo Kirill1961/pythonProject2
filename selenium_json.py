@@ -1,4 +1,4 @@
-import requests
+import  requests
 
 url =  "https://e-disclosure.ru/api/events/page?companyId=402&year=2005"
 

@@ -135,3 +135,12 @@ def sgd_for_a_b(x_data, y_data,  l):
 
 sgd_for_a_b(x_data, y_data, 0.001)
 
+# TODO .any() и .all() - работает с массивами булевых значений,
+#  например:np.array, pd.Series, list, и других итерируемых объектов.
+
+res = np.array([True, True, False]).all()  # → False
+print(res, '-> .any() и .all()')
+
+ls = [5, 4, 3, 2, 1]
+res_ls = list(filter(lambda x: (x > 2), ls))
+print(res_ls)

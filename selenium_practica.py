@@ -6,6 +6,21 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
+headers = {
+    "accept": "*/*",
+    "accept-language": "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7",
+    "sec-ch-ua": "\"Not(A:Brand\";v=\"99\", \"Google Chrome\";v=\"133\", \"Chromium\";v=\"133\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"Windows\"",
+    "sec-fetch-dest": "empty",
+    "sec-fetch-mode": "cors",
+    "sec-fetch-site": "same-origin",
+    "x-kl-ajax-request": "Ajax_Request",
+    "x-requested-with": "XMLHttpRequest",
+    "referer": "https://e-disclosure.ru/portal/company.aspx?id=",  # Можно с любым id ....../company.aspx?id=401
+    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36"
+}
+
 # years_company_urls = []
 # driver = webdriver.Chrome()
 # #Метод, который создает экземпляр веб-драйвера для браузера Chrome.
@@ -27,10 +42,14 @@ from selenium.webdriver.support import expected_conditions as EC
 #
 # years_company_urls
 
+
+options = webdriver.ChromeOptions()
+options.headless = False
+
 # Создаем пустой список для хранения URL
 years_company_urls = []
 # Создаем экземпляр веб-драйвера для браузера Chrome
-driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
 # Перебираем диапазон значений
 for u in range(400, 403):
     url0 = "<https://e-disclosure.ru/portal/company.aspx?id=> " + str(u)

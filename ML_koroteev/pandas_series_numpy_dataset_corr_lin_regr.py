@@ -181,3 +181,24 @@ plt.hist(data_kde, bins=8, density=True)
 # plt.plot(scale_rang, density)
 # plt.show()
 
+# TODO Генерация случайных данных float с нормальным распределением
+np.random.seed(42)  # Фиксируем случайность
+
+data = np.random.normal(loc=5, scale=2, size=20)
+print(data)
+
+# TODO Генерация случайных данных int с нормальным распределением
+#  с помощью округления до целого числа -> round, floor, ceil, astype(int)
+data_int = np.round(data).astype(int)
+print(data_int)
+
+# TODO Округление до сотых
+data_round = np.round(data, 2)
+print(data_round)
+
+# TODO Генерация через np.random.randint с нормальными границами
+mu, sigma = 5, 2
+st = mu - 3 * sigma
+sp = mu + 3 * sigma
+normal_boundaries = np.random.randint(st, sp, size=20)
+print(normal_boundaries, '>>>')

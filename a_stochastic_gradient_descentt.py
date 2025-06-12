@@ -8,7 +8,7 @@ def square(x_x, y_y, t):
     return (y_y - t * x_x)**2 # Loss function целевая функция - квадратичное отклонение  / Loss function
 
 def derivative(x_x, y_y, t):    # производная целевой ф-ции Loss function по theta - (y_y - (t * x_x))**2
-    return -2 * x_x * (y_y - t * x_x)   # " t " - это theta - оценочный коэфф
+    return -2 * x_x * (y_y - t * x_x)   # " t " - это theta - регрессионный коэфф, угол наклона
 
 
 
@@ -19,7 +19,7 @@ v_theta_for_sgd = 0.1 * v_theta if v_theta > 0 else v_theta * -1 # вектор 
 x_for_sgd = [0.1 * i_x for i_x in v]     # из генератора v берём Х
 y_for_sgd = [i_y ** 2 for i_y in x_for_sgd] # из У = Х**2
 print(v, v_theta, ' theta_0')
-toleerance = 0.00001 # константа точности расчёта
+toleerance = 0.00001  # константа точности расчёта
 
 
 
@@ -30,7 +30,7 @@ toleerance = 0.00001 # константа точности расчёта
 def in_random_order(data):
     indexes = [i for i,_ in enumerate(data)]
     # print(indexes, ' indexes')
-    random.shuffle(indexes) # перемешивание индексов данных для случайного выбора
+    random.shuffle(indexes)  # перемешивание индексов данных для случайного выбора
     for i in indexes:
         print(i, data[i], '  <-> i, data[i]')
         yield data[i]
@@ -73,6 +73,7 @@ def minimize_stohastic(target_fn, gradient_fn, x, y,  theta_0, alfa_0 = 0.01):
             iterration_whith_no_improvement += 1
             print('\t' * 6, '<<',iterration_whith_no_improvement, '>>')
             alfa *= 0.9  # Стартовый оценочный коэфф (slope)
+            # TODO  batch - случайным образом выбираем пару Х и У
             for x_i, y_i in in_random_order(data):
                 print('\t'*10, alfa, ' alfa ')
                 print('\t' * 2, value, ' value  <-->', min_value, ' min_value ')

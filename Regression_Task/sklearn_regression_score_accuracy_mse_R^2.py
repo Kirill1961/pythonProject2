@@ -64,3 +64,18 @@ print(f"Accuracy: {accuracy_score(y_true, y_pred):.2f}")
 y_true = [2.5, 0.0, 2.1, 1.6]
 y_pred = [2.4, 0.1, 2.3, 1.4]
 print(f"MSE: {mean_squared_error(y_true, y_pred):.2f}")
+
+
+# TODO Генерация данных с весами
+X, y, true_weights = make_regression(
+    n_samples=10,
+    n_features=3,
+    n_informative=3,
+    noise=2,
+    coef=True,
+    random_state=42,
+)
+
+print(X)
+print(y)
+print(true_weights)

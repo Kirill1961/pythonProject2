@@ -6,6 +6,9 @@ from io import StringIO
 import time as tm
 import logging
 import random
+import pandas as pd
+from sklearn.metrics import confusion_matrix
+
 
 logging.basicConfig(level=logging.DEBUG, filename="x_o_r.log", filemode="w")
 logger = logging.getLogger("X_O_R")
@@ -205,3 +208,80 @@ print(f"C-order, строковой порядок, стоит по умолча
 print(f"F-order, Fortran-order, столбцовый порядок: {np.arange(1, 13).reshape(2, 2, 3).ravel(order='F')}  Выход (идёт по столбцам)")
 print(f"A-order, Any-order, сохраняет исходный: {np.arange(1, 13).reshape(2, 2, 3).ravel(order='A')} ")
 print(f"K-order, Keep-order, сохраняет физический порядок: {np.arange(1, 13).reshape(2, 2, 3).ravel(order='A')} ")
+
+
+
+arr_2d = np.array([[1.11111111e-01],
+                   [3.33333333e-01],
+                   [6.66666667e-01],
+                   [6.66666667e-01],
+                   [5.26315789e-02],
+                   [1.04526316e-04]])
+
+# 1. Метод
+arr_1d = arr_2d.flatten()
+
+print(f'1. Метод уменьшения размерности : {arr_1d}')
+
+print(arr_1d.shape)  # (6,)
+
+# 2. Метод
+arr_1d_2 = arr_2d.ravel()
+print(f'2. Метод уменьшения размерности : {arr_1d_2}')
+
+# 3. Метод
+arr_1d_3 = arr_2d.reshape(-1)
+print(f'3. Метод уменьшения размерности : {arr_1d_3}')
+
+# 4. Метод
+arr_1d_4 = arr_2d.ravel()
+print(f'4. Метод уменьшения размерности : {arr_1d_4}')
+
+# 4. Метод
+arr_1d_5 = arr_2d.flatten()
+print(f'5. Метод уменьшения размерности : {arr_1d_5}')
+
+
+# TODO вектор столбец n умножить на вектор строку m = матрица shape(n x m)
+np.random.seed(0)
+arr = np.round(np.random.normal(scale=2, loc=1.5, size=(5, 2)), 2)
+a = np.random.randint(1, 10, size=5)
+b = np.round(np.random.random(3), 1)
+
+a_T = a.reshape(-1, 1)  # TODO транспонирование вектора а
+
+print('Вектор строка "a" : \n', f'{a}')
+print('Массив 2 х 5 : \n', f'{arr}')
+print('Скалярное умножение arr.T @ a : \n', f'{arr.T @ a_T}')
+print('Вектор столбец : \n', f'{a_T}')
+print('Вектор строка : \n', f'{b}')
+print('Произведение векторов : \n', f'{a_T * b}')
+
+# TODO Пирсон / ФИ для двух классов (0, 1) и двух бинарных признаков
+
+# Две бинарные переменные
+A = [1, 0, 1, 0, 1, 0, 1, 0]
+B = [1, 0, 1, 1, 0, 0, 1, 0]
+
+# Построим confusion matrix (таблицу сопряжённости)
+cm = confusion_matrix(A, B)
+a, b, c, d = cm[1, 1], cm[1, 0], cm[0, 1], cm[0, 0]
+
+# Фи-коэффициент по формуле
+phi = (a * d - b * c) / np.sqrt((a + b)*(c + d)*(a + c)*(b + d))
+
+print('confusion matrix (таблица сопряжённости) : \n', f'{cm}')
+print(f"phi = {phi:.3f}")
+
+# TODO confusion_matrix для 3-х классов (0, 1, 2) и 2-х бинарных признаков
+#  * Строка в итоговой матрице - это класс
+y_true = [0, 1, 2, 2, 0, 1, 2]
+y_pred = [0, 0, 2, 2, 0, 2, 1]
+
+# y_true = [2, 2, 2, 2, 3]
+# y_pred = [3, 2, 2, 1, 2]
+
+cm = confusion_matrix(y_true, y_pred)
+print('confusion_matrix для 3-х классов : \n', f'y_true : {y_true} \n', f'y_pred : {y_pred} \n', f'{cm}')
+for i, j in enumerate(cm):
+    print(f'Частота совпадений для класса {i} : {j}')

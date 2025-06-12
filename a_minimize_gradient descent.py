@@ -32,7 +32,7 @@ v = [random.randint(-10, 10) for i in range(2)]
 
 """ для вывода (next_v, v)"""
 gradient = sum_of_squares_gradient(v)
-next_v = step (v, gradient, -0.01)
+next_v = step(v, gradient, -0.01)
 
 print(next_v, v, ' next_v, v')
 
@@ -40,13 +40,13 @@ tolerance = 0.00001 # константа точности расчёта
 
 
 while True:
-    gradient = sum_of_squares_gradient(v) # вычислить градиент в v
+    gradient = sum_of_squares_gradient(v)  # вычислить градиент в v
     # print(gradient,v, ' gradient')
-    next_v = step (v, gradient, -0.1) # сделать отрицательный шаг градиента
+    next_v = step(v, gradient, -0.1)  # сделать отрицательный шаг градиента
     # print(turtle.distance(next_v[0], v[0])) # растение от '0' до точки с координатами (next_v[0], v[0])
-    if distance (next_v[0], v[0]) < tolerance: # останов при достижении приемлемого уровня (схождения)
+    if distance(next_v[0], v[0]) < tolerance:  # останов при достижении приемлемого уровня (схождения)
         break
-    v = next_v # продолжить если нет
+    v = next_v  # продолжить если нет, перезапись v
 
 
 

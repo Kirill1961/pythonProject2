@@ -66,7 +66,7 @@ intercept = model.intercept_  # значение свободного парам
 print(intercept, "intercept", "\n")
 
 
-""" Сравним некоторый  прогнозы с истинными значениями"""
+""" Сравним прогнозы с истинными значениями"""
 y_pred = model.predict(X)
 print(y_pred[5:])
 

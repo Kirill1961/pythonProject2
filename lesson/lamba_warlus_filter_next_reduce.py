@@ -315,3 +315,16 @@ a = [[4], ['qwer'], [5, 1], [555, 'abc'], [12, 10, 7, 5]]
 
 f = list(filter(lambda x: any(isinstance(y, str) for y in x), a))
 print(f"Фильтр вложенных списков содержащих тип str -> {f}")
+
+# TODO Фильтр с использованием np.inf - бесконечности
+test_mse = [9, 3, 7, 4, 20, 2, 5, 8, 6, 12]
+def foo(test_mse):
+    best_mse = np.inf  # Инициализация переменной best_mse
+    for i in test_mse:
+        if i < best_mse:
+            best_mse = i  # переопределяем best_mse для фильтра if i < best_mse, записываем наименьшее число
+            print(f'best_mse - {best_mse}')
+    return best_mse
+
+
+print('Фильтр с использованием np.inf - бесконечности : \n ', f'{foo(test_mse)}')

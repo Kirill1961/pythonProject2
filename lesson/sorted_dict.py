@@ -13,7 +13,7 @@ for ks in my_dict:
 for ks in sorted(my_dict):
     print(ks, '->', my_dict[ks])
 
-"""Сортировка производится ф-цией sorted,в аргументф ф-ции передаём:
+"""Сортировка производится ф-цией sorted,в аргументе ф-ции передаём:
     1й арг СЛОВАРЬ my_dict,
     2й арг метод get применённый к словарю my_dict который возвращает
     value соответствующее key котор на данный момент проходит сортировку
@@ -99,3 +99,11 @@ print(sorted_by_values_asc)  # {'banana': 1, 'cherry': 2, 'apple': 3}
 # По убыванию (desc)
 sorted_by_values_desc = dict(sorted(dictionary.items(), key=lambda item: item[1], reverse=True))
 print(sorted_by_values_desc)  # {'apple': 3, 'cherry': 2, 'banana': 1
+
+# TODO Сортировка value с lambda,  по любому из элементов value
+d11 = {'r': [5, 33, 7], 'w': [40, 2, 37], 'q': [1, 100, 44]}
+print(f'По третьему элементу value : {sorted(d11.values(), key=lambda x: x[2])}')
+print(f'По второму элементу value : {sorted(d11.items(), key=lambda x: x[1][1])}')
+
+# TODO Сортировка по max / min значению элемнтов value
+print(f'Сортировка по max / min значению элемнтов value{sorted(d11.items(), key=lambda x: max(x[1]))}')

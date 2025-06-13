@@ -21,6 +21,7 @@ print(b([[i] for i in a])[-1], " accumulate - Накопление в списо
 c = [["qwer"], ["asdf"], ["zxcv"]]
 
 
+print()
 def b(x):
     r = list(it.accumulate(x))
     return r
@@ -81,3 +82,18 @@ print(list(itertools.chain(lst[9: 15], lst[49: 55])), '\n')
 
 print('Комбинации из Неповторяющиеся  3x значений :  \n', f'{list(combinations([0, 1, 2, 3], 3, ))}')
 print('Комбинации из Неповторяющиеся  2x значений  : \n', f'{list(combinations([0, 1, 2], 2, ))}')
+
+# TODO Попарное умножение
+b = list('abcde')
+
+comb = combinations(b, 2)
+print(f'Попарное умножение : {list(comb)}')
+
+b = list('abcde')
+# TODO Ручной аналог
+ls = []
+for i in range(len(b)):
+    for j in range(i + 1, len(b)):
+        ls.append( (b[i], b[j]) )
+
+print(f'Ручной аналог : {ls}')

@@ -15,6 +15,8 @@ import statsmodels.api as sm
 # tukey test
 from statsmodels.stats.multicomp import pairwise_tukeyhsd
 
+from statsmodels.graphics.gofplots import qqplot
+
 # TODO index_col=0 - Убрали лишнюю колонку с индексами
 data = pd.read_csv("D:\Eduson_data\Customer Segmentation.csv", index_col=0)
 print(data.head())

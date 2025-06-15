@@ -90,10 +90,15 @@ comb = combinations(b, 2)
 print(f'Попарное умножение : {list(comb)}')
 
 b = list('abcde')
-# TODO Ручной аналог
+# TODO Ручной аналог GPT
 ls = []
 for i in range(len(b)):
     for j in range(i + 1, len(b)):
         ls.append( (b[i], b[j]) )
 
 print(f'Ручной аналог : {ls}')
+
+# TODO Ручной аналог MYYYYYYY !
+for i in range(len(b)):
+    for j in b[i + 1:]:
+        print(b[i], j)

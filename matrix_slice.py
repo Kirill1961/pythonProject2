@@ -282,3 +282,19 @@ print(np.zeros_like(ar))
 print('Треугольная матрица-Маска для ar True / False : ', '\n', f'{np.triu(np.ones_like(ar, dtype=bool))}')
 
 print(ar, '>>>>>>>>')
+
+# TODO np.vstack , np.hstack
+e = np.arange(10, 130, step=10).reshape(4, 3)
+f = np.arange(100, 1300, step=100).reshape(4, 3)
+d = np.arange(1, 13).reshape(4, 3)
+
+print('np.vstack : \n', f'{np.vstack([d, e])}')
+print('np.hstack : \n', f'{np.hstack([d, e, f])}')
+
+# TODO Таблица умножения
+table = []
+for i in range(1, 10):
+    table.append([])
+    for j in range(1, 10):
+        table[i-1].append(i * j)
+print('Таблица умножения : \n', f'{np.array(table)}')

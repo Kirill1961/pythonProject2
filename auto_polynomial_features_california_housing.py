@@ -2,14 +2,9 @@
 import numpy as np
 import pandas as pd
 from sklearn import datasets
-from sklearn.datasets import fetch_california_housing
-from sklearn import linear_model
-from sklearn import metrics
 from sklearn.preprocessing import StandardScaler, PolynomialFeatures
 from sklearn.model_selection import train_test_split, cross_val_score, cross_validate
-from sklearn.linear_model import Ridge, Lasso, ElasticNet
-from sklearn.model_selection import GridSearchCV
-from sklearn.metrics import mean_squared_error
+
 
 data = pd.read_csv('D:\Eduson_data\diamonds1.csv')
 

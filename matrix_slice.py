@@ -298,3 +298,4 @@ for i in range(1, 10):
     for j in range(1, 10):
         table[i-1].append(i * j)
 print('Таблица умножения : \n', f'{np.array(table)}')
+

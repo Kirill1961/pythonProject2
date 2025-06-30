@@ -98,3 +98,23 @@ from itertools import zip_longest
 for a, b, c in zip_longest(list1, list2, list3, fillvalue="&"):
   print(a, b, c,)
 print("LIST разной длинны + заполнение пустых мест любым символом ", "\n")
+
+
+# TODO zip - возвращает Итератор, это свойства можно использовать
+#  * Итераторы можно Исчерпать,
+#  * List(z) - zip object преобразуется в список
+#  * после полного прохода по zip он не может быть использован повторно без явного перезапуска.
+
+l1 = (10, 20, 30)
+l2 = (1, 2, 3)
+z = zip(l1, l2)
+
+print('Ячейка zip : \n', z)
+
+iter_zip = [i for i in z]
+
+print('Итератор zip Полный : \n', iter_zip)
+
+iter_zip = list(z)
+
+print('Итератор zip Пустой после обёртки в List : \n', iter_zip)

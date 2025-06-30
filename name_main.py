@@ -20,6 +20,7 @@ if __name__ == "__main__":
 from lesson import map_name
 map_name.before()
 map_name.after()
+print(__name__)
 
 
 

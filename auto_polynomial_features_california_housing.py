@@ -14,7 +14,7 @@ __doc__ = '''Добавление Полиномов исходных призн
 
 
 X, Y = datasets.fetch_california_housing(as_frame=True, return_X_y=True)
-X_train, X_test, Y_train, Y_test = train_test_split(X, Y,  train_size=0.75, random_state=42)
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y,  train_size=0.9, random_state=42)
 
 
 # TODO min / max Целевой для MSE - интерпретации

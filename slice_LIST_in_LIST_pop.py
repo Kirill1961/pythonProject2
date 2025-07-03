@@ -1,3 +1,5 @@
+import random
+
 list_slise = [1, 2, 3, 4, 5, 6, 7, 8]
 
 print(list_slise[-2:], " два последних значения")  # два последних значения
@@ -93,3 +95,13 @@ step = 3
 #  Разбивка последовательностей на заданные отрезки с фильтром по заданной длине
 print([a[i:][: step] for i in range(0, 12, step) if len(a[i:][: step]) == 3])
 print([b[i:][: step] for i in range(0, 12, step) if len(b[i:][: step]) == 3], "\n")
+
+
+# TODO Разбить два списка разной длины с последующим их совмещением
+step = 6
+a = list('AB')
+b = [_ for _ in range(12)]
+
+for name, row in zip(a, range(0, len(b), step)):  # row - индекс начала каждого нового отрезка
+    print(name, b[row: row + step])
+

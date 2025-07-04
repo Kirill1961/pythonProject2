@@ -44,6 +44,11 @@ for i in range(len(x)):
     x_tens = torch.tensor(x_weight)  # Преобразование в Тензор
 
     # TODO Используем Threshold как активацию с порогом 0,5
+    #   value=0.0 - это значение которое подставляется если вход ниже порога
+    #   Threshold — это как простая ступенчатая функция активации:
+    #   если "сигнал слишком слабый", заменяем его на "тишину" (value).
+
+
     threshold = torch.nn.Threshold(threshold=0.5, value=0.0)
     activated_output = threshold(x_tens)
     print(f"Activated output ws threshold 0.5: {activated_output}")

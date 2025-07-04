@@ -1,3 +1,5 @@
+import random
+
 list_slise = [1, 2, 3, 4, 5, 6, 7, 8]
 
 print(list_slise[-2:], " два последних значения")  # два последних значения
@@ -75,6 +77,10 @@ print(st[:: -1], " - > Реверс строки срезом", "\n")
 a2 = [2, 4, 1, 4, 2, 3]
 print([a2.pop(0) + a2.pop(0) for i in range(3)], "попарное сложение элементов c pop()", "\n")
 
+# TODO pop() - Разбивка по три элемента
+b = list('asdfghjklq')
+print('Разбивка по три элемента с вырезанием : \n', f'{[b.pop(0) + b.pop(0) + b.pop(0) for _ in b]}')
+
 # Срез Среза с Реверсом
 a2 = [2, 4, 1, 2, 3]
 print(a2[2:][:: -1], "Срез Среза с Реверсом", "\n")
@@ -89,3 +95,13 @@ step = 3
 #  Разбивка последовательностей на заданные отрезки с фильтром по заданной длине
 print([a[i:][: step] for i in range(0, 12, step) if len(a[i:][: step]) == 3])
 print([b[i:][: step] for i in range(0, 12, step) if len(b[i:][: step]) == 3], "\n")
+
+
+# TODO Разбить два списка разной длины с последующим их совмещением
+step = 6
+a = list('AB')
+b = [_ for _ in range(12)]
+
+for name, row in zip(a, range(0, len(b), step)):  # row - индекс начала каждого нового отрезка
+    print(name, b[row: row + step])
+

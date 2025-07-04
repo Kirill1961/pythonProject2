@@ -285,3 +285,11 @@ cm = confusion_matrix(y_true, y_pred)
 print('confusion_matrix для 3-х классов : \n', f'y_true : {y_true} \n', f'y_pred : {y_pred} \n', f'{cm}')
 for i, j in enumerate(cm):
     print(f'Частота совпадений для класса {i} : {j}')
+
+# TODO Индексы наибольших значений в массиве
+#   * argpartition - не возвращает отсортированные индексы, а просто перемещает топ-3 в конец массива.
+np.random.seed(0)
+arr = np.array(np.random.randint(1, 20, size=10))
+idx = np.argpartition(arr, -3)[-3:]
+print(f'Индексы наибольших значений в массиве {arr} : \n', f'Индексы {idx}')
+print('Наибольшие значения согласно индексам : \n', f'{arr[idx]}')

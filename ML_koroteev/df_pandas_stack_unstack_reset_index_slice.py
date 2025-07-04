@@ -202,3 +202,23 @@ print('Центрирование в ручную, вычитание средн
 df_list = pd.DataFrame([[1, 2], [10, 20], [100, 200]], columns=[list('AB')], index=list('abc'))
 
 print('\n', 'Создание через list - index и columns в DF :', '\n', f'{df_list}')
+
+
+# TODO Eduson Попарное сложение признаков
+
+df = pd.DataFrame([['a', 'b', 'e', 'v'], ['c', 'd', 'f', 'w']], columns=list('ABCD'))
+col = df.columns
+for n in range(len(col)):
+    for m in range(n + 1, len(col)):
+        col1, col2 = col[n], col[m]
+        df[f'{col1 + col2}'] = df[col1] + df[col2]
+print(df, '\n')
+
+# TODO MY Попарное сложение признаков
+
+df = pd.DataFrame([['a', 'b', 'e', 'v'], ['c', 'd', 'f', 'w']], columns=list('ABCD'))
+cols = df.columns
+for idx in range(len(cols)):
+    for col_next in cols[idx+1:]:
+        df[cols[idx] + col_next] = df[cols[idx]]+df[col_next]
+print(df)

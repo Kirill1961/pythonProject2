@@ -5,7 +5,7 @@ import random
 import numpy as np
 
 # Сгенерировать список слов
-set_for_train = " asdf rtyu rtyu poiu poiu poiu poiu poiu asdf asdddd" #
+set_for_train = " asdf rtyu rtyu poiu poiu poiu poiu poiu asdf assdddd" #
 for_classifier_message = " asdf poiu poiu dfghrtyu rtyu asdfpoiu asdf asdf qwert rewq asdf asdddd asdddd asdddd asdddd "
 
 def tokenize(message):

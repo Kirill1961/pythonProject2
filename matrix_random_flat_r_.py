@@ -293,3 +293,12 @@ arr = np.array(np.random.randint(1, 20, size=10))
 idx = np.argpartition(arr, -3)[-3:]
 print(f'Индексы наибольших значений в массиве {arr} : \n', f'Индексы {idx}')
 print('Наибольшие значения согласно индексам : \n', f'{arr[idx]}')
+
+
+# TODO Таблица умножения с numpy
+
+ar = np.empty([0])
+for i in range(1, 10):
+    for j in  range(1, 10):
+        ar = np.append(ar, np.array([i * j]))
+print('Таблица умножения с numpy : \n', ar.reshape(9, 9))

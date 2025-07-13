@@ -1,4 +1,4 @@
-seq = ['s', 'j', 'p', 'r', 'q'] # присваиваем ОБ списка № или индекс, start=0 - стартовое число №
+seq = ['s', 'j', 'p', 'r', 'q']  # присваиваем ОБ списка № или индекс, start=0 - стартовое число №
 
 for i, val in enumerate(seq, start=0):
   print(f'№ {i} => {val}')
@@ -60,3 +60,12 @@ x_ = [[1, 49, 4, 0], [1, 41, 6, 1], [1, 40, 2, 0]]
 y_ = [0.5, 0.5, 0.5, 0.5]
 print(list(map(lambda enum_and_y, data: [d * y_[enum_and_y[0]] for d in data], enumerate(y_), x_)),
        " Разный LEN() у LIST и LIST[LIST] и Операции между LIST и LIST[LIST] с разным LEN()")
+
+
+# TODO Разбить два списка разной длины с последующим их совмещением
+step = 6
+a = list('AB')
+b = [_ for _ in range(12)]
+
+for n, row in enumerate(range(0, len(b), step)):  # row - индекс начала каждого нового отрезка
+    print(a[n], b[row: row + step])

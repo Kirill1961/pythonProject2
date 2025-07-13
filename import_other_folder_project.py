@@ -29,7 +29,7 @@ ml = os.path.join(os.getcwd(), "..", "ML_koroteev")
 # print(vsearch.t)
 #
 sys.path.insert(1,os.path.join(sys.path[0],'../../'))
-from lesson.map import t
+from lesson.map_expt import t
 print(t)
 #
 # sys.path.insert(1,os.path.join(sys.path[0],'../../'))

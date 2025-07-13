@@ -12,11 +12,15 @@
 def greet(name):
     return f"Hello, {name}!"
 
+
 if __name__ == "__main__":
     print(greet("World"))
 
+# TODO  before() вызывается при импорте, after() только при прямом вызове
+from lesson import map_name
+map_name.before()
+map_name.after()
+print(__name__)
 
-# main.py
 
-from lesson import map
-print(map.up('three four'))
+

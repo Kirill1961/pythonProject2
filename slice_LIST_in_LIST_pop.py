@@ -105,3 +105,10 @@ b = [_ for _ in range(12)]
 for name, row in zip(a, range(0, len(b), step)):  # row - индекс начала каждого нового отрезка
     print(name, b[row: row + step])
 
+#  TODO Разбиение коллекции на списки и извлечение заданного значения из списков
+a = [i for i in range(30)]
+
+l = 10  # Длина разбитых списков
+n = 2   # Значение из разбитого списка
+res = [a[i: i + l][n] for i in range(0, len(a), l)]
+print(res)

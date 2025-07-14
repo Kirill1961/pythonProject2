@@ -248,7 +248,7 @@ arr = np.round(np.random.normal(scale=2, loc=1.5, size=(5, 2)), 2)
 a = np.random.randint(1, 10, size=5)
 b = np.round(np.random.random(3), 1)
 
-a_T = a.reshape(-1, 1)  # TODO транспонирование вектора а
+a_T = a.reshape(-1, 1)  # TODO транспонирование вектора а, 1 столбец и n строк
 
 print('Вектор строка "a" : \n', f'{a}')
 print('Массив 2 х 5 : \n', f'{arr}')
@@ -302,3 +302,12 @@ for i in range(1, 10):
     for j in  range(1, 10):
         ar = np.append(ar, np.array([i * j]))
 print('Таблица умножения с numpy : \n', ar.reshape(9, 9))
+
+# TODO Уменьшение Размерности с reshape(n, -1)
+np.random.seed(0)
+arr = np.array(np.random.randint(1, 20, size=12)).reshape(3, 2, 2)
+
+
+print('3-х мерный массив : \n', arr)
+print('2-х мерный массив 3 строки : \n', arr.reshape(3, -1))
+print('2-х мерный массив 3 столбца : \n', arr.reshape(-1, 3))

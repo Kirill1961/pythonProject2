@@ -16,7 +16,7 @@ X, y = make_classification(
 
 # 2. Модель KNN с заданным k
 k = 3  # можешь менять
-knn = KNeighborsClassifier(n_neighbors=k)
+knn = KNeighborsClassifier(n_neighbors=k, algorithm='kd_tree')
 knn.fit(X, y)
 
 # 3. Сетка значений для предсказания на всей плоскости

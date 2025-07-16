@@ -3,7 +3,7 @@ import itertools as it
 import operator
 import numpy as np
 import random
-from itertools import combinations
+from itertools import combinations, islice
 
 a = [[0, 1], [0, 0], [1, 0], [1, 1]]
 
@@ -102,3 +102,10 @@ print(f'Ручной аналог : {ls}')
 for i in range(len(b)):
     for j in b[i + 1:]:
         print(b[i], j)
+
+
+# TODO срез словаря
+d = {i: j for j, i in enumerate(list('abcde'))}
+sls = dict(islice(d.items(), 3))
+
+print('срез словаря :', sls)

@@ -38,3 +38,15 @@ print(p2.age)   # 25
 print('Извлекаем атрибуты с getattr : \n', getattr(p2, 'name'))
 print('Извлекаем атрибуты с attrgetter : \n', attrgetter('name')(p2), attrgetter('name')(p3))
 print('Извлекаем атрибуты с attrgetter : \n', p1.name, p3.name)
+
+
+# TODO Мой пример для закрепления
+
+dog = namedtuple('dog', ['name', 'breed', 'color'])
+cat = namedtuple('cat', ['name', 'breed', 'color'])
+
+p1 = cat('Lisa', 'dnt know', 'Red')
+p2 = dog('Bim', 'dnt know', 'cheprack')
+
+print('Извлекаем атрибуты с attrgetter : \n', attrgetter('name')(p1), attrgetter('color')(p1))
+print('Извлекаем атрибуты с attrgetter : \n', attrgetter('name')(p2), attrgetter('color')(p2))

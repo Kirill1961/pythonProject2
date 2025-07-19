@@ -19,7 +19,7 @@ print(" ")
 N.flower = "iris"
 
 # с помощью SETATTR динамически добавляем атрибут в класс
-setattr(N, "peopl", " John") # в классе
+setattr(N, "peopl", " John")  # в классе
 setattr(w, "plant", "birch")
 
 # Присваиваем переменной атрибут класса
@@ -162,9 +162,23 @@ print(ex.f_t(10), " Nn")
 # print(dir(ex))
 
 
+class Dog:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+# TODO вызывается с аргументом
+    def prnt1(self, x):
+        return x
+# TODO prnt2 - вызывается без аргументов, возвращает только инициализированные аргументы
+    def prnt2(self):
+        return self.name, self.age
 
 
+p1 = Dog('Sendy', 54)
+p2 = Dog('Bim', 15)
 
+print(p1.prnt2())
+print(p2.prnt1(222))
 
 
 

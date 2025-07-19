@@ -1,4 +1,5 @@
 import random
+from itertools import islice
 
 list_slise = [1, 2, 3, 4, 5, 6, 7, 8]
 
@@ -112,3 +113,8 @@ l = 10  # Длина разбитых списков
 n = 2   # Значение из разбитого списка
 res = [a[i: i + l][n] for i in range(0, len(a), l)]
 print(res)
+
+# TODO Срез словаря
+d = {i: j for j, i in enumerate(list('abcde'))}
+slice = list(islice(d.items(), 3))
+print(slice)

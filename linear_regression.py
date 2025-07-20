@@ -17,7 +17,7 @@ x = [2, 4, 6]
 y = [20, 40, 60]
 
 
-def sum_of_square_error(*residual   ):
+def sum_of_square_error(*residual):
     return sum(
         [
             error(
@@ -26,7 +26,7 @@ def sum_of_square_error(*residual   ):
                 y_i,
             )
             ** 2
-            for x_i, y_i in zip(x, y  )
+            for x_i, y_i in zip(x, y)
         ]
     )
 

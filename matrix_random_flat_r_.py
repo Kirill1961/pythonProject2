@@ -311,3 +311,16 @@ arr = np.array(np.random.randint(1, 20, size=12)).reshape(3, 2, 2)
 print('3-х мерный массив : \n', arr)
 print('2-х мерный массив 3 строки : \n', arr.reshape(3, -1))
 print('2-х мерный массив 3 столбца : \n', arr.reshape(-1, 3))
+
+
+# TODO append array
+
+a = np.random.randint(10, size=(4, 5))
+b = np.random.randint(100, 1000, size=(1, 5))
+res = np.append(b, a).reshape(-1, 5)
+print(res)
+
+# TODO hsplit
+
+print('Разделение строк \n :', np.vsplit(a, 2))
+print('Отрезаем столбцы первые 3 и то что останется \n :', np.hsplit(a, np.array([3, 5])))

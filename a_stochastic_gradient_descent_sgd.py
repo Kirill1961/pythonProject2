@@ -5,7 +5,7 @@ import random
 
 def square(x_x, y_y, t):
     # print(x, y, t, ' square')
-    return (y_y - t * x_x)**2 # Loss function целевая функция - квадратичное отклонение  / Loss function
+    return (y_y - t * x_x)**2  # Loss function целевая функция - квадратичное отклонение  / Loss function
 
 def derivative(x_x, y_y, t):    # производная целевой ф-ции Loss function по theta - (y_y - (t * x_x))**2
     return -2 * x_x * (y_y - t * x_x)   # " t " - это theta - регрессионный коэфф, угол наклона

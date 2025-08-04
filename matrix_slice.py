@@ -189,12 +189,19 @@ print(list(zip([f, g])), "Объеденения 2х мерных массиво
 # r_  Объединение 2-х мерных массивов с разным shape axis=0
 h = np.random.random((2, 3))
 o = np.random.random((1, 3))
-print(np.r_[h, o], "r_  ->  Объединение 2-х мерных массивов с разным shape axis=0")
+print("r_  ->  Объединение 2-х мерных массивов с разным shape axis=0, \n", np.r_[h, o])
 
-# с_  Объединение 2-х мерных массивов с одинаковым shape axis=1
-h = np.random.random((2, 3))
-o = np.random.random((2, 3))
-print(np.c_[h, o], "c_  ->  Объединение 2-х мерных массивов, с_ только с одинаковым shape, axis=1", "\n")
+#  с_  Объединение 2-х мерных массивов с одинаковым shape axis=1,
+# TODO с_ действует как np.hstack
+h = np.zeros((2, 3))
+o = np.ones((2, 3))
+print("c_  ->  Объединение 2-х мерных массивов, с_ действует как np.hstack, axis=1", "\n", np.c_[h, o])
+
+#  c_ - одномерный массив соединяет по столбцам по axis=1
+h = np.zeros(2)
+o = np.ones(2)
+print("c_ - одномерный массив соединяет по столбцам по axis=1", "\n", np.c_[h, o])
+
 
 # np.empty - Заполняется последним array/slice подходящим под указанный shape или dtype , если нет то НУЛИ
 print(np.random.random((1, 3)), "np.random.random((1, 3))", "\n")

@@ -8,7 +8,7 @@ from scipy.stats import f
 df = pd.DataFrame({
     "A": [1, 2, pd.NA],
     "B": [4, None, pd.NA],
-    "C": [7, 8, 9]
+    "C": [7, np.nan, 9]
 })
 df1 = pd.DataFrame({"A": [1, 2, 3, 4, 5], "B": [10, 20, 30, 40, 50], "C": [100, 200, 300, 400, 500]})
 df2 = pd.DataFrame({"A": ["yes", "no", "no"], "B": [10, "20", "30"], "C": ["0", 0, 1]})
@@ -47,6 +47,13 @@ df707 = pd.DataFrame({
     'B': pd.Series(list('QAWSEDRFTGYHUK'))
 })
 
+
+df70 = pd.DataFrame({
+    'A': [10, 20, 30, 40, 10, 20, 30, 40, 10, 20, 30, 40, 10, 20, 30, 40, 10, 20, 30, 40],
+    'B': ['M', 'W', 'F', 'V', 'M', 'F', 'F', 'D', 'F', 'M', 'M', 'M', 'M', 'F', 'F', 'F', 'M', 'M', 'F', 'F']
+})
+
+
 df44 = pd.DataFrame({"A": [5, 2, 2, 4, 5],
                      "B": [50, 20, 50, 40, 50],
                      "C": [300, 300, 300, 400, 300]},
@@ -70,14 +77,14 @@ df11 = pd.DataFrame({
 # Долевое распределение столбцов А и В
 grouped = df333.groupby(["A", "B"]).size()
 percent = grouped.groupby(level=0).apply(lambda x: x * 100 / float(x.sum()))
-print(grouped)
-print(percent)
+print('Группировка : \n', grouped)
+print('Группировка в процентах : \n', percent)
 
 #  one-hot encoding
 encod_categor = pd.get_dummies(df333, columns=["A"])  # Выйдет False и True
 encod_zero_one = encod_categor.astype(int)  # Преобразование False и True в 0 и 1
-print(encod_categor)
-print(encod_zero_one)
+print('one-hot encoding : \n', encod_categor)
+print('encod_zero_one :  \n', encod_zero_one)
 
 # Сравнение Индекса Группировки и Средного
 mean_a = df11.groupby(['A']).mean()

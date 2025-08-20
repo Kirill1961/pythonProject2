@@ -21,8 +21,8 @@ print(X_cat)
 
 df1 = pd.DataFrame({
     'age': [25, 32, 47, 51],
-    'salary': [50000, 60000, 80000, 90000],
     'gender': ['male', 'female', 'female', 'male'],
+    'salary': [50000, 60000, 80000, 90000],
     'city': ['NY', 'LA', 'NY', 'SF']
 })
 
@@ -30,10 +30,12 @@ df1 = pd.DataFrame({
 num_features = ['age', 'salary']
 cat_features = ['gender', 'city']
 
+
+# TODO sparse_output=False - параметр убирает Разрежение матрицы
 preprocessor = ColumnTransformer(
     transformers=[
         ('num', StandardScaler(), num_features),  # стандартизация числовых
-        ('cat', OneHotEncoder(), cat_features)  # OHE для категориальных
+        ('cat', OneHotEncoder(sparse_output=False), cat_features)  # OHE для категориальных
     ]
 )
 
@@ -41,4 +43,6 @@ preprocessor = ColumnTransformer(
 X_processed = preprocessor.fit_transform(df1)
 
 print(X_processed)  # если Вернёт sparse matrix
-# print(X_processed.toarray())  # если OHE вернёт sparse matrix
+
+# TODO если OHE вернёт sparse matrix
+# print(X_processed.toarray())

@@ -24,3 +24,5 @@ np.random.seed(0)
 b = np.array(list(np.random.randint(1, 10, size=12))).reshape(3, 4)
 print('Исходный array : \n', b)
 print('Уникальные значения : \n', np.unique(b, return_counts=True))
+
+print(np.__version__)

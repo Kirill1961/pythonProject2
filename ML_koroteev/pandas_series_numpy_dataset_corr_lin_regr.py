@@ -202,3 +202,13 @@ st = mu - 3 * sigma
 sp = mu + 3 * sigma
 normal_boundaries = np.random.randint(st, sp, size=20)
 print(normal_boundaries, '>>>')
+
+# TODO Кодирование category + добавление Префикса к именам новых столбцов
+df111 = pd.DataFrame({
+    "A": ["Avrg", "Bin", "Cnt", "Foo", "Dt"],
+    "B": ['M', 'F', 'F', 'F', 'M'],
+    "C": ['Male', 'Female', 'Male', 'Female', 'Male']
+})
+
+encod = pd.get_dummies(df111, prefix=[col + '_Kirill' for col in df111.columns]).astype(int)
+print(encod)

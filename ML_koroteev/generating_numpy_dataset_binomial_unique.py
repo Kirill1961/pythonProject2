@@ -17,4 +17,10 @@ print(np.random.random_sample(10))
 print(np.random.normal(0, 1, size=10))
 
 # TODO генерирует случайные числа на интервале [low, high) из равномерного распределения
-print(np.random.uniform(-2, 2, size=10))
+print(np.random.uniform(-2, 2, size=10), '\n')
+
+# TODO  Уникальные значения numpy
+np.random.seed(0)
+b = np.array(list(np.random.randint(1, 10, size=12))).reshape(3, 4)
+print('Исходный array : \n', b)
+print('Уникальные значения : \n', np.unique(b, return_counts=True))

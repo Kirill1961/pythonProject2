@@ -1,7 +1,12 @@
 from sklearn.preprocessing import OrdinalEncoder
 import pandas as pd
+import numpy as np
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.pipeline import make_pipeline
+from sklearn.impute import SimpleImputer
+
+
 
 # TODO OrdinalEncoder - Кодирование Порядковых признаков
 df = pd.DataFrame({
@@ -46,3 +51,20 @@ print(X_processed)  # если Вернёт sparse matrix
 
 # TODO если OHE вернёт sparse matrix
 # print(X_processed.toarray())
+
+X = pd.DataFrame({
+    "Sex": ["M", "F", "M"],
+    "Housing": ["own", "rent", "own"]
+})
+
+cat_pipe = make_pipeline(
+    SimpleImputer(strategy="most_frequent"),
+    OneHotEncoder(handle_unknown="ignore")
+)
+
+ct = ColumnTransformer([
+    ("cat", cat_pipe, ["Sex", "Housing"])
+], remainder="passthrough")
+
+X_trans = ct.fit_transform(X)
+print(ct.get_feature_names_out())

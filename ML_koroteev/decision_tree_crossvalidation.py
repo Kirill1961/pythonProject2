@@ -41,7 +41,7 @@ for d in range(1, 20):
 
 # TODO Визуализвция Дерева
 plot_tree(clf_tree)
-# plt.show()
+plt.show()
 
 # TODO cross_validation вывод scores (для каждого фолда) и accuracy
 for d in range(1, 20):

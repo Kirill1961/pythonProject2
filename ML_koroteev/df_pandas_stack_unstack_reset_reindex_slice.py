@@ -59,6 +59,11 @@ df44 = pd.DataFrame({"A": [5, 2, 2, 4, 5],
                      "C": [300, 300, 300, 400, 300]},
                     index=["Avrg", "Bin", "Cnt", "Foo", "Dt"]
                     )
+df404 = pd.DataFrame({"A": [5, 2, 2, 4, 5],
+                     "B": [50, 20, 50, 40, 50],
+                     "C": [300, 300, 300, 400, 300]},
+                    index=["AA", "Bin", "CC", "Foo", "Dt"])
+
 
 df22 = pd.DataFrame({"A": [0, "no", "no"], "B": [0, 0, 0], "C": [0, 0, 1]})
 
@@ -201,7 +206,6 @@ for name, data in df_7.groupby((['Sex', 'Age', 'Test'])):
 
 
 # TODO Центрирование в ручную, вычитание среднего из значений колонок
-
 df77_scaler = df77 - (df77.A.mean(), df77.B.mean())
 print('Центрирование в ручную, вычитание среднего из значений колонок', '\n', f'{df77_scaler[:5]}')
 
@@ -212,7 +216,6 @@ print('\n', 'Создание через list - index и columns в DF :', '\n',
 
 
 # TODO Eduson Попарное сложение признаков
-
 df = pd.DataFrame([['a', 'b', 'e', 'v'], ['c', 'd', 'f', 'w']], columns=list('ABCD'))
 col = df.columns
 for n in range(len(col)):
@@ -222,10 +225,20 @@ for n in range(len(col)):
 print(df, '\n')
 
 # TODO MY Попарное сложение признаков
-
 df = pd.DataFrame([['a', 'b', 'e', 'v'], ['c', 'd', 'f', 'w']], columns=list('ABCD'))
 cols = df.columns
 for idx in range(len(cols)):
     for col_next in cols[idx+1:]:
         df[cols[idx] + col_next] = df[cols[idx]]+df[col_next]
-print(df)
+print(df, '\n')
+
+# TODO reindex(для Series) + reindex_like(для DF)
+print('reindex : \n', df44.reindex(df404.index))
+print('reindex_like : \n', df44.reindex_like(df404))
+
+# TODO pd.date_range - колленкция дат в заданном интервале
+#  * здесь используется как index
+index = pd.date_range(start='2014-02-12', end='2014-02-15', freq='D')
+print('Индексы даты :\n', pd.DataFrame({'One': list(range(1, 5)), 'Two': list(range(10, 50, 10))}, index=index))
+
+print('Сгенерирванные даты с шагом Месяц :\n', pd.date_range(start='2014-02-12', end='2014-07-12', freq='M'))

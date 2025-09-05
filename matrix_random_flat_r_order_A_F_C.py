@@ -323,4 +323,10 @@ print(res)
 # TODO hsplit
 
 print('Разделение строк \n :', np.vsplit(a, 2))
-print('Отрезаем столбцы первые 3 и то что останется \n :', np.hsplit(a, np.array([3, 5])))
+print('Отрезаем столбцы первые 3 и то что останется \n :', np.hsplit(a, np.array([3, 5])), '\n')
+
+# TODO Псевдо-генератор RandomState,
+#  - Генерирует все виды массивов и распределений
+rng = np.random.RandomState(1)
+print('Псевдо-генератор RandomState c randint : \n', rng.randint(1, 10, 12), '\n')
+print('Псевдо-генератор RandomState c normal : \n', rng.normal(0, 1, 12), '\n')

@@ -67,3 +67,16 @@ def devi(x, y, a, b):
 
 
 print(devi(10, 50, 5, 2), " две ф -ции работают в связке с разным кол-вом аргументов")
+
+# TODO **kwargs собирает все дополнительные именованные аргументы в словарь.
+def foo(a, **x):
+    w = x
+    return a, w
+print(foo(a=5, b=50, c=70))
+
+# TODO **params распаковал словарь в отдельные аргументы → func(10,20,30)
+def foo(a, b, c):
+    return a, b, c
+
+param = {'a': 10, 'b': 20, 'c': 30}
+print(foo(**param))

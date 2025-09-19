@@ -58,3 +58,12 @@ print(*b1)
 a2, b1, *c2 = l
 print(*c2)
 
+# TODO
+#  / → всё слева = только позиционные аргументы
+#  * → всё справа = только именованные аргументы
+ls = list(range(5))
+
+def foo(x, /, *, n=0):
+    x.append(n)
+    return ls
+print(foo(ls, n=100))

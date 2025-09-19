@@ -242,3 +242,21 @@ index = pd.date_range(start='2014-02-12', end='2014-02-15', freq='D')
 print('Индексы даты :\n', pd.DataFrame({'One': list(range(1, 5)), 'Two': list(range(10, 50, 10))}, index=index))
 
 print('Сгенерирванные даты с шагом Месяц :\n', pd.date_range(start='2014-02-12', end='2014-07-12', freq='M'))
+
+
+# TODO Создание DF
+#  из списка
+#  из Series
+#  из ndarray
+
+a = np.array(list('gud'))
+
+print(pd.DataFrame([a], index=['Kirill'], columns=list('ABC')))
+
+s = pd.Series(list('very'))
+
+print(pd.DataFrame([s.values], index=['He'], columns=list('ABCD')))
+
+ls = list('pops')
+
+print(pd.DataFrame([ls], index=['Here'], columns=list('ABCD')))

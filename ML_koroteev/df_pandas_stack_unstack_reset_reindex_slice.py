@@ -57,7 +57,7 @@ df70 = pd.DataFrame({
 df44 = pd.DataFrame({"A": [5, 2, 2, 4, 5],
                      "B": [50, 20, 50, 40, 50],
                      "C": [300, 300, 300, 400, 300]},
-                    index=["Avrg", "Bin", "Cnt", "Foo", "Dt"]
+                    index=["Dt", "Bin", "Foo","Cnt", "Avrg"]
                     )
 df404 = pd.DataFrame({"A": [5, 2, 2, 4, 5],
                      "B": [50, 20, 50, 40, 50],
@@ -258,5 +258,6 @@ s = pd.Series(list('very'))
 print(pd.DataFrame([s.values], index=['He'], columns=list('ABCD')))
 
 ls = list('pops')
-
+f
 print(pd.DataFrame([ls], index=['Here'], columns=list('ABCD')))
+

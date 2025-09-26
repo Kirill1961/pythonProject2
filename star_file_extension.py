@@ -6,6 +6,8 @@
 * (звезда): Соответствует нулевому или более количеству любых символов.
 Примеры: file* найдет file, file1, file2.txt, file_xyz.jpg, и т. д."""
 import os
+import pandas as pd
+import numpy as np
 
 
 a = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
@@ -67,3 +69,7 @@ def foo(x, /, *, n=0):
     x.append(n)
     return ls
 print(foo(ls, n=100))
+
+d = {'A': list(range(1, 5)), 'B': list(range(10, 50, 10))}
+
+print(dict(**d))

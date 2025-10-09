@@ -27,7 +27,7 @@ print('Извлекаем заданные вложенные словари : \
 
 # TODO Извлекаем атрибуты с attrgetter
 Person = namedtuple('Person', ['name', 'age'])
-p1 = Person('Юля', 25)
+p1 = Person('Лиса', 25)
 p2 = Person('Kirill', 54)
 p3 = Person('Sveta', 18)
 

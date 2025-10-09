@@ -4,6 +4,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from scipy.stats import shapiro
 from scipy.stats import f
+import random
+from sklearn.preprocessing import OrdinalEncoder
 
 df = pd.DataFrame({
     "A": [1, 2, pd.NA],
@@ -47,23 +49,20 @@ df707 = pd.DataFrame({
     'B': pd.Series(list('QAWSEDRFTGYHUK'))
 })
 
-
 df70 = pd.DataFrame({
     'A': [10, 20, 30, 40, 10, 20, 30, 40, 10, 20, 30, 40, 10, 20, 30, 40, 10, 20, 30, 40],
     'B': ['M', 'W', 'F', 'V', 'M', 'F', 'F', 'D', 'F', 'M', 'M', 'M', 'M', 'F', 'F', 'F', 'M', 'M', 'F', 'F']
 })
 
-
 df44 = pd.DataFrame({"A": [5, 2, 2, 4, 5],
                      "B": [50, 20, 50, 40, 50],
                      "C": [300, 300, 300, 400, 300]},
-                    index=["Dt", "Bin", "Foo","Cnt", "Avrg"]
+                    index=["Dt", "Bin", "Foo", "Cnt", "Avrg"]
                     )
 df404 = pd.DataFrame({"A": [5, 2, 2, 4, 5],
-                     "B": [50, 20, 50, 40, 50],
-                     "C": [300, 300, 300, 400, 300]},
-                    index=["AA", "Bin", "CC", "Foo", "Dt"])
-
+                      "B": [50, 20, 50, 40, 50],
+                      "C": [300, 300, 300, 400, 300]},
+                     index=["AA", "Bin", "CC", "Foo", "Dt"])
 
 df22 = pd.DataFrame({"A": [0, "no", "no"], "B": [0, 0, 0], "C": [0, 0, 1]})
 
@@ -204,7 +203,6 @@ for name, data in df_7.groupby((['Sex', 'Age', 'Test'])):
 
     # print(data, '\n')  # Все группы после группировки
 
-
 # TODO Центрирование в ручную, вычитание среднего из значений колонок
 df77_scaler = df77 - (df77.A.mean(), df77.B.mean())
 print('Центрирование в ручную, вычитание среднего из значений колонок', '\n', f'{df77_scaler[:5]}')
@@ -213,7 +211,6 @@ print('Центрирование в ручную, вычитание средн
 df_list = pd.DataFrame([[1, 2], [10, 20], [100, 200]], columns=[list('AB')], index=list('abc'))
 
 print('\n', 'Создание через list - index и columns в DF :', '\n', f'{df_list}')
-
 
 # TODO Eduson Попарное сложение признаков
 df = pd.DataFrame([['a', 'b', 'e', 'v'], ['c', 'd', 'f', 'w']], columns=list('ABCD'))
@@ -228,21 +225,20 @@ print(df, '\n')
 df = pd.DataFrame([['a', 'b', 'e', 'v'], ['c', 'd', 'f', 'w']], columns=list('ABCD'))
 cols = df.columns
 for idx in range(len(cols)):
-    for col_next in cols[idx+1:]:
-        df[cols[idx] + col_next] = df[cols[idx]]+df[col_next]
+    for col_next in cols[idx + 1:]:
+        df[cols[idx] + col_next] = df[cols[idx]] + df[col_next]
 print(df, '\n')
 
 # TODO reindex(для Series) + reindex_like(для DF)
-print('reindex : \n', df44.reindex(df404.index))
-print('reindex_like : \n', df44.reindex_like(df404))
+print('reindex : \n', df44.reindex(df404.index), '\n')
+print('reindex_like : \n', df44.reindex_like(df404), '\n')
 
 # TODO pd.date_range - колленкция дат в заданном интервале
 #  * здесь используется как index
 index = pd.date_range(start='2014-02-12', end='2014-02-15', freq='D')
-print('Индексы даты :\n', pd.DataFrame({'One': list(range(1, 5)), 'Two': list(range(10, 50, 10))}, index=index))
+print('Индексы даты :\n', pd.DataFrame({'One': list(range(1, 5)), 'Two': list(range(10, 50, 10))}, index=index), '\n')
 
-print('Сгенерирванные даты с шагом Месяц :\n', pd.date_range(start='2014-02-12', end='2014-07-12', freq='M'))
-
+print('Сгенерирванные даты с шагом Месяц :\n', pd.date_range(start='2014-02-12', end='2014-07-12', freq='M'), '\n')
 
 # TODO Создание DF
 #  из списка
@@ -251,13 +247,24 @@ print('Сгенерирванные даты с шагом Месяц :\n', pd.d
 
 a = np.array(list('gud'))
 
-print(pd.DataFrame([a], index=['Kirill'], columns=list('ABC')))
+print(pd.DataFrame([a], index=['Kirill'], columns=list('ABC')), '\n')
 
 s = pd.Series(list('very'))
 
-print(pd.DataFrame([s.values], index=['He'], columns=list('ABCD')))
+print(pd.DataFrame([s.values], index=['He'], columns=list('ABCD')), '\n')
 
 ls = list('pops')
 f
-print(pd.DataFrame([ls], index=['Here'], columns=list('ABCD')))
+print(pd.DataFrame([ls], index=['Here'], columns=list('ABCD')), '\n')
 
+# TODO OrdinalEncoder
+df = pd.DataFrame(
+    {'A': ['asdf'[random.randint(0, 3)] for _ in range(5)],
+     'B': ['qwer'[random.randint(0, 3)] for _ in range(5)]
+     }
+)
+
+enc = OrdinalEncoder()
+
+print('OrdinalEncoder для DataFrame :\n', enc.fit_transform(df), '\n')
+print('OrdinalEncoder для Series через array :\n', enc.fit_transform(np.array(df.A).reshape(-1, 1)), '\n')

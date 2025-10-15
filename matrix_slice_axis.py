@@ -306,3 +306,14 @@ for i in range(1, 10):
         table[i-1].append(i * j)
 print('Таблица умножения : \n', f'{np.array(table)}')
 
+# TODO slice + axis
+
+df = np.arange(1, 13).reshape(3, 4)
+
+print('Исходный df :\n', df, '\n')
+print('1D по столбцам : \n', df[:, 2], '\n')
+print('1D по строкам : \n', df[2, :], '\n')
+print('2D : \n', df[:, :2], '\n')
+print('Координата : \n', df[1, 3], '\n')
+print('Среднее по axis=0 по столбцам : \n', df[:, 2:].mean(axis=0))
+print('Среднее по axis=1 по строкам : \n', df[:, 2:].mean(axis=1))

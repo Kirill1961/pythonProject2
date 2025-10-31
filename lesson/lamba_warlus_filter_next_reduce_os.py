@@ -226,6 +226,9 @@ print(list(map(lambda enum_and_y, data: [d * y_[enum_and_y[0]] for d in data], e
       " Разный LEN() у LIST и LIST[LIST] и Операции между LIST и LIST[LIST] с разным LEN()", "\n")
 
 #  reduce  используем с 3х мерной матрицей
+# TODO reduce - для lambda с двумя аргументами
+#  Применяет функцию `lambda` для `двух аргументов`,  суммарно к элементам iterable слева направо,
+#  чтобы уменьшить значение iterable до одного значения.
 
 ar = np.arange(1, 13, 1).reshape(2, 3, 2)
 print(ar, " генерируем 3х мерную матрицу от 1 до 12 ", "\n")
@@ -328,3 +331,5 @@ def foo(test_mse):
 
 
 print('Фильтр с использованием np.inf - бесконечности : \n ', f'{foo(test_mse)}')
+
+print('Текущая Рабочая директория CWD current working directory : \n', os.getcwd())

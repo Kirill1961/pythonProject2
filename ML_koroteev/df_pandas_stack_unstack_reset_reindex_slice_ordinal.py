@@ -7,6 +7,7 @@ from scipy.stats import f
 import random
 from sklearn.preprocessing import OrdinalEncoder
 
+
 df = pd.DataFrame({
     "A": [1, 2, pd.NA],
     "B": [4, None, pd.NA],

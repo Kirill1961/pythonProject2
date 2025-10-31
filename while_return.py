@@ -76,16 +76,16 @@ def whle():
 
 print(whle())
 
-l = [0, 1, 2, 3, 4]
-l1 = []
+ls = [0, 1, 2, 3, 4]
+ls1 = []
 
 
 def whle():
-    while l is not None:
-        l1.append(l.pop())
-        if len(l1) == 4:
+    while ls is not None:
+        ls1.append(ls.pop())
+        if len(ls1) == 4:
             break
-    print(l1)
+    print(ls1)
 
 
 whle()

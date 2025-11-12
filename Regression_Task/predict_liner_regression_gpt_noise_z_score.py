@@ -83,3 +83,14 @@ test_mse = mean_squared_error(y_test, reg.predict(X_test))
 
 print(f"Train MSE: {train_mse:.2f}")
 print(f"Test MSE: {test_mse:.2f}")
+
+
+# TODO Поиск Шума через z-score
+#  z-score - отклонение значений выборки от среднего в сигмах
+#  z = xi−μ / σ
+A = np.array([5,   5,   1,   6,   3,   1,   2,   4,   4,   6,   4,   9,   3,
+         3,   8,   3,   1,   3,   8,   5, 100])
+z = (A - np.mean(A)) / np.std(A)  # 👆 z = xi−μ / σ
+outliers = A[np.abs(z) > 3]  # 👉 если больше 3 сигм от центра
+
+print(outliers)

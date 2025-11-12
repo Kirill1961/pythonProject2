@@ -21,6 +21,13 @@ print(d.split(), 'split() - делит по умолчанию по пробел
 
 print(d.split(sep=','), '  sep="," - доп параметр который указывает по какому символу делить строку ')
 
+s = "ID	Year_Birth	Education	Marital_Status	Income	Kidhome	Teenhome"
+
+print('Исходная : \n', s, '\n')
+
+print('Деление по умолчанию по пробелам  : \n', s.split(), '\n')
+
+print('Число строк в строке  : \n', len(s.split()), '\n')
 
 
 b = 'Welcome to the python world' # строка  с пробелами без запятых

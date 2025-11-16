@@ -100,13 +100,22 @@ print(res, " search res 3")
 # Находим и возвращаем одни цифры
 s = " test_sub 0 test_sub 1 test_sub 2 test_sub 3 test_sub 4 "
 res = re.findall( "\d", s)
-print(res, " Находим и возвращаем одни цифры findall( '\d', s) ")
+print(res, " Находим и возвращаем одни цифры findall( '\d', s) ", '\n')
 
 
 
-# sub - самое простое использование re.sub("что надо заменить","чем надо заменить", "строка где надо заменить")
-# .
+# TODO sub - самое простое использование re.sub("что надо заменить","чем надо заменить", "строка где надо заменить")
+#  .
 #  больше вариантов применения в док-ции.
+
+s = "ID	Year_Birth	Education	Marital_Status	Income	Kidhome	Teenhome"
+
+print('sub - Исходная строка содержит \\t : \n', [s], '\n')
+
+
+res = re.sub(r'\t', ',' , s)
+
+print('sub - Результат замены _ на , : \n', res, '\n')
 
 pattern = 'aa'
 s = 'aabb'
@@ -210,3 +219,8 @@ s = " test_sub 0 test_sub 1 test_sub 2 test_sub 3 test_sub 4 "
 res = re.sub( r"(test_sub) (\d)", func,  s)
 print(res, " Поиск и просто замена чисел в строке")
 
+
+# TODO \b - Пустая строка в начале или в конце слова
+#  здесь слова начинаются на f и с пробелами с 2-х сторон
+
+print(re.findall(r'\bf[a-z]*', 'which foot or hand fell fastest'))

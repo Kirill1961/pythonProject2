@@ -12,6 +12,7 @@
 import random
 from collections import defaultdict
 import numpy as np
+import scipy as sp
 import pprint
 # TODO begin
 
@@ -145,3 +146,28 @@ reduce = matrix_multiply_reducer(m_1, element_mtrx)
 print(A, "\n", B, "\n")
 # перемножение для проверки
 print(A.dot(B))
+
+
+# TODO Sparse matrices
+
+print(sp.sparse.random(3, 4, density=0.2).toarray(), '\n')
+
+# TODO Разрежаем ручную по столбцам
+
+np.random.seed(1)
+mx = np.random.randint(1, 10, size=12).astype('float').reshape(3, 4)
+
+print('Исходная mx : \n', mx, '\n')
+
+mx[:,  2 * np.arange(2)]= 0
+
+print('Разреженная mx по столбцам : \n', mx, '\n')
+
+# TODO Разрежаем ручную через np.where
+
+np.random.seed(1)
+mx = np.random.randint(1, 10, size=12).reshape(3, 4)
+
+print('Исходная mx : \n', mx, '\n')
+
+print('Разреженная через mx : \n', np.where(mx > 7, mx, 0), '\n')

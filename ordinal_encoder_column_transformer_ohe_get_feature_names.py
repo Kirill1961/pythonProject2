@@ -6,9 +6,7 @@ from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.pipeline import make_pipeline
 from sklearn.impute import SimpleImputer
 
-
-
-# TODO OrdinalEncoder - Кодирование Порядковых признаков
+# TODO OrdinalEncoder - Векторное Кодирование Порядковых признаков
 df = pd.DataFrame({
     "col1": ["high", "low", "medium"],
     "col2": ['two', 'three', 'one'],
@@ -34,7 +32,6 @@ df1 = pd.DataFrame({
 # Указываем, какие колонки куда идут
 num_features = ['age', 'salary']
 cat_features = ['gender', 'city']
-
 
 # TODO sparse_output=False - параметр убирает Разрежение матрицы
 preprocessor = ColumnTransformer(

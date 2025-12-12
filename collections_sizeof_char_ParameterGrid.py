@@ -16,6 +16,9 @@ from itertools import islice
 import random
 import string
 
+import numpy as np
+from sklearn.model_selection import ParameterGrid
+
 # defaultdic нужен для создания словаря со значением по умолчанию, значение подставляется
 # при обращении к несуществующему ключу.То есть можно наклепать ключей без значений с последующей вставкой значений
 # указываем функцию (или тип) по умолчанию, которая будет использоваться для создания значений для новых ключей.
@@ -256,4 +259,20 @@ print(s)
 
 n = 10
 s = ''.join(random.choice(string.ascii_uppercase) for _ in range(n))
-print(s)
+print(s, '\n')
+
+# TODO ParameterGrid - встроенный iter создаёт все парные комбинации из заданных значений
+
+params = [{
+    'param1': np.arange(0.1, 0.3, 0.1),
+    'param2' : np.arange(10, 40, 10)
+}]
+
+grid = ParameterGrid(params)
+
+for i in grid:
+    print(i)
+
+# TODO Вывод через list всех кобинаций
+
+print('\n Вывод через list всех кобинаций : \n', list(ParameterGrid(params)))

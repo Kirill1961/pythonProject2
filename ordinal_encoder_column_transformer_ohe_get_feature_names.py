@@ -1,4 +1,4 @@
-from sklearn.preprocessing import OrdinalEncoder
+from sklearn.preprocessing import OrdinalEncoder, TargetEncoder
 import pandas as pd
 import numpy as np
 from sklearn.compose import ColumnTransformer
@@ -64,4 +64,26 @@ ct = ColumnTransformer([
 ], remainder="passthrough")
 
 X_trans = ct.fit_transform(X)
-print(ct.get_feature_names_out())
+print(ct.get_feature_names_out(), '\n')
+
+
+# TODO TargetEncoder - кодирует global target mean
+#  global target mean используется в XGBoost
+
+df = pd.DataFrame({'col1': ['A', 'A', 'B', 'A', 'B', 'A', 'A', 'B', 'A', 'B'],
+                    'col2': [1, 0, 0, 1, 1, 1, 0, 0, 1, 1]})
+X = np.array(df.col1).reshape(-1, 1)
+y = np.array(df.col2)
+
+enc = TargetEncoder(cv=5)
+print(enc.fit_transform(X, y), '\n')
+
+
+# TODO Если df маленький, уменьшаем число фолдов cv=3
+df1 = pd.DataFrame({'col1': ['A', 'A', 'B', 'A', 'B'],
+                    'col2': [1, 0, 0, 1, 1]})
+X1 = np.array(df1['col1']).reshape(-1, 1)
+y1 = np.array(df1['col2'])
+
+enc1 = TargetEncoder(cv=3)
+print(enc1.fit_transform(X1, y1), '\n')

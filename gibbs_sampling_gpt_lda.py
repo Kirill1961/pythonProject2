@@ -1,54 +1,156 @@
 from gensim import corpora
 from gensim.models import LdaModel
+import random
 
 # Предположим, у вас есть некоторые текстовые данные
-data = [['apple', 'banana', 'banana', 'lemon'],
-        ['apple', 'banana', 'peach'],
-        ['apple', 'banana', 'banana', 'peach'],
-        ['lemon', 'orange', 'lemon', 'lemon']
-        ]
+data = [
+    ["apple", "banana", "banana", "lemon"],
+    ["apple", "banana", "peach"],
+    ["apple", "banana", "banana", "peach"],
+    ["lemon", "orange", "lemon", "lemon"],
+]
 
 
-d = [['MongoDB', 'data science', 'Spark', 'Postgres', 'pandas', 'NoSQL''Big Data'],
-             ['Storm', 'Java', 'pandas', 'MongoDB', 'data science', 'pandas', 'data science'],
-             ['C++', 'Scikit-learn', 'regression', 'neural network', 'MongoDB', 'Big Data', 'data science', 'NoSQL Big Data'],
-             ['statistic', 'R', 'go', 'scipy', 'numpy', 'MongoDB', 'pandas', 'data science'],
-             ['Storm', 'regression', 'neural network', 'MongoDB', 'Big Data', 'data science', 'NoSQL Big Data'],
-             ['C++', 'Scikit-learn', 'regression', 'neural network', 'Big Data', 'pandas'],
-             ['Scikit-learn', 'regression', 'neural network', 'MongoDB', 'Big Data', 'data science', 'NoSQL Big Data'],
-             ['statistic', 'R', 'go', 'scipy', 'numpy', 'data science', 'pandas', 'NoSQL''Big Data'],
-             ['Python', 'Hadoop', 'numpy', 'NoSQL', 'MongoDB', 'HBase', 'data science', 'NoSQL''Big Data'],
-             ['Cassandra', 'machine learning', 'Haskel', 'C++', 'scipy', 'data science', 'NoSQL Big Data'],
-             ['Python', 'Hadoop', 'numpy', 'NoSQL Big Data', 'pandas', 'NoSQL Big Data'],
-             ['statistic', 'Java', 'pandas', 'MongoDB', 'data science'],
-             ['numpy', 'decision trees', 'libsvm', 'MongoDB', 'probability'],
-             ['statistic', 'R', 'go', 'scipy', 'numpy', 'machine learning', 'data science', 'NoSQL Big Data'],
-             ['Python', 'Hadoop', 'numpy', 'data science', 'MongoDB', 'NoSQL''Big Data'],
-             ['HBase', 'Storm', 'Java', 'pandas'],
-             ['statistic', 'R', 'go', 'scipy', 'C++', 'MongoDB', 'pandas', 'data science', 'NoSQL Big Data'],
-             ['Spark', 'Postgres', 'Cassandra', 'machine learning', 'Haskel', 'pandas'],
-             ['statistic', 'R', 'go', 'scipy', 'HBase', 'pandas', 'data science'],
-             ['Python', 'Hadoop', 'numpy', 'NoSQL', 'HBase', 'NoSQL Big Data'],
+d = [
+    ["MongoDB", "data science", "Spark", "Postgres", "pandas", "NoSQL" "Big Data"],
+    ["Storm", "Java", "pandas", "MongoDB", "data science", "pandas", "data science"],
+    [
+        "C++",
+        "Scikit-learn",
+        "regression",
+        "neural network",
+        "MongoDB",
+        "Big Data",
+        "data science",
+        "NoSQL Big Data",
+    ],
+    ["statistic", "R", "go", "scipy", "numpy", "MongoDB", "pandas", "data science"],
+    [
+        "Storm",
+        "regression",
+        "neural network",
+        "MongoDB",
+        "Big Data",
+        "data science",
+        "NoSQL Big Data",
+    ],
+    ["C++", "Scikit-learn", "regression", "neural network", "Big Data", "pandas"],
+    [
+        "Scikit-learn",
+        "regression",
+        "neural network",
+        "MongoDB",
+        "Big Data",
+        "data science",
+        "NoSQL Big Data",
+    ],
+    [
+        "statistic",
+        "R",
+        "go",
+        "scipy",
+        "numpy",
+        "data science",
+        "pandas",
+        "NoSQL" "Big Data",
+    ],
+    [
+        "Python",
+        "Hadoop",
+        "numpy",
+        "NoSQL",
+        "MongoDB",
+        "HBase",
+        "data science",
+        "NoSQL" "Big Data",
+    ],
+    [
+        "Cassandra",
+        "machine learning",
+        "Haskel",
+        "C++",
+        "scipy",
+        "data science",
+        "NoSQL Big Data",
+    ],
+    ["Python", "Hadoop", "numpy", "NoSQL Big Data", "pandas", "NoSQL Big Data"],
+    ["statistic", "Java", "pandas", "MongoDB", "data science"],
+    ["numpy", "decision trees", "libsvm", "MongoDB", "probability"],
+    [
+        "statistic",
+        "R",
+        "go",
+        "scipy",
+        "numpy",
+        "machine learning",
+        "data science",
+        "NoSQL Big Data",
+    ],
+    ["Python", "Hadoop", "numpy", "data science", "MongoDB", "NoSQL" "Big Data"],
+    ["HBase", "Storm", "Java", "pandas"],
+    [
+        "statistic",
+        "R",
+        "go",
+        "scipy",
+        "C++",
+        "MongoDB",
+        "pandas",
+        "data science",
+        "NoSQL Big Data",
+    ],
+    ["Spark", "Postgres", "Cassandra", "machine learning", "Haskel", "pandas"],
+    ["statistic", "R", "go", "scipy", "HBase", "pandas", "data science"],
+    ["Python", "Hadoop", "numpy", "NoSQL", "HBase", "NoSQL Big Data"],
+]
 
-        ]
-# Создание словаря, пять уникальных слов ,
-# Dictionary<5 unique tokens: ['apple', 'banana', 'lemon', 'peach', 'orange']>
+# data_raw = [
+#     [
+#         "Human machine interface for lab abc computer applications",
+#         "A survey of user opinion of computer system response time",
+#         "The EPS user interface management system",
+#         "System and human system engineering testing of EPS",
+#         "Relation of user perceived response time to error measurement",
+#         "The generation of random binary unordered trees",
+#         "The intersection graph of paths in trees",
+#         "Graph minors IV Widths of trees and well quasi ordering",
+#         "Graph minors A survey",
+#     ]
+# ]
+
+# TODO split - Делим слова по пробелам,
+#  Создаём документы с разделёными словами
+# data = [doc.split(" ") for doc in data_raw[0]]
+# print('Docums+terms :\n', data)
+
+# TODO Создание словаря, пять уникальных слов ,
+#  Dictionary<5 unique tokens: ['apple', 'banana', 'lemon', 'peach', 'orange']>
 dictionary = corpora.Dictionary(data)  # преобразует unique tokens в id (индексы)
-print(dictionary, "dictionary")
-corpus = [dictionary.doc2bow(text) for text in data]    # doc2bow все слова преобр. в bag-of-words, (id, frequents)
-print(corpus, "corpus")
+print("Dictionary :\n", dictionary, "\n")
+
+# TODO doc2bow все слова преобразует в bag-of-words, (id, frequents)
+corpus = [dictionary.doc2bow(text) for text in data]
+print("corpus из уникальных слов \n "
+      "( idx_term x frequents_term ): \n" , corpus, "\n")
+
 # Обучение модели LDA
 lda_model = LdaModel(corpus=corpus, id2word=dictionary, num_topics=2)
-print(lda_model, "lda_model")
-# Сэмплирование по Гиббсу
-# Предположим, что мы хотим сгенерировать новую тему для первого документа
-doc = corpus[0]
-topic_probabilities = lda_model.get_document_topics(doc)
-print(topic_probabilities)
+print("lda_model :\n", lda_model, "\n")
+
+print("lda_model.print_topics : \n ", lda_model.print_topics(), "\n")
+
+# TODO Сэмплирование по Гиббсу
+#  Предположим, что мы хотим сгенерировать новую тему для первого документа
+# doc = corpus[0]
+for idx, _ in enumerate(corpus):
+    doc = corpus[idx]
+    topic_probabilities = lda_model.get_document_topics(doc, minimum_probability=0.01)
+    print(f"get_document_topics {idx} :\n", topic_probabilities, "\n")
+
 topic_distribution = [probability for _, probability in topic_probabilities]
-print(topic_distribution)
-# Выбор новой темы с учетом текущего распределения тем
-import random
-new_topic = random.choices(range(lda_model.num_topics), weights=topic_distribution)[0]
-print(new_topic, "new_topic")
-print("New topic for the document:", new_topic)
+print("topic_probabilities : \n", topic_distribution, "\n")
+
+# TODO Выбор новой темы с учетом текущего распределения тем
+new_topic = random.choices(range(lda_model.num_topics), weights=topic_distribution)
+print("new_topic : \n", new_topic, "\n")
+print("New topic for the document: \n", new_topic, "\n")

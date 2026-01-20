@@ -145,7 +145,7 @@ print("lda_model.print_topics : \n ", lda_model.print_topics(), "\n")
 for idx, _ in enumerate(corpus):
     doc = corpus[idx]
     topic_probabilities = lda_model.get_document_topics(doc, minimum_probability=0.01)
-    print(f"get_document_topics {idx} :\n", topic_probabilities, "\n")
+    print(f"Вероятность topics в document № {idx} :\n", topic_probabilities, "\n")
 
 topic_distribution = [probability for _, probability in topic_probabilities]
 print("topic_probabilities : \n", topic_distribution, "\n")

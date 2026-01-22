@@ -1,16 +1,34 @@
 from gensim import corpora
 from gensim.models import LdaModel
+from gensim.utils import simple_preprocess
 import random
 
+# TODO 1
 # Предположим, у вас есть некоторые текстовые данные
-data = [
-    ["apple", "banana", "banana", "lemon"],
-    ["apple", "banana", "peach"],
-    ["apple", "banana", "banana", "peach"],
-    ["lemon", "orange", "lemon", "lemon"],
+# data = [
+#     ["apple", "banana", "banana", "lemon"],
+#     ["apple", "banana", "peach"],
+#     ["apple", "banana", "banana", "peach"],
+#     ["lemon", "orange", "lemon", "lemon"],
+# ]
+
+# TODO 2
+data_raw = [
+    "кот любит молоко",
+    "собака любит кость",
+    "кот и собака друзья"
 ]
 
+# TODO Tokenizer
+# 1️⃣👎
+# data = list(map(lambda x: x.split(' '), data_raw))
+# 2️⃣👆
+# data = [doc.split(" ") for doc in data_raw]
+# 3️⃣🚀
+data = [simple_preprocess(doc) for doc in data_raw]
 
+
+#  TODO 3
 d = [
     ["MongoDB", "data science", "Spark", "Postgres", "pandas", "NoSQL" "Big Data"],
     ["Storm", "Java", "pandas", "MongoDB", "data science", "pandas", "data science"],
@@ -104,6 +122,7 @@ d = [
     ["Python", "Hadoop", "numpy", "NoSQL", "HBase", "NoSQL Big Data"],
 ]
 
+# TODO 4
 # data_raw = [
 #     [
 #         "Human machine interface for lab abc computer applications",
@@ -134,7 +153,7 @@ print("corpus из уникальных слов \n "
       "( idx_term x frequents_term ): \n" , corpus, "\n")
 
 # Обучение модели LDA
-lda_model = LdaModel(corpus=corpus, id2word=dictionary, num_topics=2)
+lda_model = LdaModel(corpus=corpus, id2word=dictionary, num_topics=3)
 print("lda_model :\n", lda_model, "\n")
 
 print("lda_model.print_topics : \n ", lda_model.print_topics(), "\n")
@@ -148,7 +167,7 @@ for idx, _ in enumerate(corpus):
     print(f"Вероятность topics в document № {idx} :\n", topic_probabilities, "\n")
 
 topic_distribution = [probability for _, probability in topic_probabilities]
-print("topic_probabilities : \n", topic_distribution, "\n")
+print("topic_distribution : \n", topic_distribution, "\n")
 
 # TODO Выбор новой темы с учетом текущего распределения тем
 new_topic = random.choices(range(lda_model.num_topics), weights=topic_distribution)

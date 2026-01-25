@@ -158,8 +158,9 @@ print("lda_model :\n", lda_model, "\n")
 
 print("lda_model.print_topics : \n ", lda_model.print_topics(), "\n")
 
-# TODO Сэмплирование по Гиббсу
-#  Предположим, что мы хотим сгенерировать новую тему для первого документа
+
+# TODO 🚩 Сэмплирование по Variational Bayes 👉 это происходит подкапотом LdaModel
+#  концептуально соответствует одному микрошагу, который модель делает во время обучения
 # doc = corpus[0]
 for idx, _ in enumerate(corpus):
     doc = corpus[idx]

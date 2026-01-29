@@ -44,16 +44,17 @@ print(dt.today().year)
 
 
 """datetime"""
-# datetime - конвертирует из строки объект дату
+# datetime - конвертирует из ineger объект дату
 dtm = datetime(2021, 11, 19, 20, 15, 13, 283).strftime('%d   %m-%Y')
-print(dtm)
+print('конвертирует из ineger объект дату : \n', dtm, '\n')
 
 # Делаем из строки дату
 s = '2024-07-31 19:09'
-print(datetime.strptime(s, '%Y-%m-%d %H:%M'))
+print('Делаем из строки дату :\n', datetime.strptime(s, '%Y-%m-%d %H:%M'), '\n')
+
 
 # конвертируем datetime в date
-print(datetime.strptime(s, '%Y-%m-%d %H:%M').date())
+print('конвертируем datetime в date : \n', datetime.strptime(s, '%Y-%m-%d %H:%M').date())
 
 
 # Формат timestamp
@@ -61,7 +62,8 @@ print(datetime.strptime(s, '%Y-%m-%d %H:%M').date())
 s = '2022-11-15 19:09'
 dt = datetime.strptime(s, '%Y-%m-%d %H:%M')
 ts = datetime.timestamp(dt)
-print(ts, "strptime")
+print('кол-во секунд с начала ЭПОХИ(01 01 1970) : \n', ts, "strptime", '\n')
+
 
 # Первод обратно метки времени в дату
 print(f"Обратный перевод из метки времени в дату : {datetime.fromtimestamp(ts)}")
@@ -71,7 +73,7 @@ all_time = pytz.all_timezones
 
 # Конструктор часового пояса
 time_Mosk = pytz.timezone('Europe/Moscow')
-print(time_Mosk)
+print('Конструктор часового пояса : \n', time_Mosk, '\n')
 
 # данный вывод -  None тк tzinfo ищет часовой пояс но мы его не обозначили
 print(datetime(2022, 11, 19, 23, 15, 16, 125).tzinfo, "- tzinfo ищет часовой пояс но мы его не обозначили")

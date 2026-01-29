@@ -44,17 +44,17 @@ cube_three = Cube(1, 2, 5)
 
 
 # TODO Преобразование в dict
-dict_hole_one = asdict(cube_one)
+dict_hole_two = asdict(cube_two)
 
 # TODO обращение к методам
-print(cube_one.volume_cube(5, 3, 2))
-print(cube_two.side_area())
+print('обращение к методу volume_cube : \n', cube_one.volume_cube(5, 3, 2))
+print('обращение к методу side_area : \n', cube_two.side_area(), '\n')
 
 # TODO Вывод преобразованного словаря
-print(dict_hole_one)
+print('asdict -> Преобразование в словарь :\n', dict_hole_two, '\n')
 
 # TODO Автоматический __repr__ -> вывод инф. по объектам
-print(cube_one, cube_two)
+print('Автоматический __repr__ -> вывод инф. по объектам : \n', cube_one, cube_two, '\n')
 
 # TODO __eq__ -> Автоматическое сравнение  размеров двух кубов
-print(cube_one == cube_three)
+print('Автоматическое сравнение  размеров двух кубов : \n', cube_one == cube_three)

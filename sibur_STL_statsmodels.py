@@ -39,11 +39,13 @@ df_tr['timestamp'] = pd.to_datetime(df_tr['timestamp'])
 
 df_tr = df_tr.set_index('timestamp')
 
-print(df_tr['A_CH4'], '\n')
+print(df_tr.index, '\n')
 
-print(pd.infer_freq(df_tr['A_CH4'].index), '\n')
+print(df_tr.index.freq, '\n')
 
-stl = STL(df_tr.index, period=336)  # period = предполагаемый сезонный цикл
+print(pd.infer_freq(df_tr.index), '\n')
+
+stl = STL(df_tr['A_CH4'], period=48)  # period = предполагаемый сезонный цикл
 
 res = stl.fit()
 

@@ -325,5 +325,5 @@ def f():
 
 a = f()
 print(next(a))
-print(a.send(200))
-print(a.send(200))
+print(a.send(20))
+print(a.send(20))

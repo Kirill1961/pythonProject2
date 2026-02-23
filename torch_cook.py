@@ -56,9 +56,9 @@ print(samples)
 mean = torch.arange(1., 6.)      # (5,) - вектор средних
 std = torch.arange(1, 0.5, -0.1)   # (5,) - вектор sdt
 
-samples1 = torch.normal(
+samples11 = torch.normal(
     mean.expand(10, 5),
     std.expand(10, 5)
 )
 
-print(samples1)
+print(samples11)

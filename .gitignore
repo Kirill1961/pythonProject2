@@ -1,0 +1,9 @@
+/.idea/
+__pycache__/
+*.pyc
+*.log
+*.pyo
+# Virtual environments
+venv/
+pytorch_cpu_env/
+ts_env/

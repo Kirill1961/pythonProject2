@@ -1,0 +1,68 @@
+<!-- Форма ввода данных пациента -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% extends 'base.html' %}
+
+{% block body %}
+
+<h2>{{ the_title }}</h2>
+
+<form method="POST" action="/d_s">
+  <p>Use this form to submit patient data for diabetes prediction:</p>
+  <table>
+    <tr><td>Pregnancies:</td><td><input name="Pregnancies" type="number" step="1"></td></tr>
+    <tr><td>Glucose:</td><td><input name="Glucose" type="number" step="any"></td></tr>
+    <tr><td>BloodPressure:</td><td><input name="BloodPressure" type="number" step="any"></td></tr>
+    <tr><td>SkinThickness:</td><td><input name="SkinThickness" type="number" step="any"></td></tr>
+    <tr><td>Insulin:</td><td><input name="Insulin" type="number" step="any"></td></tr>
+    <tr><td>BMI:</td><td><input name="BMI" type="number" step="any"></td></tr>
+    <tr><td>DiabetesPedigreeFunction:</td><td><input name="DiabetesPedigreeFunction" type="number" step="any"></td></tr>
+    <tr><td>Age:</td><td><input name="Age" type="number" step="1"></td></tr>
+  </table>
+
+  <p>When you're ready, click this button:</p>
+  <p><input value="Submit" type="submit"></p>
+</form>
+
+{% endblock %}
+
+
+<!--Форма для ответа-->
+</body>
+</html>
+
+rfr
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% extends 'base.html' %}
+
+{% block body %}
+
+<h2>{{ the_title }}</h2>
+
+<p>Prediction result:</p>
+
+<table>
+  <tr>
+    <td>Outcome:</td>
+    <td>{{ outcome }}</td>
+  </tr>
+</table>
+
+<p><a href="/">Go back</a></p>
+
+{% endblock %}
+
+</body>
+</html>

@@ -77,3 +77,20 @@ df
 df.bfill(inplace=True)
 
 df
+
+#%%
+# TODO data train test target
+df_tr = pd.read_csv('D:\Eduson_data\sibur_train_features.csv')
+
+df_ts = pd.read_csv('D:\Eduson_data\sibur_test_features.csv')
+
+df_tg = pd.read_csv('D:\Eduson_data\sibur_train_targets.csv')
+
+df_sb = pd.read_csv('D:\Eduson_data\sibur_sample_submission.csv')
+
+print(df_tr.columns)
+print(df_ts.columns)
+print(df_tr.shape, df_ts.shape, df_tg.shape, df_sb.shape)
+
+#%%
+df_tr['A_rate'][0]

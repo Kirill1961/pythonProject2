@@ -140,3 +140,5 @@ indicator_sesone(df_tr, df_tr.columns, 48)
 # (g.max() - g.min()) / df_tr.std()
 
 print(df_tr.isna().any())
+
+

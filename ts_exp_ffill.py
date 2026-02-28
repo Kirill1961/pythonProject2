@@ -111,6 +111,7 @@ df_sub
 
 # %%
 # TODO окно для cv через numpy, с шагом 5
+#  i * 5 - это скользящее окно
 
 # фолд = 10 строк
 # шаг окна = 5 строк
@@ -121,7 +122,17 @@ df2 = pd.DataFrame(np.arange(1, 301).reshape(-1, 3), columns=list("ABC"))
 # train = df2.iloc[:71, :]
 # test = df2.iloc[70:, :]
 
-[[np.arange(0 + i * 5, 10 + i * 5), np.arange(0, 10)] for i in range(10)]
+cv_idx = [[np.arange(0 + i * 5, 10 + i * 5), np.arange(0, 10)] for i in range(10)]
+
+cv_idx
+
+
+#%%
+# TODO Вывод train и test по idx от скользящего окна
+for idx_tr, idx_ts in cv_idx:
+    print(f'TRAIN : \n {df2.iloc[idx_tr, :].head(2)}')
+    print(f'TEST : \n {df2.iloc[idx_ts, :].head(2)}')
+
 
 
 

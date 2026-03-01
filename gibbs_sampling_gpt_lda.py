@@ -1,8 +1,9 @@
+
 from gensim import corpora
 from gensim.models import LdaModel
 from gensim.utils import simple_preprocess
 import random
-
+#%%
 # TODO 1
 # Предположим, у вас есть некоторые текстовые данные
 # data = [
@@ -18,7 +19,7 @@ data_raw = [
     "собака любит кость",
     "кот и собака друзья"
 ]
-
+#%%
 # TODO Tokenizer
 # 1️⃣👎
 # data = list(map(lambda x: x.split(' '), data_raw))
@@ -27,7 +28,7 @@ data_raw = [
 # 3️⃣🚀
 data = [simple_preprocess(doc) for doc in data_raw]
 
-
+#%%
 #  TODO 3
 d = [
     ["MongoDB", "data science", "Spark", "Postgres", "pandas", "NoSQL" "Big Data"],

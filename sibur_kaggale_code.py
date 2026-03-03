@@ -2,6 +2,7 @@
 Сглаживание,
 Кастомные CV и заполнения,
 Удаление аутлаеров и мусора
+size=9792
 """
 
 # TODO START
@@ -50,6 +51,8 @@ print(
 
 print("infer_freq :\n", pd.infer_freq(df_tr["timestamp"]), "\n")
 
+df2 = pd.DataFrame(np.arange(1, 46).reshape(-1, 3), columns=list("ABC"))
+df3 = pd.DataFrame(np.arange(1, 301).reshape(-1, 3), columns=list("ABC"))
 
 #%%
 # TODO init train
@@ -90,28 +93,38 @@ def exponential_smoothing(series, alpha):
 
 
 #%%
+# TODO end
 def A_B_rate_restore(a_rate, b_rate, window, sigma):
     """
     Функция, которая восстанавливает значения A_rate и B_rate
     В окне считаем статистики, затем основываясь на среднеквадратичном отклонении определяем аутлаеры
     Если после этого у нас не хватает только одного значения из пары A_rate и B_rate, то строим регрессию
     И восстанавливаем второе. Если неизвестны оба, заполняем на основе предыдущих значений
+    Руками находим значения для окон 20 и 100 через CV
+    Размер окон 20 и 100, при infer_freq = 30min, 20 - 10 часов и 100 - 50часов примерно 2 дня,
+    * 10 часов локальной динамики
+    * 2 суток устойчивого направления
     """
     a_rate = a_rate.copy()
     b_rate = b_rate.copy()
 
     # инициализируем новые массивы значений
+    # result_a и result_b - список
     result_a = [a_rate[0]]
     result_b = [b_rate[0]]
 
-    # в цикле проходим изначальный массив, заполняя на один шаг вперед основываясь на прошлых данных
+    # в цикле проходим изначальный массив, заполняя на один шаг вперед основываясь 👉 на прошлых данных
     for n in range(1, len(a_rate)):
 
+        # Для заполнения A_rate и B_rate:
         # статистики по A_rate, считаем среднее значение последних 20 объектов
         # находим среднее изменение по последним 100 объектам
-        # получаем прогноз на следующий элемент, если у нас будет пропуск
+        # создаём прогноз на следующий элемент, если у нас будет пропуск
+        # 👉 result_a[-20:] это скользящее окно для заполняемого списка result_a
         mean_a_gup = np.array(result_a[-20:]).mean()
+        # 👉 Средний прирост (наклон)
         resid_a_gup = (pd.Series(result_a[-100:]) - pd.Series(result_a[-100:]).shift(1)).mean()
+        # 👉 текущий уровень + средняя скорость изменения
         mean_a_gup += resid_a_gup
         # среднее значение в заданном окне и среднее квадратичное изменение
         resid_mean_a = abs(pd.Series(result_a[-window:]) - pd.Series(result_a[-window:]).shift(1)).mean()
@@ -167,6 +180,9 @@ def A_B_rate_restore(a_rate, b_rate, window, sigma):
             result_b.append(b_rate[n])
 
     return pd.Series(result_a), pd.Series(result_b)
+
+
+A_B_rate_restore(df3.A, df3.B, 20, 5)
 
 
 #%%
@@ -394,7 +410,6 @@ data = data.drop(trash_indexes, axis=0).reset_index(drop=True)
 raw_train = data.iloc[:, :10]
 raw_targets = data.iloc[:, 10:]
 
-
 #%%
 # чтобы получить максимально чистые тренировочные данные, до процесса очистки и заполнения пропусков
 # 👉 руками были найденны аутлаеры/пропуски в трейне, которые будут удаленны после восстановления
@@ -437,7 +452,6 @@ trash_indexes += range(3578, 3586)
 trash_indexes += range(3638, 3641)
 trash_indexes += range(1341, 1349)
 trash_indexes += range(2835, 2837)
-
 
 #%%
 # восстановливаем только тренировочные данные, так как тестовые целиком будут взяты из данных с новыми сдвигами
@@ -510,6 +524,5 @@ def stl_init(sample, period, flag=False):
     # plt.tight_layout()
     # plt.show()
 
-
 # stl_init(df_tr['A_rate'], 48, flag=False)
-stl_init(features['A_rate'], 48, flag=True)
+# stl_init(features['A_rate'], 48, flag=True)

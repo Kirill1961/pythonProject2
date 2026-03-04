@@ -1,6 +1,7 @@
 """
 Сглаживание,
-Кастомные CV и заполнения,
+Кастомное CV,
+Кастомное заполнения,
 Удаление аутлаеров и мусора
 size=9792
 """
@@ -96,6 +97,7 @@ def exponential_smoothing(series, alpha):
 # TODO end
 def A_B_rate_restore(a_rate, b_rate, window, sigma):
     """
+    Кастомный ffill()
     Функция, которая восстанавливает значения A_rate и B_rate
     В окне считаем статистики, затем основываясь на среднеквадратичном отклонении определяем аутлаеры
     Если после этого у нас не хватает только одного значения из пары A_rate и B_rate, то строим регрессию
@@ -120,13 +122,15 @@ def A_B_rate_restore(a_rate, b_rate, window, sigma):
         # статистики по A_rate, считаем среднее значение последних 20 объектов
         # находим среднее изменение по последним 100 объектам
         # создаём прогноз на следующий элемент, если у нас будет пропуск
-        # 👉 result_a[-20:] это скользящее окно для заполняемого списка result_a
+        # 👉 result_a[-20:] это скользящее окно для заполняемого списка result_a, 20 - ткущий уровень(число)
         mean_a_gup = np.array(result_a[-20:]).mean()
-        # 👉 Средний прирост (наклон)
+        # 👉 Средний прирост (наклон), устойчиво направление изменения(разница)
         resid_a_gup = (pd.Series(result_a[-100:]) - pd.Series(result_a[-100:]).shift(1)).mean()
         # 👉 текущий уровень + средняя скорость изменения
         mean_a_gup += resid_a_gup
         # среднее значение в заданном окне и среднее квадратичное изменение
+        # 👉 resid_mean_a - средний размер изменения, типичная амплитуда шага
+        # 👉 resid_std_a - разброс размеров изменений, насколько изменения стабильны, или бывают резкие скачки
         resid_mean_a = abs(pd.Series(result_a[-window:]) - pd.Series(result_a[-window:]).shift(1)).mean()
         resid_std_a = abs(pd.Series(result_a[-window:]) - pd.Series(result_a[-window:]).shift(1)).std()
 
@@ -182,7 +186,7 @@ def A_B_rate_restore(a_rate, b_rate, window, sigma):
     return pd.Series(result_a), pd.Series(result_b)
 
 
-A_B_rate_restore(df3.A, df3.B, 20, 5)
+# A_B_rate_restore(df3.A, df3.B, 20, 5)
 
 
 #%%
@@ -233,7 +237,7 @@ def chemical_data_restore(series, window, window_mean, window_resid, sigma):
 def restore_percent(data):
     """
     Функция восстановления процентов состава
-    После восстановления пропусков некоторые суммы улетели за логичные значения
+    После восстановления пропусков некоторые суммы улетели за логичные значения 👉 аутлаеры
     Больше 100, или меньше 99,2
     Пропорционально восстанавливаем их
     """
@@ -285,13 +289,13 @@ start = time.time()
 features['A_rate'], features['B_rate'] = A_B_rate_restore(features['A_rate'], features['B_rate'], 500, 10)
 
 features['A_CH4'] = chemical_data_restore(features['A_CH4'], 500, 20, 100, 9)
-# features['A_C2H6'] = chemical_data_restore(features['A_C2H6'], 400, 20, 100, 10)
-# features['A_C3H8'] = chemical_data_restore(features['A_C3H8'], 500, 20, 100, 14)
-# features['A_iC4H10'] = chemical_data_restore(features['A_iC4H10'], 500, 20, 100, 11)
-# features['A_nC4H10'] = chemical_data_restore(features['A_nC4H10'], 500, 20, 100, 11)
-# features['A_iC5H12'] = chemical_data_restore(features['A_iC5H12'], 400, 20, 100, 8)
-# features['A_nC5H12'] = chemical_data_restore(features['A_nC5H12'], 400, 20, 100, 9)
-# features['A_C6H14'] = chemical_data_restore(features['A_C6H14'], 500, 20, 100, 18)
+features['A_C2H6'] = chemical_data_restore(features['A_C2H6'], 400, 20, 100, 10)
+features['A_C3H8'] = chemical_data_restore(features['A_C3H8'], 500, 20, 100, 14)
+features['A_iC4H10'] = chemical_data_restore(features['A_iC4H10'], 500, 20, 100, 11)
+features['A_nC4H10'] = chemical_data_restore(features['A_nC4H10'], 500, 20, 100, 11)
+features['A_iC5H12'] = chemical_data_restore(features['A_iC5H12'], 400, 20, 100, 8)
+features['A_nC5H12'] = chemical_data_restore(features['A_nC5H12'], 400, 20, 100, 9)
+features['A_C6H14'] = chemical_data_restore(features['A_C6H14'], 500, 20, 100, 18)
 
 end = time.time()
 print(end - start)
@@ -455,7 +459,7 @@ trash_indexes += range(2835, 2837)
 
 #%%
 # восстановливаем только тренировочные данные, так как тестовые целиком будут взяты из данных с новыми сдвигами
-
+start = time.time()
 raw_train['A_rate'], raw_train['B_rate'] = A_B_rate_restore(raw_train['A_rate'], raw_train['B_rate'], 1000, 12)
 
 raw_train['A_CH4'] = chemical_data_restore(raw_train['A_CH4'], 500, 20, 100, 10)
@@ -467,8 +471,182 @@ raw_train['A_iC5H12'] = chemical_data_restore(raw_train['A_iC5H12'], 500, 20, 10
 raw_train['A_nC5H12'] = chemical_data_restore(raw_train['A_nC5H12'], 400, 20, 100, 9)
 raw_train['A_C6H14'] = chemical_data_restore(raw_train['A_C6H14'], 500, 20, 100, 18)
 
+end = time.time()
+print(end - start)
+
 # восстановление процентов
 raw_train = restore_percent(raw_train)
+
+#%%
+# данные для предсказания
+final_train = raw_train.copy()
+final_targets = raw_targets.copy()
+
+# удаляем ранее отмеченные аутлаеры и пропуски
+data = pd.concat([final_train, final_targets], axis=1)
+data.drop(list(set(trash_indexes)), axis=0, inplace=True)
+data = data.reset_index(drop=True)
+
+# отделяем трейн и таргеты
+final_train = data.iloc[:, :10].copy()
+final_targets = data.iloc[:, 10:].copy()
+
+#%%
+# еще щепотка чистки трейна
+data = pd.concat([final_train, final_targets], axis=1)
+data = data.drop([1353, 1354, 1355, 1437], axis=0).reset_index(drop=True)
+
+# переносим метку времени в трейн из таргетов для последующего объединения по ней
+# и поэтому делим [:, :11], а не [:, :10], как до этого
+final_train = data.iloc[:, :11]
+final_targets = data.iloc[:, 11:]
+
+
+#%%
+# Как было упомянуто в начале ноутбука.
+# На данный момент мы имеем сэмпл трейна и тест посчитанный с новыми сдвигами
+# И трейн посчитаный со старыми константными сдвигами
+# И сейчас мы заменим старые данные на новые по тем объектам для которых смогли посчитать объекты с новыми сдвигами
+
+# по временной метке мерджим старые и новые данные
+comb_data = pd.merge(final_train, train, on='timestamp', how='left')
+# выделяем индексы для которых у нас есть новые значения
+idx = comb_data[~comb_data['A_rate_y'].isnull()].index
+# заменяем часть трейна на новые данные
+comb_train = final_train.iloc[:, :10].copy()
+comb_train.iloc[idx] = comb_data[~comb_data['A_rate_y'].isnull()].iloc[:, 11:]
+# сохраняем тренировочную выборку
+final_train = comb_train.copy()
+
+
+#%%
+# оверсэмплинг трейна
+# для сглаживания выборки, берем трейн, через один восстанавливаем пропуски и интерполируем
+
+final_data = pd.concat([final_train, final_targets], axis=1)
+
+# инициализация нового датафрейма
+valid_data = pd.DataFrame()
+# cчетчик
+j = 0
+# пустая строка для вставки
+none = pd.Series([None] * 14).T
+
+# проходим в цикле и вставляем пустую строку между двух известных значений
+for i in range(final_data.shape[0] * 2 - 1):
+
+    if i % 2 == 0:
+        valid_data = valid_data.append(final_data.iloc[j])
+        j += 1
+    else:
+        valid_data = valid_data.append(none, ignore_index=True)
+
+# отрезаем появившиеся лишние признаки
+valid_data = valid_data.iloc[:, :14]
+# восстанавливаем имена столбцов
+valid_data = valid_data[final_data.columns]
+# интерполируем
+valid_data = valid_data.interpolate()
+valid_data = valid_data.reset_index(drop=True)
+
+final_data = valid_data.copy()
+
+# финальные трейн и таргеты
+final_train = final_data.iloc[:, :10]
+final_targets = final_data.iloc[:, 10:]
+
+
+#%%
+# финальный тест
+final_test = test.copy()
+
+
+#%%
+# кастомная кросс валидация на 16 фолдов
+# инициализируем первый фолд как первые 912 значений, и предсказываем весь трейн
+# дальше проходим окном с шагом 456 по всему трейну
+# получаем 16 предсказаний трейна, которые усредняем
+cv = [[np.arange(0 + i * 456, 912 + i * 456), np.arange(0, 8215)] for i in range(16)]
+
+# в попытках настроить стабильную валидацию, некоторые фолды в итоге не использовались
+drop_folds = [0, 7, 3, 8, 13]
+cv = [cv[i] for i in range(len(cv)) if i not in drop_folds]
+
+
+#%%
+# инициализация датафрейма с предсказаниями теста
+submission = sample.copy()
+submission.iloc[:, 1:] = 0
+
+# сумма ошибки на валидации
+total_loss = 0
+
+# цикл для предсказания каждого таргета отдельно
+for num, target in enumerate(final_targets.columns):
+
+    print(target, end='  ')
+
+    # переменная для сохранения ошибки
+    loss = 0
+    # сериес для записи результата предсказания
+    res = pd.Series(np.zeros(final_train.shape[0]))
+
+    # инициализируются фоллды
+    for num, (train_idx, test_idx) in enumerate(cv):
+        # разбиение на тестовую и тренировочную выборку внутри трейна
+        x_train = final_train.iloc[train_idx]
+        x_test = final_train.iloc[test_idx]
+        y_train = final_targets.iloc[train_idx][target]
+        y_test = final_targets.iloc[test_idx][target].reset_index(drop=True)
+
+        # инициализируем модель
+        model = Ridge()
+        # обучаем модель
+        model.fit(x_train, y_train)
+        # предсказываем значения для валидации
+        res += model.predict(x_test) / len(cv)
+        # предсказываем значения для теста
+        submission[target] += model.predict(final_test) / len(cv)
+
+    # экспоненциальное сглаживание таргетов, коэфициенты подобраны на валидации
+    if target == 'B_C2H6':
+        res = exponential_smoothing(res, 0.65)
+        submission[target] = exponential_smoothing(submission[target], 0.65)
+
+    if target == 'B_C3H8':
+        res = exponential_smoothing(res, 0.2)
+        submission[target] = exponential_smoothing(submission[target], 0.2)
+
+    if target == 'B_iC4H10':
+        res = exponential_smoothing(res, 1)
+        submission[target] = exponential_smoothing(submission[target], 1)
+
+    if target == 'B_nC4H10':
+        res = exponential_smoothing(res, 0.35)
+        submission[target] = exponential_smoothing(submission[target], 0.35)
+
+    # ошибка по таргету
+    loss = mean_abs_per_err(y_test, res)
+
+    total_loss += loss
+    print(round(loss, 5))
+
+print()
+print('total_loss', round(total_loss, 5) / 4)
+
+'''
+>>>
+B_C2H6  4.15904
+B_C3H8  1.92389
+B_iC4H10  1.26067
+B_nC4H10  1.01302
+
+total_loss 2.0891525
+'''
+
+#%%
+submission.to_csv('combinated_version_v_6.csv', index=False)
+
 
 
 #%%

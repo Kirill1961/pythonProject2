@@ -1,5 +1,5 @@
 """
-Сглаживание,
+Сглаживание (на основе смешения),
 Кастомное CV,
 Кастомное заполнения,
 Удаление аутлаеров и мусора
@@ -94,7 +94,7 @@ def exponential_smoothing(series, alpha):
 
 
 #%%
-# TODO end
+# TODO Кастомный ffill
 def A_B_rate_restore(a_rate, b_rate, window, sigma):
     """
     Кастомный ffill()
@@ -111,7 +111,7 @@ def A_B_rate_restore(a_rate, b_rate, window, sigma):
     b_rate = b_rate.copy()
 
     # инициализируем новые массивы значений
-    # result_a и result_b - список
+    # 👉 result_a и result_b - список
     result_a = [a_rate[0]]
     result_b = [b_rate[0]]
 
@@ -134,7 +134,7 @@ def A_B_rate_restore(a_rate, b_rate, window, sigma):
         resid_mean_a = abs(pd.Series(result_a[-window:]) - pd.Series(result_a[-window:]).shift(1)).mean()
         resid_std_a = abs(pd.Series(result_a[-window:]) - pd.Series(result_a[-window:]).shift(1)).std()
 
-        # Статистики по A_rate -/-
+        # Статистики аналогично как по A_rate -/-
         mean_b_gup = np.array(result_b[-20:]).mean()
         resid_b_gup = (pd.Series(result_b[-100:]) - pd.Series(result_b[-100:]).shift(1)).mean()
         mean_b_gup += resid_b_gup
@@ -143,6 +143,8 @@ def A_B_rate_restore(a_rate, b_rate, window, sigma):
         resid_std_b = abs(pd.Series(result_b[-window:]) - pd.Series(result_b[-window:]).shift(1)).std()
 
         # для первых значений аутлаеры не ищем, пока не наберется заданое окно значений
+        # 👉 порог выброса = resid_mean_a + resid_std_a * sigma или k это чувствительность
+        # 👉 порог аутлаера = средняя амплитуда значения + волатильность значения
         if n < window:
             pass
         else:

@@ -310,3 +310,36 @@ solution(sentence1)
 # TODO ''.join(generator) - Преобразует ссылку на генератор в строку!!!
 generator = (i for i in ['asdf', 'qwer', 'lk'] )
 print(f"Преобразует ссылку на генератор в строку -> {' '.join(generator)}")
+
+#%%
+# TODO slice window,  скользящее окно, самая длинная и самая короткая уникальная субстрока
+ls = list('asddfghjkkqwee')
+
+ls_w = [[]]
+for n in range(len(ls)):
+    ls_f = ls[n:n + 2]
+    if ls_f[0] != ls_f[-1]:
+        ls_w[-1] += ls[n]
+    else:
+        ls_w[-1] += ls[n]
+        ls_w.append([])
+
+print(max(ls_w, key=len))
+min((x for x in ls_w if x), key=len)
+
+# TODO Вариант 2
+
+#%%
+ls_w = [[]]
+
+for n in range(len(ls)-1):
+    if ls[n] != ls[n+1]:
+        ls_w[-1].append(ls[n])
+    else:
+        ls_w[-1].append(ls[n])
+        ls_w.append([])
+
+ls_w[-1].append(ls[-1])
+
+print(max(ls_w, key=len))
+min((x for x in ls_w if x), key=len)

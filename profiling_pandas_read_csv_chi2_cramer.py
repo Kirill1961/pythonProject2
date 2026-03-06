@@ -5,27 +5,28 @@ import numpy as np
 import pandas as pd
 import scipy.stats as stats
 
-
-
-
-
 print(pd.__version__)
 
 # TODO Читаем файл heart.csv по указанному пути
 puth = 'D:\Eduson_data\heart.csv'
 
-# df = pd.read_csv(puth)
-# print(df.head(5))
+df = pd.read_csv(puth)
+print(df.head(5))
 
+# df = pd.DataFrame(
+#     np.random.rand(4, 3),
+#     columns=['a', 'b', 'c']
+# )
 
-df = pd.DataFrame(
-    np.random.rand(4, 3),
-    columns=['a', 'b', 'c']
-)
+# Создаём отчёт
+profile = ProfileReport(df, title='Pandas ProfileReport', explorative=True)
+# print(profile)
 
-profile = ProfileReport(df, title='Pandas ProfileReport')
-print(profile)
+# Сохраняем его в HTML-файл
+profile.to_file("D:/profiling_report.html")
 
+# открыть файл в браузере вручную
+print("D:/profiling_report.html")
 
 # TODO  Cramér's V измеряет силу зависимости, если она есть.
 #  Хи-квадрат проверяет есть ли зависимость между двумя категориальными переменными
@@ -53,5 +54,3 @@ cramers_v = np.sqrt(chi2 / (n * (k - 1)))
 
 print(f"Хи-квадрат p-value: {p:.4f}")
 print(f"Cramér's V: {cramers_v:.4f}")
-
-

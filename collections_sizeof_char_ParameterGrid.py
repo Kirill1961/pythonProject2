@@ -252,7 +252,7 @@ def sliding_window(iterable, n):
 
 print(list(sliding_window(a, 3)), '\n')
 
-# TODO Генератор букв
+# TODO Генератор букв, char generator
 n = 10
 s = ''.join(random.choice(string.ascii_lowercase) for _ in range(n))
 print(s)

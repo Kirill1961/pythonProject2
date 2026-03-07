@@ -8,7 +8,9 @@ import scipy.stats as stats
 print(pd.__version__)
 
 # TODO Читаем файл heart.csv по указанному пути
-puth = 'D:\Eduson_data\heart.csv'
+# puth = 'D:\Eduson_data\heart.csv'
+
+puth = 'D:\Eduson_data\sibur_train_features.csv'
 
 df = pd.read_csv(puth)
 print(df.head(5))
@@ -27,6 +29,7 @@ profile.to_file("D:/profiling_report.html")
 
 # открыть файл в браузере вручную
 print("D:/profiling_report.html")
+
 
 # TODO  Cramér's V измеряет силу зависимости, если она есть.
 #  Хи-квадрат проверяет есть ли зависимость между двумя категориальными переменными

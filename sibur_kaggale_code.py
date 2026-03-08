@@ -12,9 +12,9 @@ import numpy as np
 import pandas as pd
 import time
 from sklearn.linear_model import Ridge
+from scipy.signal import find_peaks
 
 import matplotlib
-
 # matplotlib.use("Agg")
 matplotlib.use("TkAgg")
 # matplotlib.use("QtAgg")
@@ -195,7 +195,7 @@ def A_B_rate_restore(a_rate, b_rate, window, sigma):
 def chemical_data_restore(series, window, window_mean, window_resid, sigma):
     """
     Функция, которая восстанавливает значения химических элементов
-    В окне считаем статистики, затем основываясь на среднеквадратичном отклонении определяем аутлаеры
+    В окне считаем статистики, затем основываясь на среднеквадратичном отклонении (волатильности) определяем аутлаеры
     И на основе статистик заполняем пропуски
     """
     series = series.copy()
@@ -291,13 +291,13 @@ start = time.time()
 features['A_rate'], features['B_rate'] = A_B_rate_restore(features['A_rate'], features['B_rate'], 500, 10)
 
 features['A_CH4'] = chemical_data_restore(features['A_CH4'], 500, 20, 100, 9)
-features['A_C2H6'] = chemical_data_restore(features['A_C2H6'], 400, 20, 100, 10)
-features['A_C3H8'] = chemical_data_restore(features['A_C3H8'], 500, 20, 100, 14)
-features['A_iC4H10'] = chemical_data_restore(features['A_iC4H10'], 500, 20, 100, 11)
-features['A_nC4H10'] = chemical_data_restore(features['A_nC4H10'], 500, 20, 100, 11)
-features['A_iC5H12'] = chemical_data_restore(features['A_iC5H12'], 400, 20, 100, 8)
-features['A_nC5H12'] = chemical_data_restore(features['A_nC5H12'], 400, 20, 100, 9)
-features['A_C6H14'] = chemical_data_restore(features['A_C6H14'], 500, 20, 100, 18)
+# features['A_C2H6'] = chemical_data_restore(features['A_C2H6'], 400, 20, 100, 10)
+# features['A_C3H8'] = chemical_data_restore(features['A_C3H8'], 500, 20, 100, 14)
+# features['A_iC4H10'] = chemical_data_restore(features['A_iC4H10'], 500, 20, 100, 11)
+# features['A_nC4H10'] = chemical_data_restore(features['A_nC4H10'], 500, 20, 100, 11)
+# features['A_iC5H12'] = chemical_data_restore(features['A_iC5H12'], 400, 20, 100, 8)
+# features['A_nC5H12'] = chemical_data_restore(features['A_nC5H12'], 400, 20, 100, 9)
+# features['A_C6H14'] = chemical_data_restore(features['A_C6H14'], 500, 20, 100, 18)
 
 end = time.time()
 print(end - start)
@@ -465,13 +465,13 @@ start = time.time()
 raw_train['A_rate'], raw_train['B_rate'] = A_B_rate_restore(raw_train['A_rate'], raw_train['B_rate'], 1000, 12)
 
 raw_train['A_CH4'] = chemical_data_restore(raw_train['A_CH4'], 500, 20, 100, 10)
-raw_train['A_C2H6'] = chemical_data_restore(raw_train['A_C2H6'], 500, 20, 100, 14)
-raw_train['A_C3H8'] = chemical_data_restore(raw_train['A_C3H8'], 500, 20, 100, 15)
-raw_train['A_iC4H10'] = chemical_data_restore(raw_train['A_iC4H10'], 500, 20, 100, 11)
-raw_train['A_nC4H10'] = chemical_data_restore(raw_train['A_nC4H10'], 500, 20, 100, 11)
-raw_train['A_iC5H12'] = chemical_data_restore(raw_train['A_iC5H12'], 500, 20, 100, 7)
-raw_train['A_nC5H12'] = chemical_data_restore(raw_train['A_nC5H12'], 400, 20, 100, 9)
-raw_train['A_C6H14'] = chemical_data_restore(raw_train['A_C6H14'], 500, 20, 100, 18)
+# raw_train['A_C2H6'] = chemical_data_restore(raw_train['A_C2H6'], 500, 20, 100, 14)
+# raw_train['A_C3H8'] = chemical_data_restore(raw_train['A_C3H8'], 500, 20, 100, 15)
+# raw_train['A_iC4H10'] = chemical_data_restore(raw_train['A_iC4H10'], 500, 20, 100, 11)
+# raw_train['A_nC4H10'] = chemical_data_restore(raw_train['A_nC4H10'], 500, 20, 100, 11)
+# raw_train['A_iC5H12'] = chemical_data_restore(raw_train['A_iC5H12'], 500, 20, 100, 7)
+# raw_train['A_nC5H12'] = chemical_data_restore(raw_train['A_nC5H12'], 400, 20, 100, 9)
+# raw_train['A_C6H14'] = chemical_data_restore(raw_train['A_C6H14'], 500, 20, 100, 18)
 
 end = time.time()
 print(end - start)
@@ -704,5 +704,18 @@ def stl_init(sample, period, flag=False):
     # plt.tight_layout()
     # plt.show()
 
-# stl_init(df_tr['A_rate'], 48, flag=False)
-# stl_init(features['A_rate'], 48, flag=True)
+# stl_init(df_tr['A_CH4'], 48, flag=False)
+stl_init(features['A_CH4'], 48, flag=True)
+
+#%%
+# TODO find peak period
+# После acf ищем пики периода сезона
+def peak_period(sample, nlags):
+
+    # print(sample.isna().any().any())
+    acf_values = acf(sample, nlags=nlags)
+    peaks, _ = find_peaks(acf_values)
+    period_size = np.diff(peaks)
+
+    return period_size
+peak_period(features['A_CH4'], 500)

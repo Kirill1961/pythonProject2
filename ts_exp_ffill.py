@@ -136,5 +136,24 @@ for idx_tr, idx_ts in cv_idx:
 
 
 
+#%%
+# TODO Интервал между наблюдениями
+#  diff() - Это разница между всеми соседними значениями в наборе данных
+np.random.seed(0)
+dt = pd.date_range(start='1/1/2020', end='12/31/2020', freq='0.5h')
+
+ts = pd.DataFrame(np.random.randint(1, 100, size=dt.shape[0] * 3).reshape(-1, 3),
+                  columns=['x1', 'x2', 'Y'],
+                  index=dt
+                  )
+
+#%%
+# TODO Интервал между наблюдениями простой способ, если расстояния идеально одинаковы
+print('Интервал если расстояния идеально одинаковы : \n', ts.index[0] - ts.index[1], '\n')
+
+print('Интервал если infer_freq неизвестный: \n', ts.index.diff().to_series().value_counts())
+
+
+
 
 

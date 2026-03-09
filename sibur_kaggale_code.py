@@ -12,9 +12,10 @@ import numpy as np
 import pandas as pd
 import time
 from sklearn.linear_model import Ridge
-from scipy.signal import find_peaks
+from scipy.signal import find_peaks, peak_prominences
 
 import matplotlib
+
 # matplotlib.use("Agg")
 matplotlib.use("TkAgg")
 # matplotlib.use("QtAgg")
@@ -54,6 +55,7 @@ print("infer_freq :\n", pd.infer_freq(df_tr["timestamp"]), "\n")
 
 df2 = pd.DataFrame(np.arange(1, 46).reshape(-1, 3), columns=list("ABC"))
 df3 = pd.DataFrame(np.arange(1, 301).reshape(-1, 3), columns=list("ABC"))
+
 
 #%%
 # TODO init train
@@ -149,6 +151,7 @@ def A_B_rate_restore(a_rate, b_rate, window, sigma):
             pass
         else:
             # находим аутлаеры, изменение которых сильно больше обычного и заменяем их на Null значение
+            # 👉 если a_rate[n] - result_a[n - 1] = NaN, то NaN > threshold -> False
             if abs(a_rate[n] - result_a[n - 1]) > resid_mean_a + resid_std_a * sigma:
                 a_rate[n] = None
 
@@ -503,7 +506,6 @@ data = data.drop([1353, 1354, 1355, 1437], axis=0).reset_index(drop=True)
 final_train = data.iloc[:, :11]
 final_targets = data.iloc[:, 11:]
 
-
 #%%
 # Как было упомянуто в начале ноутбука.
 # На данный момент мы имеем сэмпл трейна и тест посчитанный с новыми сдвигами
@@ -519,7 +521,6 @@ comb_train = final_train.iloc[:, :10].copy()
 comb_train.iloc[idx] = comb_data[~comb_data['A_rate_y'].isnull()].iloc[:, 11:]
 # сохраняем тренировочную выборку
 final_train = comb_train.copy()
-
 
 #%%
 # оверсэмплинг трейна
@@ -557,11 +558,9 @@ final_data = valid_data.copy()
 final_train = final_data.iloc[:, :10]
 final_targets = final_data.iloc[:, 10:]
 
-
 #%%
 # финальный тест
 final_test = test.copy()
-
 
 #%%
 # кастомная кросс валидация на 16 фолдов
@@ -573,7 +572,6 @@ cv = [[np.arange(0 + i * 456, 912 + i * 456), np.arange(0, 8215)] for i in range
 # в попытках настроить стабильную валидацию, некоторые фолды в итоге не использовались
 drop_folds = [0, 7, 3, 8, 13]
 cv = [cv[i] for i in range(len(cv)) if i not in drop_folds]
-
 
 #%%
 # инициализация датафрейма с предсказаниями теста
@@ -649,73 +647,3 @@ total_loss 2.0891525
 #%%
 submission.to_csv('combinated_version_v_6.csv', index=False)
 
-
-
-#%%
-# TODO acf, STL
-# TODO limit_direction="both" - Заполнение NA в начале и в конце df
-
-def stl_init(sample, period, flag=False):
-    """
-    Построение через res.plot() и в ручную
-    """
-
-    if flag == False:
-
-        feature = sample.astype(float).interpolate(limit_direction='both')
-
-        stl = STL(feature, period=period, robust=True)  # period = предполагаемый сезонный цикл
-
-        res = stl.fit()
-
-        res.plot()
-        plt.show()
-
-    else:
-        feature = sample.astype(float)
-
-        stl = STL(feature, period=period)  # period = предполагаемый сезонный цикл
-
-        res = stl.fit()
-
-        res.plot()
-        plt.show()
-
-    # 1️⃣ В ручную
-    # feature = sample
-    #
-    # stl = STL(feature, period=period, robust=True)
-    # res = stl.fit()
-    #
-    # fig, ax = plt.subplots(4, 1, figsize=(12, 8), sharex=True)
-    #
-    # ax[0].plot(feature)
-    # ax[0].set_title("Original")
-    #
-    # ax[1].plot(res.trend)
-    # ax[1].set_title("Trend")
-    #
-    # ax[2].plot(res.seasonal)
-    # ax[2].set_title("Seasonal")
-    #
-    # ax[3].plot(res.resid)
-    # ax[3].set_title("Residual")
-    #
-    # plt.tight_layout()
-    # plt.show()
-
-# stl_init(df_tr['A_CH4'], 48, flag=False)
-stl_init(features['A_CH4'], 48, flag=True)
-
-#%%
-# TODO find peak period
-# После acf ищем пики периода сезона
-def peak_period(sample, nlags):
-
-    # print(sample.isna().any().any())
-    acf_values = acf(sample, nlags=nlags)
-    peaks, _ = find_peaks(acf_values)
-    period_size = np.diff(peaks)
-
-    return period_size
-peak_period(features['A_CH4'], 500)

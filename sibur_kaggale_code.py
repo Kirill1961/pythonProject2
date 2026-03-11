@@ -167,6 +167,8 @@ def A_B_rate_restore(a_rate, b_rate, window, sigma):
         elif pd.isnull(a_rate[n]):
 
             # строим регрессию по последним 3000 объектов между A_rate и B_rate
+            # 👉 A_rate - известно, B_rate - предсказываем, через регрессию, где A_rate предиктор, B_rate - целевая
+            # 👉 в модели Ridge A_rate - это Х, B_rate - это Y
             model = Ridge()
             model.fit(np.array(result_b[-3000:]).reshape(-1, 1), result_a[-3000:])
             result_a.append(model.predict(np.array(b_rate[n]).reshape(-1, 1))[0])
@@ -174,6 +176,7 @@ def A_B_rate_restore(a_rate, b_rate, window, sigma):
             result_b.append(b_rate[n])
 
         # если значений B_rate известно
+        # Алгоритм тот же что и с известным A_rate
         elif pd.isnull(b_rate[n]):
 
             # строим регрессию по последним 3000 объектов между A_rate и B_rate
@@ -242,19 +245,25 @@ def chemical_data_restore(series, window, window_mean, window_resid, sigma):
 def restore_percent(data):
     """
     Функция восстановления процентов состава
-    После восстановления пропусков некоторые суммы улетели за логичные значения 👉 аутлаеры
+    После восстановления пропусков некоторые суммы улетели за логичные значения
+        * 👉 каждая строка - это состав смеси, признаки это компоненты, значения - % в составе
+        * 👉 сумма строки д. быть в пределах 99 - 100
     Больше 100, или меньше 99,2
     Пропорционально восстанавливаем их
+
     """
     data = data.copy()
     # находим сумму элементов
     data['sum'] = data.iloc[:, 1:-1].T.sum()
     # находим кэффициент на который сумма отличается от эталоного значения
+    # 👉 'coef' - это последний столбец в data
     data['coef'] = 99.95 / data['sum']
     # определяем индексы объектов со сломанной суммой
     outlier_indexes = data[(data['sum'] > 99.99) | (data['sum'] < 99.92)].index
 
     # в цикле пропорционально восстанавливаем значения элементов
+    # 👉 range(1, 9) - по числу признаков
+    # 👉 data['coef'] == data.iloc[outlier_indexes, -1]
     for feat in range(1, 9):
         data.iloc[outlier_indexes, feat] = data.iloc[outlier_indexes, feat] * data.iloc[outlier_indexes, -1]
 

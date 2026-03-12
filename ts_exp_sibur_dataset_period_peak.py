@@ -53,6 +53,10 @@ print(
 
 print("infer_freq :\n", pd.infer_freq(df_tr["timestamp"]), "\n")
 
+np.random.seed(0)
+
+df = pd.DataFrame(np.random.randint(1, 15, size=45).reshape(-1, 3), columns=list("ABC"))
+df1 = pd.DataFrame(np.random.randint(1, 15, size=9).reshape(-1, 3), columns=list("ABC"))
 df2 = pd.DataFrame(np.arange(1, 46).reshape(-1, 3), columns=list("ABC"))
 df3 = pd.DataFrame(np.arange(1, 301).reshape(-1, 3), columns=list("ABC"))
 
@@ -102,6 +106,8 @@ def A_B_rate_restore(a_rate, b_rate, window, sigma):
     Кастомный ffill()
     Функция, которая восстанавливает значения A_rate и B_rate
     В окне считаем статистики, затем основываясь на среднеквадратичном отклонении определяем аутлаеры
+        * 👉 Окно привязано к текущему значению срезом result_a[-20:] и result_a[-100:]
+        * 👉 В цикле за значением следуют окна и если NA то заполняем проруск
     Если после этого у нас не хватает только одного значения из пары A_rate и B_rate, то строим регрессию
     И восстанавливаем второе. Если неизвестны оба, заполняем на основе предыдущих значений
     Руками находим значения для окон 20 и 100 через CV

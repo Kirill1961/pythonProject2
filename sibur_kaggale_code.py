@@ -54,6 +54,7 @@ print(
 print("infer_freq :\n", pd.infer_freq(df_tr["timestamp"]), "\n")
 
 df2 = pd.DataFrame(np.arange(1, 46).reshape(-1, 3), columns=list("ABC"))
+df2 = pd.DataFrame(np.arange(1, 46).reshape(-1, 3), columns=list("ABC"))
 df3 = pd.DataFrame(np.arange(1, 301).reshape(-1, 3), columns=list("ABC"))
 
 

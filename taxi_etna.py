@@ -9,6 +9,7 @@ import matplotlib
 # matplotlib.use("Agg")
 matplotlib.use("TkAgg")
 # matplotlib.use("QtAgg")
+# matplotlib.use("WebAgg")
 import matplotlib.pyplot as plt
 
 from statsmodels.tsa.stattools import acf, pacf, ccf
@@ -73,14 +74,30 @@ plt.show()
 
 #%%
 # TODO frequency & period
-print(pd.infer_freq(df.index))
+print('infer_freq >>> ', pd.infer_freq(df.index))
 df.diff().value_counts()
 
 #%%
-# TODO train и test через percentile
-train_size = np.percentile(df, 90)
-train = df[df['num_orders'] < train_size]
-test = df[~(df['num_orders'] < train_size)]
+# TODO train и test через percentile и IndexSlice
+idx = pd.IndexSlice
+row_end = pd.to_datetime(np.percentile(df.index, 90))
+# train_start = df.index[0]
+
+# 1️⃣ Просто срез можно, 👉 но при type datetime
+tr = df[df.index[0]: row_end]
+
+# 2️⃣ Срез через IndexSlice
+train = df.loc[idx[:row_end]]
+test = df.loc[idx[row_end:]]
+
+# 3️⃣ Срез через len
+split = int((len(df) * 0.9))
+trn = df.iloc[: split]
+tst = df.iloc[split:]
+
+print(trn.index.max())
+print(tst.index.min())
+
 
 #%%
 # TODO target

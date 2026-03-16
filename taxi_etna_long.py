@@ -16,8 +16,10 @@ from statsmodels.tsa.stattools import acf, pacf, ccf
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 from statsmodels.tsa.seasonal import seasonal_decompose, STL
 
+from etna.datasets import generate_const_df
+from etna.datasets import TSDataset
 #%%
-# TODO data
+# TODO MY data
 #  Параметр λ (lambda), lam=30 — это среднее число событий за интервал 10min.
 date_rng = pd.date_range("2018-03-01", "2018-08-31 23:50", freq="10min")
 
@@ -55,6 +57,12 @@ print(df.shape)
 
 
 print(df.min(), df.max())
+
+# TODO Eduson data
+#%%
+
+df = pd.read_csv(r"D:/Eduson_data/taxi.csv")
+
 
 #%%
 # TODO Декомпозиция через STL
@@ -100,5 +108,42 @@ print(tst.index.min())
 
 
 #%%
-# TODO target
+# TODO long table -> TSDataset
+df = pd.DataFrame(np.random.randint(1, 15, size=9).reshape(-1, 3),
+                  columns=list("ABC"),
+                  index=pd.date_range('01-01-2005', periods=3, freq='10D')
+                  )
+df.index.name = 'timestamp'
 
+print('Исходный : \n', df, '\n')
+
+freq = pd.infer_freq(df.index)
+
+df = df.reset_index().melt(id_vars="timestamp", var_name="segment", value_name="target")
+
+ts = TSDataset(df=df, freq=freq)
+
+print('long table :\n', df, '\n')
+
+print('TSDataset :\n', ts)
+
+#%%
+# TODO  long -> wide через to_dataset()
+
+df = pd.DataFrame(
+    np.random.randint(1, 15, size=9).reshape(-1, 3),
+    columns=list("ABC"),
+    index=pd.date_range("2005-01-01", periods=3, freq="10D")
+)
+
+df.index.name = 'timestamp'
+
+freq = pd.infer_freq(df.index)
+
+df = df.reset_index().melt(id_vars="timestamp", var_name="segment", value_name="target")
+
+print('long table :\n', df, '\n')
+
+df = TSDataset.to_dataset(df)
+
+print('wide table :\n', df, '\n')

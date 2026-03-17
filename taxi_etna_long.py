@@ -5,12 +5,13 @@ from datetime import date, datetime, timedelta
 import datetime
 
 import matplotlib
-
 # matplotlib.use("Agg")
 matplotlib.use("TkAgg")
 # matplotlib.use("QtAgg")
 # matplotlib.use("WebAgg")
 import matplotlib.pyplot as plt
+
+import plotly.express as px
 
 from statsmodels.tsa.stattools import acf, pacf, ccf
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
@@ -58,7 +59,7 @@ print(df.shape)
 
 print(df.min(), df.max())
 
-# TODO Eduson data
+# 1️⃣ TODO Eduson data
 #%%
 
 df = pd.read_csv(r"D:/Eduson_data/taxi.csv")
@@ -108,7 +109,7 @@ print(tst.index.min())
 
 
 #%%
-# TODO long table -> TSDataset
+# TODO wide long table через melt
 df = pd.DataFrame(np.random.randint(1, 15, size=9).reshape(-1, 3),
                   columns=list("ABC"),
                   index=pd.date_range('01-01-2005', periods=3, freq='10D')
@@ -147,3 +148,36 @@ print('long table :\n', df, '\n')
 df = TSDataset.to_dataset(df)
 
 print('wide table :\n', df, '\n')
+
+#%%
+# 2️⃣ TODO lesson, графики, convert через strftime, plotly через 'browser'
+
+df.info()
+
+print(df.datetime.min(), df.datetime.max())
+
+df['datetime'] = pd.to_datetime(df['datetime'], format='%Y-%m-%d %H:%M:%S')
+
+# Convert data через strftime
+print(df.datetime.dt.strftime('%d-%m-%Y'))
+
+# 1️
+# df.plot()
+# plt.show()
+
+# 2️⃣
+# plt.plot(df.set_index('datetime'))
+# plt.show()
+
+# 3️⃣
+import plotly.io as pio
+pio.renderers.default = 'browser'
+# pio.renderers.default = 'svg'
+# pio.renderers.default = 'png'
+
+fig = px.line(df, x='datetime', y='num_orders')
+fig.show()
+
+
+
+

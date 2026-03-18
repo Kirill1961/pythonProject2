@@ -44,18 +44,17 @@ season_day = 5 * np.sin(2 * np.pi * np.arange(len(orders)) / 144)
 orders_trend = orders + trend + season_day
 
 
-df = pd.DataFrame({"num_orders": orders_trend}, index=date_rng)
+df = pd.DataFrame({"datetime": date_rng,  "num_orders": orders_trend})
 
 # df1 = pd.DataFrame({'num_orders': orders}, index=date_rng)
 
-df.index.name = "datetime"
+# df.index.name = "datetime"
 
 print(df.head())
 # print(df1.head())
 
 print(df.shape)
 # print(df1.shape)
-
 
 print(df.min(), df.max())
 
@@ -66,9 +65,9 @@ df = pd.read_csv(r"D:/Eduson_data/taxi.csv")
 
 
 #%%
-# TODO Декомпозиция через STL
+# TODO Декомпозиция через STL, подбор периода
 
-stl = STL(endog=df["num_orders"], period=144)
+stl = STL(endog=df["num_orders"], period=6*24*14)
 
 res = stl.fit()
 
@@ -150,7 +149,7 @@ df = TSDataset.to_dataset(df)
 print('wide table :\n', df, '\n')
 
 #%%
-# 2️⃣ TODO lesson, графики, convert через strftime, plotly через 'browser'
+# 2️⃣ TODO lesson, convert через strftime
 
 df.info()
 
@@ -161,22 +160,25 @@ df['datetime'] = pd.to_datetime(df['datetime'], format='%Y-%m-%d %H:%M:%S')
 # Convert data через strftime
 print(df.datetime.dt.strftime('%d-%m-%Y'))
 
-# 1️
-# df.plot()
-# plt.show()
+#%%
+# TODO графики, plotly через 'browser', дату на лету переносим в индекс
+# 📈
+df.set_index('datetime').plot(title="taxi")
+plt.show()
 
-# 2️⃣
+# 📈
 # plt.plot(df.set_index('datetime'))
 # plt.show()
 
-# 3️⃣
+# 📈
 import plotly.io as pio
 pio.renderers.default = 'browser'
 # pio.renderers.default = 'svg'
 # pio.renderers.default = 'png'
 
-fig = px.line(df, x='datetime', y='num_orders')
-fig.show()
+# fig = px.line(df, x='datetime', y='num_orders')
+# fig.set_size_inches(8, 4)
+# fig.show()
 
 
 

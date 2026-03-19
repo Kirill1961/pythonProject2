@@ -53,6 +53,7 @@ print(
 
 print("infer_freq :\n", pd.infer_freq(df_tr["timestamp"]), "\n")
 
+#%%
 np.random.seed(0)
 
 df = pd.DataFrame(np.random.randint(1, 15, size=45).reshape(-1, 3), columns=list("ABC"))

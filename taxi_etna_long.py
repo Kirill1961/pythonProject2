@@ -58,7 +58,7 @@ print(df.shape)
 
 print(df.min(), df.max())
 
-# 1️⃣ TODO Eduson data
+# 1️⃣ TODO Eduson taxi/data
 #%%
 
 df = pd.read_csv(r"D:/Eduson_data/taxi.csv")

@@ -9,6 +9,7 @@ from statsmodels.tsa.stattools import acf, pacf, ccf
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 from statsmodels.tsa.seasonal import seasonal_decompose, STL
 
+from etna.datasets import TSDataset
 
 # %%
 # TODO функция генерит df
@@ -68,6 +69,14 @@ df1 = pd.DataFrame(np.arange(1, 19).reshape(-1, 3), columns=list("ABC"), index=d
 
 print("Исходный df : \n", df, "\n")
 
+#%%
+# TODO генерим df, тип даты object
+df = pd.DataFrame(
+    {'month': pd.date_range('2010-01-01', periods=12, freq='ME').astype(str),
+     'val': np.arange(10, 130, 10)}
+)
+
+df.dtypes
 # %%
 #
 # TODO создаём лаговые признаки и лаговые целевые
@@ -137,7 +146,7 @@ for idx_tr, idx_ts in cv_idx:
 
 
 #%%
-# TODO Интервал между наблюдениями
+# TODO Интервал ряда между наблюдениями
 #  diff() - Это разница между всеми соседними значениями в наборе данных
 np.random.seed(0)
 dt = pd.date_range(start='1/1/2020', end='12/31/2020', freq='0.5h')
@@ -148,10 +157,19 @@ ts = pd.DataFrame(np.random.randint(1, 100, size=dt.shape[0] * 3).reshape(-1, 3)
                   )
 
 #%%
-# TODO Интервал между наблюдениями простой способ, если расстояния идеально одинаковы
+# TODO Интервал ряда между наблюдениями простой способ, если расстояния идеально одинаковы
 print('Интервал если расстояния идеально одинаковы : \n', ts.index[0] - ts.index[1], '\n')
 
 print('Интервал если infer_freq неизвестный: \n', ts.index.diff().to_series().value_counts())
+
+#%%
+# TODO Один временной ряд "main", Подготовка df к TSDataset
+df['timestamp'] = pd.to_datetime(df['month'])
+df['target'] = df['val'].shift(-1)
+df['segment'] = 'main'
+df = df.drop(['month', 'val'], axis=1)
+
+df
 
 
 

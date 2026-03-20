@@ -1,4 +1,14 @@
+"""
+pandas - полный вывод таблицы
+"""
+
 import pandas as pd
+pd.set_option('display.max_rows', None)
+pd.set_option('display.max_columns', None)
+pd.set_option('display.width', None)
+pd.set_option('display.max_colwidth', None)
+
+
 import numpy as np
 
 from datetime import date, datetime, timedelta
@@ -35,4 +45,15 @@ data.set_index('timestamp', inplace=True)
 # TSDataset(data, freq='M')
 data.dtypes
 
+#%%
+# TODO TSDataset describe
 
+# Число сегментов
+print(data['segment'].unique())
+
+# to_dataset - можно не делать тк TSDataset сам всё сделает
+df = TSDataset.to_dataset(data)
+
+ts = TSDataset(df, freq='D')
+
+ts.describe()

@@ -30,6 +30,8 @@ from statsmodels.tsa.seasonal import seasonal_decompose, STL
 
 from etna.datasets import generate_const_df
 from etna.datasets import TSDataset
+from etna.analysis import acf_plot
+from etna.analysis import plot_correlation_matrix
 
 #%%
 # TODO data
@@ -38,6 +40,10 @@ data = pd.read_csv('D:\Eduson_data\example_dataset.csv')
 data1 = pd.read_csv('D:\Eduson_data\monthly_australian_wine_sales.csv')
 data2 = pd.read_csv('D:\Eduson_data\online_retail.csv')
 
+
+exog = data.copy()
+
+exog['lag1'] = exog['target'].shift(1).astype(float).interpolate(limit_direction='both')
 #%%
 
 data['timestamp'] = pd.to_datetime(data['timestamp'])
@@ -57,3 +63,19 @@ df = TSDataset.to_dataset(data)
 ts = TSDataset(df, freq='D')
 
 ts.describe()
+
+ts.info()
+
+#%%
+# TODO ts.plot
+
+ts.plot()
+plt.show()
+
+#%%
+# TODO ACF PACF
+acf_plot(ts, lags=21)
+plt.show()
+
+
+

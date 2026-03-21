@@ -171,7 +171,22 @@ df = df.drop(['month', 'val'], axis=1)
 
 df
 
+#%%
+# TODO ts - slice на прямую и через to_pandas
+np.random.seed(0)
+dt = pd.date_range(start='1/1/2020', end='12/31/2020', freq='ME')
 
+df = pd.DataFrame({'timestamp': dt, 'target': np.random.randint(1, 100, size=dt.shape[0])})
+
+df['segment'] = 'main'
+
+ts = TSDataset(df, freq='ME')
+
+# Через to_pandas
+print(ts.to_pandas().iloc[:3])
+
+# На прямую
+ts['2020-04-30': '2020-06-30']
 
 
 

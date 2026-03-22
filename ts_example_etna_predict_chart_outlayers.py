@@ -15,7 +15,6 @@ from datetime import date, datetime, timedelta
 import datetime
 
 import matplotlib
-
 # matplotlib.use("Agg")
 matplotlib.use("TkAgg")
 # matplotlib.use("QtAgg")
@@ -29,10 +28,13 @@ from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 from statsmodels.tsa.seasonal import seasonal_decompose, STL
 
 from etna.datasets import generate_const_df
-from etna.datasets import TSDataset
 from etna.analysis import acf_plot
 from etna.analysis import plot_correlation_matrix
+from etna.transforms import LagTransform
+from etna.transforms import LinearTrendTransform
 
+from etna.datasets import TSDataset  # импорт через публичный API
+from etna.datasets.tsdataset import TSDataset  # импорт напрямую из внутреннего модуля
 #%%
 # TODO data
 
@@ -40,10 +42,11 @@ data = pd.read_csv('D:\Eduson_data\example_dataset.csv')
 data1 = pd.read_csv('D:\Eduson_data\monthly_australian_wine_sales.csv')
 data2 = pd.read_csv('D:\Eduson_data\online_retail.csv')
 
-
-exog = data.copy()
-
-exog['lag1'] = exog['target'].shift(1).astype(float).interpolate(limit_direction='both')
+#%%
+# TODO Лаг по сегментам
+data_ex = data.copy()
+data_ex['lag1'] = data_ex.groupby('segment')['target'].shift(1)
+data_ex['lag1'] = data_ex['lag1'].interpolate(limit_direction='both')
 #%%
 
 data['timestamp'] = pd.to_datetime(data['timestamp'])
@@ -74,8 +77,25 @@ plt.show()
 
 #%%
 # TODO ACF PACF
+
 acf_plot(ts, lags=21)
 plt.show()
 
+#%%
 
+import matplotlib
+# import matplotlib
+# # matplotlib.use("Agg")
+# matplotlib.use("TkAgg")
+# # matplotlib.use("QtAgg")
+# # matplotlib.use("WebAgg")
+# import matplotlib.pyplot as plt
+#
+# import matplotlib.pyplot as plt
+
+x = [1, 2, 3,]
+y = [10, 20, 30]
+
+plt.plot(x, y)
+plt.show()
 

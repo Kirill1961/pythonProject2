@@ -248,12 +248,12 @@ df = pd.read_csv("D:\Eduson_data\example_dataset.csv")
 
 ts = TSDataset(df, freq='D')
 
-# ts.plot()
-# plt.show()
-#
-# dtrend = LinearTrendTransform(in_column='target', poly_degree=3)
-#
-# dtrend.fit_transform(ts)
-#
-# ts.plot()
-# plt.show()
+ts.plot()
+plt.show()
+
+dtrend = LinearTrendTransform(in_column='target', poly_degree=3)
+
+dtrend.fit_transform(ts)
+
+ts.plot()
+plt.show()

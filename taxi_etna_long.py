@@ -75,10 +75,18 @@ res.plot()
 plt.show()
 
 #%%
-# TODO Декомпозиция через acf
+# TODO Декомпозиция через acf + diff(1) / diff(24)
+df['datetime'] = pd.to_datetime(df['datetime'])
+df = df.set_index('datetime')
+
+df['num_orders'] = df['num_orders'].diff(1)  # Убираем тренд
+# df['num_orders'] = df['num_orders'].diff(24)  # Убираем сезон
+
+df.dropna(inplace=True, axis=0)
 
 plot_acf(df.num_orders, lags=30)
 plt.show()
+
 
 #%%
 # TODO frequency & period

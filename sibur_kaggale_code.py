@@ -32,7 +32,7 @@ from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 from statsmodels.tsa.seasonal import seasonal_decompose, STL
 
 #%%
-# TODO data train test target
+# TODO ❗ data train test target
 
 df_tr = pd.read_csv(r"D:\Eduson_data\sibur_train_features.csv")
 
@@ -64,7 +64,7 @@ df3 = pd.DataFrame(np.arange(1, 301).reshape(-1, 3), columns=list("ABC"))
 
 
 #%%
-# TODO init train
+# TODO ❗ exp init train
 # df_tr["timestamp"] = pd.to_datetime(df_tr["timestamp"])
 #
 # df_tr = df_tr.set_index("timestamp")
@@ -280,12 +280,13 @@ def restore_percent(data):
 # TODO 2 часть: подготовка данных с новыми адаптивными сдвигами
 
 # загрузка данных
-raw_train = df_tr
-raw_test = df_ts
-sample = df_sb
-raw_targets = df_tg
+raw_train = pd.read_csv(r"D:\Eduson_data\sibur_train_features.csv")
+raw_test = pd.read_csv("D:\Eduson_data\sibur_test_features.csv")
+sample = pd.read_csv("D:\Eduson_data\sibur_train_targets.csv")
+raw_targets = pd.read_csv("D:\Eduson_data\sibur_sample_submission.csv")
 
-# удаление временных промежутков, в таргетах он нам нужен для мержда с основным пайплайном
+
+# удаление временных промежутков в train и test, но в таргетах оставляем, он нам нужен для мержда с основным пайплайном
 raw_train.drop('timestamp', axis=1, inplace=True)
 raw_test.drop('timestamp', axis=1, inplace=True)
 # raw_targets.drop('timestamp', axis=1, inplace=True)
@@ -440,9 +441,9 @@ raw_targets = data.iloc[:, 10:]
 
 # инициализация списка индексов с мусорными объектами (индексы взяты с учетом предыдущего удаления и сбросом индексов)
 trash_indexes = list()
-# пропуски по элементам
+# пропуски по элементам, 👉 берём индексы строк содержащих 0
 trash_indexes += raw_train[raw_train['A_C3H8'].isnull()].index.to_list()
-# # пропуски в таргетах
+# # пропуски в таргетах 👉 [:, 1:5] - столбцы без timestamp
 trash_indexes += raw_targets[raw_targets.iloc[:, 1:5].isnull().T.sum() > 0].index.to_list()
 
 # аутлаеры по A_rate
@@ -478,6 +479,7 @@ trash_indexes += range(1341, 1349)
 trash_indexes += range(2835, 2837)
 
 #%%
+# TODO Восстановление train и %
 # восстановливаем только тренировочные данные, так как тестовые целиком будут взяты из данных с новыми сдвигами
 start = time.time()
 raw_train['A_rate'], raw_train['B_rate'] = A_B_rate_restore(raw_train['A_rate'], raw_train['B_rate'], 1000, 12)
@@ -502,7 +504,7 @@ raw_train = restore_percent(raw_train)
 final_train = raw_train.copy()
 final_targets = raw_targets.copy()
 
-# удаляем ранее отмеченные аутлаеры и пропуски
+# удаляем ранее отмеченные аутлаеры и пропуски 👉 через trash_indexes, индексы определили заранее
 data = pd.concat([final_train, final_targets], axis=1)
 data.drop(list(set(trash_indexes)), axis=0, inplace=True)
 data = data.reset_index(drop=True)
@@ -549,16 +551,17 @@ valid_data = pd.DataFrame()
 j = 0
 # пустая строка для вставки
 none = pd.Series([None] * 14).T
-
+#%%
 # проходим в цикле и вставляем пустую строку между двух известных значений
 for i in range(final_data.shape[0] * 2 - 1):
 
     if i % 2 == 0:
-        valid_data = valid_data.append(final_data.iloc[j])
+        valid_data = valid_data._append(final_data.iloc[j])
+        # valid_data = pd.concat([valid_data, final_data.iloc[[j]]])
         j += 1
     else:
-        valid_data = valid_data.append(none, ignore_index=True)
-
+        valid_data = valid_data._append(none, ignore_index=True)
+        # valid_data = pd.concat([valid_data, none])
 # отрезаем появившиеся лишние признаки
 valid_data = valid_data.iloc[:, :14]
 # восстанавливаем имена столбцов

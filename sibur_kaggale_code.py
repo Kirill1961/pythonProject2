@@ -569,17 +569,19 @@ valid_data = pd.DataFrame()
 j = 0
 # пустая строка для вставки, 👉 обязательно указать индекс иначе transpons не создаст строку
 none = pd.Series([np.nan] * 14, index=final_data.columns)
-#%%
+
 # проходим в цикле и вставляем пустую строку между двух известных значений
-# 👉 Так как это оверсэмплинг то число циклов увеличиваем final_data.shape[0] * 2 - 1
+# 👉 Так как это оверсэмплинг, то число циклов увеличиваем final_data.shape[0] * 2 - 1
 for i in range(final_data.shape[0] * 2 - 1):
 
-    if i % 2 == 0:
+    if i % 2 == 0 and j < len(final_data):
+
         # valid_data = valid_data._append(final_data.iloc[j])
         valid_data = pd.concat([valid_data, final_data.iloc[[j]]], axis=0)
         j += 1
 
     else:
+
         # valid_data = valid_data._append(none, ignore_index=True)
         valid_data = pd.concat([valid_data, none.to_frame().T], axis=0, ignore_index=True)
 # отрезаем появившиеся лишние признаки

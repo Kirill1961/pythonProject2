@@ -43,33 +43,33 @@ from statsmodels.tsa.seasonal import seasonal_decompose, STL
 #%%
 # TODO ❗ data train test target
 
-df_tr = pd.read_csv(r"D:\Eduson_data\sibur_train_features.csv")
-
-df_ts = pd.read_csv("D:\Eduson_data\sibur_test_features.csv")
-
-df_tg = pd.read_csv("D:\Eduson_data\sibur_train_targets.csv")
-
-df_sb = pd.read_csv("D:\Eduson_data\sibur_sample_submission.csv")
-
-print("train :\n", df_tr.columns, "\n")
-print("test  :\n", df_ts.columns, "\n")
-print("target :\n", df_tg.columns, "\n")
-print(
-    f" train : {df_tr.shape} \n test : {df_ts.shape}"
-    f" \n target : {df_tg.shape} \n submisiion : {df_sb.shape}",
-    "\n",
-)
-
-print("infer_freq :\n", pd.infer_freq(df_tr["timestamp"]), "\n")
-
-df = pd.DataFrame(
-    np.arange(1, 46).reshape(-1, 3),
-    columns=list("ABC"),
-    index=pd.date_range('01-01-2010', periods=15, freq='D')
-)
-df1 = pd.DataFrame(np.random.randint(1, 15, size=45).reshape(-1, 3), columns=list("ABC"))
-df2 = pd.DataFrame(np.arange(1, 46).reshape(-1, 3), columns=list("ABC"))
-df3 = pd.DataFrame(np.arange(1, 301).reshape(-1, 3), columns=list("ABC"))
+# df_tr = pd.read_csv(r"D:\Eduson_data\sibur_train_features.csv")
+#
+# df_ts = pd.read_csv("D:\Eduson_data\sibur_test_features.csv")
+#
+# df_tg = pd.read_csv("D:\Eduson_data\sibur_train_targets.csv")
+#
+# df_sb = pd.read_csv("D:\Eduson_data\sibur_sample_submission.csv")
+#
+# print("train :\n", df_tr.columns, "\n")
+# print("test  :\n", df_ts.columns, "\n")
+# print("target :\n", df_tg.columns, "\n")
+# print(
+#     f" train : {df_tr.shape} \n test : {df_ts.shape}"
+#     f" \n target : {df_tg.shape} \n submisiion : {df_sb.shape}",
+#     "\n",
+# )
+#
+# print("infer_freq :\n", pd.infer_freq(df_tr["timestamp"]), "\n")
+#
+# df = pd.DataFrame(
+#     np.arange(1, 46).reshape(-1, 3),
+#     columns=list("ABC"),
+#     index=pd.date_range('01-01-2010', periods=15, freq='D')
+# )
+# df1 = pd.DataFrame(np.random.randint(1, 15, size=45).reshape(-1, 3), columns=list("ABC"))
+# df2 = pd.DataFrame(np.arange(1, 46).reshape(-1, 3), columns=list("ABC"))
+# df3 = pd.DataFrame(np.arange(1, 301).reshape(-1, 3), columns=list("ABC"))
 
 
 #%%
@@ -322,13 +322,13 @@ start = time.time()
 features['A_rate'], features['B_rate'] = A_B_rate_restore(features['A_rate'], features['B_rate'], 500, 10)
 
 features['A_CH4'] = chemical_data_restore(features['A_CH4'], 500, 20, 100, 9)
-# features['A_C2H6'] = chemical_data_restore(features['A_C2H6'], 400, 20, 100, 10)
-# features['A_C3H8'] = chemical_data_restore(features['A_C3H8'], 500, 20, 100, 14)
-# features['A_iC4H10'] = chemical_data_restore(features['A_iC4H10'], 500, 20, 100, 11)
-# features['A_nC4H10'] = chemical_data_restore(features['A_nC4H10'], 500, 20, 100, 11)
-# features['A_iC5H12'] = chemical_data_restore(features['A_iC5H12'], 400, 20, 100, 8)
-# features['A_nC5H12'] = chemical_data_restore(features['A_nC5H12'], 400, 20, 100, 9)
-# features['A_C6H14'] = chemical_data_restore(features['A_C6H14'], 500, 20, 100, 18)
+features['A_C2H6'] = chemical_data_restore(features['A_C2H6'], 400, 20, 100, 10)
+features['A_C3H8'] = chemical_data_restore(features['A_C3H8'], 500, 20, 100, 14)
+features['A_iC4H10'] = chemical_data_restore(features['A_iC4H10'], 500, 20, 100, 11)
+features['A_nC4H10'] = chemical_data_restore(features['A_nC4H10'], 500, 20, 100, 11)
+features['A_iC5H12'] = chemical_data_restore(features['A_iC5H12'], 400, 20, 100, 8)
+features['A_nC5H12'] = chemical_data_restore(features['A_nC5H12'], 400, 20, 100, 9)
+features['A_C6H14'] = chemical_data_restore(features['A_C6H14'], 500, 20, 100, 18)
 
 end = time.time()
 print(end - start)
@@ -503,13 +503,13 @@ start = time.time()
 raw_train['A_rate'], raw_train['B_rate'] = A_B_rate_restore(raw_train['A_rate'], raw_train['B_rate'], 1000, 12)
 
 raw_train['A_CH4'] = chemical_data_restore(raw_train['A_CH4'], 500, 20, 100, 10)
-# raw_train['A_C2H6'] = chemical_data_restore(raw_train['A_C2H6'], 500, 20, 100, 14)
-# raw_train['A_C3H8'] = chemical_data_restore(raw_train['A_C3H8'], 500, 20, 100, 15)
-# raw_train['A_iC4H10'] = chemical_data_restore(raw_train['A_iC4H10'], 500, 20, 100, 11)
-# raw_train['A_nC4H10'] = chemical_data_restore(raw_train['A_nC4H10'], 500, 20, 100, 11)
-# raw_train['A_iC5H12'] = chemical_data_restore(raw_train['A_iC5H12'], 500, 20, 100, 7)
-# raw_train['A_nC5H12'] = chemical_data_restore(raw_train['A_nC5H12'], 400, 20, 100, 9)
-# raw_train['A_C6H14'] = chemical_data_restore(raw_train['A_C6H14'], 500, 20, 100, 18)
+raw_train['A_C2H6'] = chemical_data_restore(raw_train['A_C2H6'], 500, 20, 100, 14)
+raw_train['A_C3H8'] = chemical_data_restore(raw_train['A_C3H8'], 500, 20, 100, 15)
+raw_train['A_iC4H10'] = chemical_data_restore(raw_train['A_iC4H10'], 500, 20, 100, 11)
+raw_train['A_nC4H10'] = chemical_data_restore(raw_train['A_nC4H10'], 500, 20, 100, 11)
+raw_train['A_iC5H12'] = chemical_data_restore(raw_train['A_iC5H12'], 500, 20, 100, 7)
+raw_train['A_nC5H12'] = chemical_data_restore(raw_train['A_nC5H12'], 400, 20, 100, 9)
+raw_train['A_C6H14'] = chemical_data_restore(raw_train['A_C6H14'], 500, 20, 100, 18)
 
 end = time.time()
 print(end - start)
@@ -598,7 +598,7 @@ final_data = valid_data.copy()
 final_train = final_data.iloc[:, :10]
 final_targets = final_data.iloc[:, 10:]
 
-#%%
+
 # финальный тест
 final_test = test.copy()
 
@@ -621,7 +621,12 @@ submission.iloc[:, 1:] = 0
 # сумма ошибки на валидации
 total_loss = 0
 
+
+#%%
+# TODO Прогноз для каждого таргета отдельно
+
 # цикл для предсказания каждого таргета отдельно
+# 👉 крутим таргеты, для каждого своя alpha в exponential_smoothing
 for num, target in enumerate(final_targets.columns):
 
     print(target, end='  ')
@@ -638,51 +643,56 @@ for num, target in enumerate(final_targets.columns):
         x_test = final_train.iloc[test_idx]
         y_train = final_targets.iloc[train_idx][target]
         y_test = final_targets.iloc[test_idx][target].reset_index(drop=True)
-
+    # try:
         # инициализируем модель
         model = Ridge()
+    # except Exception as e:
+    #     print(e)
         # обучаем модель
         model.fit(x_train, y_train)
+    # except:
         # предсказываем значения для валидации
+        # 👉 Средний прогноз по всем моделям, усредняем на число фолдов и суммируем в переменную
         res += model.predict(x_test) / len(cv)
+    # except:
         # предсказываем значения для теста
         submission[target] += model.predict(final_test) / len(cv)
 
-    # экспоненциальное сглаживание таргетов, коэфициенты подобраны на валидации
-    if target == 'B_C2H6':
-        res = exponential_smoothing(res, 0.65)
-        submission[target] = exponential_smoothing(submission[target], 0.65)
+        # экспоненциальное сглаживание таргетов, коэфициенты подобраны на валидации
+        if target == 'B_C2H6':
+            res = exponential_smoothing(res, 0.65)
+            submission[target] = exponential_smoothing(submission[target], 0.65)
 
-    if target == 'B_C3H8':
-        res = exponential_smoothing(res, 0.2)
-        submission[target] = exponential_smoothing(submission[target], 0.2)
+        if target == 'B_C3H8':
+            res = exponential_smoothing(res, 0.2)
+            submission[target] = exponential_smoothing(submission[target], 0.2)
 
-    if target == 'B_iC4H10':
-        res = exponential_smoothing(res, 1)
-        submission[target] = exponential_smoothing(submission[target], 1)
+        if target == 'B_iC4H10':
+            res = exponential_smoothing(res, 1)
+            submission[target] = exponential_smoothing(submission[target], 1)
 
-    if target == 'B_nC4H10':
-        res = exponential_smoothing(res, 0.35)
-        submission[target] = exponential_smoothing(submission[target], 0.35)
+        if target == 'B_nC4H10':
+            res = exponential_smoothing(res, 0.35)
+            submission[target] = exponential_smoothing(submission[target], 0.35)
 
-    # ошибка по таргету
-    loss = mean_abs_per_err(y_test, res)
+        # ошибка по таргету
+        loss = mean_abs_per_err(y_test, res)
 
-    total_loss += loss
-    print(round(loss, 5))
+        total_loss += loss
+        print(round(loss, 5))
 
 print()
 print('total_loss', round(total_loss, 5) / 4)
 
-'''
->>>
-B_C2H6  4.15904
-B_C3H8  1.92389
-B_iC4H10  1.26067
-B_nC4H10  1.01302
-
-total_loss 2.0891525
-'''
+# '''
+# >>>
+# B_C2H6  4.15904
+# B_C3H8  1.92389
+# B_iC4H10  1.26067
+# B_nC4H10  1.01302
+#
+# total_loss 2.0891525
+# '''
 
 #%%
 submission.to_csv('combinated_version_v_6.csv', index=False)

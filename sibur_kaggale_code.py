@@ -548,8 +548,10 @@ final_targets = data.iloc[:, 11:]
 # И сейчас мы заменим старые данные на новые по тем объектам для которых смогли посчитать объекты с новыми сдвигами
 
 # по временной метке мерджим старые и новые данные
+# 👉 Так как final_train и train имеют одинаковые имена столбцов, то pandas присвоит суффиксы _x и _y
 comb_data = pd.merge(final_train, train, on='timestamp', how='left')
 # выделяем индексы для которых у нас есть новые значения
+# 👉 новые значения определяем через Тильду как ненулевые значения A_rate_y
 idx = comb_data[~comb_data['A_rate_y'].isnull()].index
 # заменяем часть трейна на новые данные
 comb_train = final_train.iloc[:, :10].copy()
@@ -558,6 +560,7 @@ comb_train.iloc[idx] = comb_data[~comb_data['A_rate_y'].isnull()].iloc[:, 11:]
 final_train = comb_train.copy()
 
 #%%
+# TODO oversampling
 # оверсэмплинг трейна, 👉 вставляя между строк строку с NA добавляем данных
 # для сглаживания выборки, берем трейн, через один восстанавливаем пропуски и интерполируем
 
@@ -574,6 +577,7 @@ none = pd.Series([np.nan] * 14, index=final_data.columns)
 # 👉 Так как это оверсэмплинг, то число циклов увеличиваем final_data.shape[0] * 2 - 1
 for i in range(final_data.shape[0] * 2 - 1):
 
+    # if i % 2 == 0:
     if i % 2 == 0 and j < len(final_data):
 
         # valid_data = valid_data._append(final_data.iloc[j])
@@ -643,11 +647,12 @@ for num, target in enumerate(final_targets.columns):
         x_test = final_train.iloc[test_idx]
         y_train = final_targets.iloc[train_idx][target]
         y_test = final_targets.iloc[test_idx][target].reset_index(drop=True)
+        print(x_test.shape, y_test.shape)
     # try:
         # инициализируем модель
         model = Ridge()
-    # except Exception as e:
-    #     print(e)
+    # except Exception:
+    #     raise
         # обучаем модель
         model.fit(x_train, y_train)
     # except:

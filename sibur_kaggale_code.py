@@ -294,8 +294,8 @@ def restore_percent(data):
 # загрузка данных
 raw_train = pd.read_csv(r"D:\Eduson_data\sibur_train_features.csv")
 raw_test = pd.read_csv("D:\Eduson_data\sibur_test_features.csv")
-sample = pd.read_csv("D:\Eduson_data\sibur_train_targets.csv")
-raw_targets = pd.read_csv("D:\Eduson_data\sibur_sample_submission.csv")
+raw_targets = pd.read_csv("D:\Eduson_data\sibur_train_targets.csv")
+sample  = pd.read_csv("D:\Eduson_data\sibur_sample_submission.csv")
 
 
 # удаление временных промежутков в train и test, но в таргетах оставляем, он нам нужен для мержда с основным пайплайном
@@ -303,14 +303,16 @@ raw_train.drop('timestamp', axis=1, inplace=True)
 raw_test.drop('timestamp', axis=1, inplace=True)
 # raw_targets.drop('timestamp', axis=1, inplace=True)
 
-# склеиваем все данные вместе
+# склеиваем все данные вместе, raw_train + raw_targets + raw_test
+# 👉 склеиваем для совместной обработки train, test и target
 data = pd.concat([raw_train, raw_targets], axis=1)
 data = pd.concat([data, raw_test], axis=0).reset_index(drop=True)
 
 # обрезаем начало трейна, так как все что раньше слишком шумно и пробрасываться не будет
+# 👉 Шумное начало определили вручную и визуально
 data = data[2200:].reset_index(drop=True)
 
-# разделяем на признаки и на таргеты данные
+# разделяем на признаки и на таргеты данные -> :10 и 10:
 features = data.iloc[:, :10]
 targets = data.iloc[:, 10:]
 
@@ -318,6 +320,8 @@ targets = data.iloc[:, 10:]
 # TODO features
 start = time.time()
 # чистим признаки по выше описаным функциям, некоторые параметры подбирались исходя из структуры изменения признака
+# 👉 Структура изменения признака определяется через локальные статистики
+# 👉 заполняем пропуски через локальные статистики
 
 features['A_rate'], features['B_rate'] = A_B_rate_restore(features['A_rate'], features['B_rate'], 500, 10)
 
@@ -355,6 +359,7 @@ new_targets = targets.copy()
 new_targets.iloc[:, :] = 0
 
 # первые 250 значений мусорим, так как не имеем о них качественных значений из прошлого
+# 👉 первые 250 значений мусорные потому что первые 250 значений в исходном df NA
 for i in range(features.shape[0]):
     if i < 250:
         new_features.iloc[i] = features.iloc[0]
@@ -372,6 +377,8 @@ for i in range(features.shape[0]):
         new_targets.iloc[i] = targets.iloc[i]
 
 # обрезаем лишние признаки
+# 👉 Без первых 250 мусорных значений, тк они удалены по условию
+# 👉 new_features и new_targets режутся только вместе, что бы было равное число строк
 new_features = new_features.iloc[:, :10]
 new_features = new_features.reset_index(drop=True)
 new_targets = new_targets.reset_index(drop=True)
@@ -391,7 +398,7 @@ new_targets = new_targets.drop(range(1290, 1440), axis=0).reset_index(drop=True)
 # сохраняем тестовые значения, 3984 это размер тестовой выборки, отрезаем с конца ее
 test = new_features[-3984:].reset_index(drop=True)
 
-# объединяем трен и таргеты, чтобы удалить пропуски по таргетам, так же у нас удаляться тестовые значений, так как для них таргетов нет
+# объединяем трейн и таргеты, чтобы удалить пропуски по таргетам, так же у нас удаляться тестовые значений, так как для них таргетов нет
 data = pd.concat([new_features, new_targets], axis=1).dropna(
     subset=['B_C2H6', 'B_C3H8', 'B_iC4H10', 'B_nC4H10']).reset_index(drop=True)
 
@@ -410,6 +417,7 @@ raw_test = pd.read_csv("D:\Eduson_data\sibur_test_features.csv")
 raw_targets = pd.read_csv("D:\Eduson_data\sibur_train_targets.csv")
 
 # удаление временных промежутков, в таргетах он нам нужен для мержда с новыми данными
+# 👉 в таргетах 'timestamp' нужен для мержда по on='timestamp'
 raw_train.drop('timestamp', axis=1, inplace=True)
 raw_test.drop('timestamp', axis=1, inplace=True)
 # raw_targets.drop('timestamp', axis=1, inplace=True)
@@ -436,13 +444,14 @@ raw_test = data.iloc[size_train:-shift, :10].reset_index(drop=True)
 
 #%%
 # предварительная чистка трейна
-
+# 👉 записываем в список трешевые индексы
 data = pd.concat([raw_train, raw_targets], axis=1)
 
 # инициализация списка индексов с мусорными объектами
 trash_indexes = list()
 # в первых 190 строках очень шумные данные по многим хим элементам
 trash_indexes += range(0, 190)
+
 # # огромный сэмпл пустых/странных значений хим элементов в перемешку с пропусками таргета
 trash_indexes += range(1191, 1886)
 # # сэмпл трейна, где таргеты ведут себя очень странно
@@ -522,7 +531,7 @@ raw_train = restore_percent(raw_train)
 final_train = raw_train.copy()
 final_targets = raw_targets.copy()
 
-# удаляем ранее отмеченные аутлаеры и пропуски 👉 через trash_indexes, индексы определили заранее
+# удаляем ранее отмеченные аутлаеры и пропуски 👉 через trash_indexes, индексы, которые определили заранее
 data = pd.concat([final_train, final_targets], axis=1)
 data.drop(list(set(trash_indexes)), axis=0, inplace=True)
 data = data.reset_index(drop=True)

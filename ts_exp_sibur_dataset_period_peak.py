@@ -397,6 +397,17 @@ def peak_period(sample, nlags):
 # peak_period(df_tr['A_CH4'], 5000)
 peak_period(features['A_CH4'], 5000)
 
+#%%
+# TODO train test через shape
+df = pd.DataFrame(np.random.randint(1, 15, size=45).reshape(-1, 3), columns=list("ABC"))
+df.index = pd.date_range('01-01-2010', periods=len(df), freq='MS')
+df.index.name = 'timestamp'
+size_train = int(df.shape[0] * 0.7)
 
+train, test = df.iloc[:size_train, :], df.iloc[size_train:, :]
+
+
+print(train)
+print(test)
 
 

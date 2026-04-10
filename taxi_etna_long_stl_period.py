@@ -65,7 +65,7 @@ df = pd.read_csv(r"D:/Eduson_data/taxi.csv")
 
 
 #%%
-# TODO Декомпозиция через STL, подбор периода
+# TODO Декомпозиция через STL, задавая period - мы формируем гипотезу о размере season, число наблюдений в сезоне
 
 stl = STL(endog=df["num_orders"], period=6*24*14)
 

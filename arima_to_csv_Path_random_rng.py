@@ -75,7 +75,37 @@ acf(data['V1'])
 pacf(data['V1'], nlags=15, method='ols')
 
 #%%
-d = sm.datasets.get_rdataset("dowjones", "fma")
-dj = d.data
+# TODO Dow-Jones
+data = pd.read_csv('D:\Eduson_data\dj.csv')
 
-# d = sm.datasets.get_rdataset("dj", "fma")
+data.drop('t', axis=1,  inplace=True)
+
+data.plot()
+plt.show()
+
+#%%
+# TODO Dow-Jones acf, pacf
+plt.subplot(211)  # Ось 1-го графика
+plot_acf(data, lags=20, ax=plt.gca())
+plt.subplot(212)  # Ось 2-го графика
+plot_pacf(data, method='ywm', lags=20, ax=plt.gca())
+plt.show()
+
+#%%
+# TODO Плавно-убывающая ACF для Dow-Jones требует diff
+data_diff = data.diff()
+
+
+#%%
+data_diff.plot()
+plt.show()
+
+#%%
+# TODO тк после diff появился NA то его удаляем
+data_diff.dropna(inplace=True)
+
+plt.subplot(211)  # Ось 1-го графика
+plot_acf(data_diff, lags=20, ax=plt.gca())
+plt.subplot(212)  # Ось 2-го графика
+plot_pacf(data_diff, method='ywm', lags=20, ax=plt.gca())
+plt.show()

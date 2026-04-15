@@ -31,6 +31,7 @@ data_p.shape
 # TODO index, Сам добавил индекс
 data_p.index = pd.date_range('01-01-2020', periods=len(data_p), freq='D', name='timestamp')
 data_p.index
+
 #%%
 # TODO Мультипликативный ряд
 data_p.plot(figsize=(7, 3))
@@ -41,9 +42,19 @@ plt.title('pass transport')
 plt.show()
 
 #%%
+plot_acf(data_p, lags=20)
+plt.show()
+
+#%%
 # TODO Логарифмирование
 data_p_add = np.log10(data_p)
 data_p_add.head()
+
+#%%
+plot_pacf(data_p_add, lags=20)
+plt.show()
+
+
 #%%
 # TODO Аддитивный ряд
 data_p_add.plot(figsize=(7, 3))

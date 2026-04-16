@@ -42,7 +42,7 @@ plt.title('pass transport')
 plt.show()
 
 #%%
-plot_acf(data_p, lags=20)
+plot_pacf(data_p, lags=20)
 plt.show()
 
 #%%

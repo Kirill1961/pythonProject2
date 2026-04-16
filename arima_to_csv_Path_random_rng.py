@@ -1,3 +1,14 @@
+"""
+Работа Ручная подборка параметров ARIMA по ACF и PACF
+1 Построение график, первая оценка
+2 По ACF смотрим стационарность ряда
+3 Приводим к стационарному виду через diff, если требуется
+4 Смотрим пару ACF и PACF, по ним определяем (p, q)
+5 Оценка модели не вошла в работу:
+    * AIC / BIC
+    * остатки (white noise?)
+"""
+
 from statsmodels.tsa.arima_model import ARIMA
 
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
@@ -22,7 +33,7 @@ data.plot()
 plt.show()
 
 #%%
-# TODO data default_rng
+# TODO 1️⃣ data default_rng
 #  rng - Объект Генератора
 mu = 0
 sigma = 1.5
@@ -84,7 +95,7 @@ data.plot()
 plt.show()
 
 #%%
-# TODO Dow-Jones acf, pacf
+# TODO 2️⃣ Dow-Jones acf, pacf
 plt.subplot(211)  # Ось 1-го графика
 plot_acf(data, lags=20, ax=plt.gca())
 plt.subplot(212)  # Ось 2-го графика
@@ -108,4 +119,42 @@ plt.subplot(211)  # Ось 1-го графика
 plot_acf(data_diff, lags=20, ax=plt.gca())
 plt.subplot(212)  # Ось 2-го графика
 plot_pacf(data_diff, method='ywm', lags=20, ax=plt.gca())
+plt.show()
+
+#%%
+# TODO 3️⃣ IBM ibmclose
+data = pd.read_csv('D:\Eduson_data\ibmclose.csv')
+df = data.copy()
+df.drop('time', axis=1, inplace=True)
+
+
+
+#%%
+# TODO IBM plot acf pacf
+plt.subplot(311)
+df.plot(ax=plt.gca())
+
+plt.subplot(312)
+plot_acf(df, lags=20, ax=plt.gca())
+
+plt.subplot(313)
+plot_pacf(df, lags=20, ax=plt.gca())
+
+plt.show()
+
+#%%
+# TODO diff
+df = df.diff(periods=1)
+
+df.dropna(inplace=True)
+
+plt.subplot(311)
+df.plot(ax=plt.gca())
+
+plt.subplot(312)
+plot_acf(df, lags=20, ax=plt.gca())
+
+plt.subplot(313)
+plot_pacf(df, lags=20, ax=plt.gca())
+
 plt.show()

@@ -4,7 +4,8 @@
 2 По ACF смотрим стационарность ряда
 3 Приводим к стационарному виду через diff, если требуется
 4 Смотрим пару ACF и PACF, по ним определяем (p, q)
-5 Оценка модели не вошла в работу:
+5 Построение модели ARIMA
+6 Оценка модели не вошла в работу:
     * AIC / BIC
     * остатки (white noise?)
 """
@@ -158,3 +159,29 @@ plt.subplot(313)
 plot_pacf(df, lags=20, ax=plt.gca())
 
 plt.show()
+
+#%%
+# TODO 4️⃣ strike, визуализация acf, pacf
+
+data = pd.read_csv('D:/Eduson_data/strikes.csv')
+
+# Срез - это подгонка под учебный пример
+endog = data.close[335:360]
+
+endog.plot()
+plt.show()
+
+plt.subplot(211)  # Ось 1-го графика
+plot_acf(endog, lags=20, ax=plt.gca())
+plt.subplot(212)  # Ось 2-го графика
+plot_pacf(endog, method='ywm', lags=12, ax=plt.gca())
+plt.show()
+
+#%%
+# TODO 5️⃣ Моделирование ARIMA для strike
+mod = sm.tsa.arima.ARIMA(endog, order=(1, 0, 0))
+res = mod.fit()
+print(res.summary())
+
+print(res.model_orders)
+# print(res.arroots, res.maroots)

@@ -36,7 +36,7 @@ plt.show()
 #%%
 # TODO 1️⃣ data default_rng
 #  rng - Объект Генератора
-mu = 0
+mu = 0.5
 sigma = 1.5
 rng = np.random.default_rng(1)
 data = pd.DataFrame(rng.normal(mu, sigma, 30), columns=['V1'])

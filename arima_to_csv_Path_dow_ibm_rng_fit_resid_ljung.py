@@ -20,10 +20,12 @@ import numpy as np
 from pandas import DataFrame
 
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 from pathlib import Path
 
 import statsmodels.api as sm
+from statsmodels.stats.diagnostic import acorr_ljungbox
 #%%
 # TODO data random.normal
 mu = 0
@@ -178,10 +180,59 @@ plot_pacf(endog, method='ywm', lags=12, ax=plt.gca())
 plt.show()
 
 #%%
-# TODO 5️⃣ Моделирование ARIMA для strike
+# TODO 5️⃣ strike Моделирование ARIMA
 mod = sm.tsa.arima.ARIMA(endog, order=(1, 0, 0))
 res = mod.fit()
 print(res.summary())
 
 print(res.model_orders)
 # print(res.arroots, res.maroots)
+
+#%%
+# 6️⃣ TODO coal-production annual  1920-1968.
+data = pd.read_csv('D:/Eduson_data/bicoal.csv')
+
+#%%
+# TODO Графики plt, sns, acf, pacf, расстояние между графиками
+
+# sns.lineplot(x=data.year, y=data.tons)
+# plt.show()
+
+plt.subplot(311)
+plt.plot(data.year, data.tons)
+
+plt.subplot(312)
+plot_acf(data.tons, lags=20,  ax=plt.gca())
+
+plt.subplot(313)
+plot_pacf(data.tons, lags=20, ax=plt.gca())
+plt.tight_layout()
+plt.show()
+
+#%%
+# TODO 7️⃣ coal Моделирование ARIMA
+mod = sm.tsa.arima.ARIMA(data.tons, order=(4, 0, 0))
+res = mod.fit()
+print(res.summary())
+
+print(res.model_orders)
+# print(res.arroots, res.maroots)
+
+#%%
+# TODO Остатки, графики разных моделей
+
+resid = pd.DataFrame(res.resid)
+
+plt.plot(data.year, resid)
+plt.title('1, 0, 0')
+plt.show()
+
+#%%
+# TODO kde остатков
+resid.plot(kind='kde')
+plt.title('1, 0, 0')
+plt.show()
+
+#%%
+# TODO Ljung–Box
+acorr_ljungbox(res.resid, lags=[1], return_df=True)

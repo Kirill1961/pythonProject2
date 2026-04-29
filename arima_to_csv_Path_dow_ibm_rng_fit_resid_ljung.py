@@ -102,7 +102,7 @@ plt.show()
 plt.subplot(211)  # Ось 1-го графика
 plot_acf(data, lags=20, ax=plt.gca())
 plt.subplot(212)  # Ось 2-го графика
-plot_pacf(data, method='ywm', lags=20, ax=plt.gca())
+plot_pacf(data, method='ywm', lags=15, ax=plt.gca())
 plt.show()
 
 #%%

@@ -20,7 +20,7 @@ from statsmodels.tsa.seasonal import seasonal_decompose, STL
 from etna.datasets import generate_const_df
 from etna.datasets import TSDataset
 #%%
-# TODO MY data
+# TODO my data
 #  Параметр λ (lambda), lam=30 — это среднее число событий за интервал 10min.
 date_rng = pd.date_range("2018-03-01", "2018-08-31 23:50", freq="10min")
 

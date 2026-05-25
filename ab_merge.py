@@ -11,10 +11,19 @@ import numpy as np
 import pandas as pd
 from scipy.stats import norm
 
+
 #%%
 # TODO data
-data = pd.read_csv('D:/Eduson_data/ab_test.csv')
-data
+ab_test = pd.read_csv('D:/Eduson_data/ab_test.csv')
+countries = pd.read_csv('D:/Eduson_data/countries_ab.csv')
+print(ab_test.shape, '\n', countries.shape)
+
+
 #%%
-# norm.pdf(np.array([0, 1, 2, 3]), 0, 1)
-norm.cdf(-3.3)
+data = pd.merge(ab_test, countries, on='id', how='left')
+data.shape
+
+# TODO Число дубликатов
+#%%
+duplicate = data.duplicated(subset=['id']).sum()
+duplicate

@@ -8,6 +8,9 @@ A/B test
  * id - уникальный идентификатор пользователя
  * time - время события/визита пользователя
  * con_treat - (или чаще group)	в какую группу эксперимента попал пользователь: control или treatment
+    * control - пользователи, которые видят старую страницу
+    * treatment - пользователи, которые видят новую страницу
+    * num - моя колонка, для ttest
  * page - какую версию страницы увидел пользователь
  * converted - совершил ли пользователь целевое действие
  * country - страна пользователя
@@ -15,10 +18,12 @@ A/B test
 #%%
 import numpy as np
 import pandas as pd
-from scipy.stats import norm
+from scipy.stats import norm, ttest_ind
 import matplotlib.pyplot as plt
 import seaborn as sns
 import seaborn.objects as so
+import statsmodels.api as sm
+
 
 #%%
 # TODO data
@@ -30,7 +35,10 @@ print(ab_test.shape, '\n', countries.shape)
 #%%
 # TODO merge 2-х таблиц
 
+# np.random.seed(1)  # Средние  num по control/treatment  почти не различаются
+np.random.seed(10)  # Средние num по control/treatment хорошо различаются
 data = pd.merge(ab_test, countries, on='id', how='left')
+data['num'] = np.random.randint(1, 100, size=len(data))
 data.shape
 
 
@@ -84,9 +92,43 @@ plt.show()
 
 #%%
 # TODO Рассчитайте коэффициенты конверсии для каждой группы.
+#  🚀 mean - по сути для Бернулли (1/0) это оценка вероятности успеха -> P_успех / P_число испытаний
 
-control_rate =  data.loc[data['con_treat'] == 'control', 'converted'].mean()
-treatment_rate =  data.loc[data['con_treat'] == 'treatment', 'converted'].mean()
+control_rate = data.loc[data['con_treat'] == 'control', 'converted'].mean()
+treatment_rate = data.loc[data['con_treat'] == 'treatment', 'converted'].mean()
+
+#%%
+# TODO Cat - Bin >>> группировка >>> Bin 0/1 - распределение Бернулли
+
+group_trials = data.groupby(['con_treat'])['converted'].count()
+print(group_trials)
+
+group_success = data.groupby(['con_treat'])['converted'].sum()
+print(group_success)
+
+trials = pd.DataFrame(group_trials).values.ravel().tolist()
+success = pd.DataFrame(group_success).values.ravel().tolist()
+print(trials, success)
+
+#%%
+# TODO Z - test, пропорции, Cat-Bin, признаки con_treat и converted
+
+stat, p_val = sm.stats.proportions_ztest(success, trials)
+print(stat, p_val)
+
+#%%
+# TODO t - test, средние, Cat-Num, признаки con_treat и num
+
+group_con_treat = data.groupby(['con_treat'])['num'].mean()
+print(group_con_treat)
+
+# array-like наборы для ttest_ind
+treatment = data.loc[data['con_treat'] == 'treatment']['num']
+control = data.loc[data['con_treat'] == 'control']['num']
+
+# t-тест и p-value
+tstat, pvalue = ttest_ind(treatment, control)
+print(tstat, pvalue)
 
 #%% TODO conversion rates через seaborn
 ax = sns.barplot(data, x=data['con_treat'], y=data['converted'])

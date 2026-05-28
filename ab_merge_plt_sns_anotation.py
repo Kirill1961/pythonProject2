@@ -43,6 +43,14 @@ data.shape
 
 
 #%%
+# TODO Отбор только совпадающих категорий: 'control'-'old_page' и 'treatment'-'new_page'
+df = data[
+    ((data['con_treat'] == 'control') & (data['page'] == 'old_page')) |
+    ((data['con_treat'] == 'treatment') & (data['page'] == 'new_page'))
+]
+
+
+#%%
 # TODO Число дубликатов
 
 duplicate = data.duplicated(subset=['id']).sum()
@@ -106,8 +114,8 @@ print(group_trials)
 group_success = data.groupby(['con_treat'])['converted'].sum()
 print(group_success)
 
-trials = pd.DataFrame(group_trials).values.ravel().tolist()
-success = pd.DataFrame(group_success).values.ravel().tolist()
+trials = pd.DataFrame(group_trials).values.ravel().tolist()  # Неудача
+success = pd.DataFrame(group_success).values.ravel().tolist()  # Успех
 print(trials, success)
 
 #%%
@@ -156,5 +164,27 @@ plt.ylim(0, 0.15)
 plt.text(0, control_rate + 0.01, f'{control_rate:.4f}')
 plt.text(1, treatment_rate + 0.01, f'{treatment_rate:.4f}')
 plt.show()
+
+#%%
+# TODO  Оценка события по странам
+#  scatterplot группировки,  подписи через itertuples
+
+country_group = pd.DataFrame(data.groupby('country')['converted'].mean())
+
+fig, ax = plt.subplots(figsize=(4, 4))
+sns.scatterplot(country_group, x=country_group.index, y=country_group.loc[:, 'converted'])
+
+ax.set(ylim=(0, 0.15))
+
+for row in country_group.itertuples():
+    ax.text(
+        x=row[0],  # Координаты текста по X
+        y=row[1] + 0.003,  # Координаты текста по Y
+        s=f'{row[1]:.2f}',  # Строка, подпись значения
+        ha='center'
+    )
+plt.show()
+
+
 
 

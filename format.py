@@ -66,5 +66,6 @@ for i in df.columns:
     print(f"Столбец {i:15} тип {colum_type}")
 
 #%%
+# TODO перевод числа в строку
 ls = [0.2315423654, 2.74521019124, 0.0012325]
 print(['{:.4f}'.format(i) for i in ls])

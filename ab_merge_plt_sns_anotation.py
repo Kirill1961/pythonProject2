@@ -43,13 +43,21 @@ data.shape
 
 
 #%%
-# TODO Отбор только совпадающих категорий: 'control'-'old_page' и 'treatment'-'new_page'
+# TODO MY Фильтр Отбор только совпадающих категорий: 'control'-'old_page' и 'treatment'-'new_page'
 df = data[
     ((data['con_treat'] == 'control') & (data['page'] == 'old_page')) |
     ((data['con_treat'] == 'treatment') & (data['page'] == 'new_page'))
 ]
 
 
+#%%
+# TODO HERE Фильтр Отбор только совпадающих категорий: 'control'-'old_page' и 'treatment'-'new_page'
+control_equal = data.loc[data['page'] == 'old_page']  # Старички Фильтр Таблицы по 'old_page'
+treatment_equal = data.loc[data['page'] == 'new_page']  # Новички Фильтр Таблицы по 'new_page'
+print(control_equal.shape, treatment_equal.shape)
+
+controls = control_equal[control_equal['con_treat'] == 'control']
+treatments = treatment_equal[treatment_equal['con_treat'] == 'treatment']
 #%%
 # TODO Число дубликатов
 
@@ -185,6 +193,16 @@ for row in country_group.itertuples():
     )
 plt.show()
 
+#%%
+# TODO ttest Конверсий по странам через 'old_page' и 'new_page'
 
+control_eql = data.loc[data['page'] == 'old_page']  # Старички Фильтр Таблицы по 'old_page'
+treatment_eql = data.loc[data['page'] == 'new_page']  # Новички Фильтр Таблицы по 'new_page'
 
+for country in data['country'].unique():
+    conversion_control = control_eql.loc[control_eql['country'] == country, 'converted']  # Старички конверсия по странам
+    conversion_treatment = treatment_eql.loc[treatment_eql['country'] == country, 'converted']  # Новички конверсия по странам
+    # print(country, conversion_control.mean(), conversion_treatment.mean())
 
+    country_control_mean = conversion_control.mean()
+    country_treatment_mean = conversion_treatment.mean()

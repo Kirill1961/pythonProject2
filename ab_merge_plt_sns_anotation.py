@@ -114,15 +114,14 @@ control_rate = data.loc[data['con_treat'] == 'control', 'converted'].mean()
 treatment_rate = data.loc[data['con_treat'] == 'treatment', 'converted'].mean()
 
 #%%
-# TODO Cat - Bin >>> группировка >>> Bin 0/1 - распределение Бернулли
+# TODO По всем странам: US, CA, UK, Доли Числа Успехов к Общему Числу Испытаний
+total_trials = data.groupby(['con_treat'])['converted'].count()  # Общее число испытаний в группах control/treatment
+print(total_trials)
 
-group_trials = data.groupby(['con_treat'])['converted'].count()
-print(group_trials)
-
-group_success = data.groupby(['con_treat'])['converted'].sum()
+group_success = data.groupby(['con_treat'])['converted'].sum()  # Число Удач в группах control/treatment через sum()
 print(group_success)
 
-trials = pd.DataFrame(group_trials).values.ravel().tolist()  # Неудача
+trials = pd.DataFrame(total_trials).values.ravel().tolist()  # Испытания
 success = pd.DataFrame(group_success).values.ravel().tolist()  # Успех
 print(trials, success)
 
@@ -131,6 +130,7 @@ print(trials, success)
 
 stat, p_val = sm.stats.proportions_ztest(success, trials)
 print(stat, p_val)
+
 
 #%%
 # TODO t - test, средние, Cat-Num, признаки con_treat и num

@@ -24,13 +24,11 @@ import seaborn as sns
 import seaborn.objects as so
 import statsmodels.api as sm
 
-
 #%%
 # TODO data
 ab_test = pd.read_csv('D:/Eduson_data/ab_test.csv')
 countries = pd.read_csv('D:/Eduson_data/countries_ab.csv')
 print(ab_test.shape, '\n', countries.shape)
-
 
 #%%
 # TODO merge 2-х таблиц
@@ -41,14 +39,12 @@ data = pd.merge(ab_test, countries, on='id', how='left')
 data['num'] = np.random.randint(1, 100, size=len(data))
 data.shape
 
-
 #%%
 # TODO MY Фильтр Отбор только совпадающих категорий: 'control'-'old_page' и 'treatment'-'new_page'
 df = data[
     ((data['con_treat'] == 'control') & (data['page'] == 'old_page')) |
     ((data['con_treat'] == 'treatment') & (data['page'] == 'new_page'))
-]
-
+    ]
 
 #%%
 # TODO HERE Фильтр Отбор только совпадающих категорий: 'control'-'old_page' и 'treatment'-'new_page'
@@ -63,7 +59,6 @@ treatments = treatment_equal[treatment_equal['con_treat'] == 'treatment']
 
 duplicate = data.duplicated(subset=['id']).sum()
 duplicate
-
 
 #%%
 # TODO seaborn Подписи столбцов Гистограммы, числа из контейнера
@@ -81,7 +76,6 @@ for i in ax.containers:
     )
 plt.show()
 
-
 #%%
 # TODO Новый seaborn.objects
 
@@ -90,7 +84,6 @@ plt.show()
     .add(so.Bar(), so.Hist())
     .show()
 )
-
 
 #%%
 # TODO matplotlib Подписи столбцов Гистограммы
@@ -105,7 +98,6 @@ for i, country in enumerate(data['country'].unique()):
     plt.text(i, count, str(count), ha='center', va='bottom')
 plt.show()
 
-
 #%%
 # TODO Рассчитайте коэффициенты конверсии для каждой группы.
 #  🚀 mean - по сути для Бернулли (1/0) это оценка вероятности успеха -> P_успех / P_число испытаний
@@ -114,7 +106,7 @@ control_rate = data.loc[data['con_treat'] == 'control', 'converted'].mean()
 treatment_rate = data.loc[data['con_treat'] == 'treatment', 'converted'].mean()
 
 #%%
-# TODO По всем странам: US, CA, UK, Доли Числа Успехов к Общему Числу Испытаний
+# TODO converted По всем странам: US, CA, UK, Доли Числа Успехов к Общему Числу Испытаний
 total_trials = data.groupby(['con_treat'])['converted'].count()  # Общее число испытаний в группах control/treatment
 print(total_trials)
 
@@ -126,11 +118,10 @@ success = pd.DataFrame(group_success).values.ravel().tolist()  # Успех
 print(trials, success)
 
 #%%
-# TODO Z - test, пропорции, Cat-Bin, признаки con_treat и converted
+# TODO Z - test по всем странам, пропорции, Cat-Bin, признаки con_treat и converted
 
 stat, p_val = sm.stats.proportions_ztest(success, trials)
 print(stat, p_val)
-
 
 #%%
 # TODO t - test, средние, Cat-Num, признаки con_treat и num
@@ -150,6 +141,9 @@ print(tstat, pvalue)
 ax = sns.barplot(data, x=data['con_treat'], y=data['converted'])
 
 for i in ax.containers:
+    __doc__ = '''
+    Из containers берём значения для подписи столбцов
+    '''
     ax.bar_label(i)
     ax.set(
         xlabel="группы пользователей",
@@ -160,7 +154,6 @@ for i in ax.containers:
         # xticklabels=[...],
     )
 plt.show()
-
 
 #%% TODO conversion rates через matplotlib
 
@@ -185,6 +178,9 @@ sns.scatterplot(country_group, x=country_group.index, y=country_group.loc[:, 'co
 ax.set(ylim=(0, 0.15))
 
 for row in country_group.itertuples():
+    __doc__ = '''
+    в itertuples хранятся кортежи из группировки
+    '''
     ax.text(
         x=row[0],  # Координаты текста по X
         y=row[1] + 0.003,  # Координаты текста по Y
@@ -194,15 +190,65 @@ for row in country_group.itertuples():
 plt.show()
 
 #%%
-# TODO ttest Конверсий по странам через 'old_page' и 'new_page'
+# TODO HERE ttest Конверсий по странам через 'old_page' и 'new_page'
 
 control_eql = data.loc[data['page'] == 'old_page']  # Старички Фильтр Таблицы по 'old_page'
 treatment_eql = data.loc[data['page'] == 'new_page']  # Новички Фильтр Таблицы по 'new_page'
 
 for country in data['country'].unique():
-    conversion_control = control_eql.loc[control_eql['country'] == country, 'converted']  # Старички конверсия по странам
-    conversion_treatment = treatment_eql.loc[treatment_eql['country'] == country, 'converted']  # Новички конверсия по странам
-    # print(country, conversion_control.mean(), conversion_treatment.mean())
+    __doc__ = '''
+    * Старички и Новички конверсия по странам
+    * в ttest передаём 2 набора данных но не их редние!
+    '''
+    conversion_control = control_eql.loc[control_eql['country'] == country, 'converted']
+    conversion_treatment = treatment_eql.loc[treatment_eql['country'] == country, 'converted']
 
-    country_control_mean = conversion_control.mean()
-    country_treatment_mean = conversion_treatment.mean()
+    # calculate the conversion rates for each group
+    control_rate = conversion_control.mean()
+    treatment_rate = conversion_treatment.mean()
+
+    print(control_rate, treatment_rate)
+
+    tstat, pvalue = ttest_ind(conversion_treatment, conversion_control)
+    print('\t', tstat, pvalue)
+
+#%%
+# TODO отбор не соответствующих категорий control/treatment
+#  сопоставляем : 'control'/'treatment' и 'old_page'/'new_page'
+#  группируем 'old_page'/'new_page' и 'converted' по country
+
+
+for countries in data['country'].unique():
+    __doc__ = '''
+    * ttest - делаем в цикле
+    * В цикле Передаём имя страны (countries) в таблицы 'converted_control' и 'data_treatment' 
+      затем фильтруем по стране и сопоставляем с 'converted'
+    '''
+
+    # Отбор по Старичкам(control), Страницам(old_page) и странам, вывод конверсии(converted)
+    converted_control = data.loc[
+        (data['page'] == 'old_page') &
+        (data['con_treat'] == 'control') &
+        (data['country'] == countries),
+        'converted'
+    ]
+
+    # Отбор по Новичкам(treatment), Страницам(old_page) и странам, вывод конверсии(converted)
+    converted_treatment = data.loc[
+        (data['page'] == 'new_page') &
+        (data['con_treat'] == 'treatment') &
+        (data['country'] == countries),
+        'converted'
+    ]
+
+    tstat, pvalue = ttest_ind(converted_treatment, converted_control)
+
+    print('Страна : ', countries)
+    print('Доля успехов Старичков относительно всех опытов :', converted_control.mean())
+    print('Доля успехов Новичков относительно всех опытов :',converted_treatment.mean())
+    print('pvalue :', pvalue)
+    print('tstat :', tstat, '\n')
+    if pvalue > 0.05:
+        print('Разница Статистически Не значима')
+    else:
+        print('Разница Статистически Значима')

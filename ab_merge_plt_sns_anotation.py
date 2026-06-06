@@ -31,7 +31,7 @@ countries = pd.read_csv('D:/Eduson_data/countries_ab.csv')
 print(ab_test.shape, '\n', countries.shape)
 
 #%%
-# TODO merge 2-х таблиц
+# TODO merge 2-х таблиц + Добавление столбца num для experience
 
 # np.random.seed(1)  # Средние  num по control/treatment  почти не различаются
 np.random.seed(10)  # Средние num по control/treatment хорошо различаются

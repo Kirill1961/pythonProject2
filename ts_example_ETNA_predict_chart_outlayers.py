@@ -81,32 +81,53 @@ ts.info()
 
 # %%
 # TODO ts.plot
-
-ts.plot()
+ts.plot(figsize=(5, 3))
 plt.show()
 
 # %%
 # TODO ACF через ETNA acf_plot
-
-acf_plot(ts, lags=21)
+acf_plot(ts, lags=21, figsize=(5, 3))
 plt.show()
 
-# %%
-# TODO EDA vmin, vmax - Граница цветовой шкалы
-#  Заданные Лаги через LagTransform и Heatmap сегментов целевой с её лагами
 
-lag = LagTransform(in_column="target", lags=[1, 2, 3], out_column="lag")
+#%%
+# TODO PACF то же через acf_plot
+acf_plot(ts, lags=21, figsize=(5, 3), partial=True)
+plt.show()
 
-ts.fit_transform([lag])
-
-# Корреляция Лагов временных рядов
+#%%
+# TODO Корреляция рядов между собой
 plot_correlation_matrix(
     ts,
-    columns=["lag_1", "lag_2", "target"],
-    segments=["segment_a", "segment_b"],
+    columns=["target"],
+    segments=["segment_a", "segment_b", "segment_c", "segment_d"],
     method="spearman",
     vmin=0.5,
     vmax=1,
+    figsize=(10, 10)
+)
+plt.show()
+
+
+# %%
+# TODO EDA vmin, vmax - Граница цветовой шкалы
+#  Задаём  Лаги через LagTransform и Heatmap сегментов целевой с её лагами
+
+lag = LagTransform(in_column="target", lags=[2, 3, 4, 7], out_column="lag")
+
+ts.fit_transform([lag])
+
+#%%
+# TODO Корреляция Лагов временных рядов
+#  Если сравнить heatmap с ACF то результаты совпадут
+plot_correlation_matrix(
+    ts,
+    columns=['lag_2', "lag_3", "lag_4", 'lag_7', "target"],
+    segments=["segment_a"],
+    method="spearman",
+    vmin=0.5,
+    vmax=1,
+    figsize=(5, 5)
 )
 plt.show()
 
@@ -118,5 +139,12 @@ plot_correlation_matrix(
     method="spearman",
     vmin=0.5,
     vmax=1,
+    figsize=(10, 10)
 )
 plt.show()
+
+#%%
+# TODO Перекрестная корреляция - Cross-correlation
+
+cross_corr_plot(ts, maxlags=100, figsize=(7, 2))
+

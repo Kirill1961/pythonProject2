@@ -38,6 +38,10 @@ from etna.analysis import (
     plot_trend,
     stl_plot,
     seasonal_plot,
+    plot_periodogram,
+    get_anomalies_density,
+    get_anomalies_median,
+    plot_anomalies
 )
 from etna.transforms import LagTransform
 from etna.transforms import LinearTrendTransform
@@ -150,7 +154,8 @@ plt.show()
 cross_corr_plot(ts, maxlags=100, figsize=(7, 2))
 
 #%%
-# TODO plot_trend - Визуализация  тренда для каждого сегмента
+# TODO TREND
+#  plot_trend - Визуализация  тренда для каждого сегмента
 #  выбор подходящей модели для его описания
 #  LinearTrendTransform - Преобразование, использующее Лин. Регр. с полиномиальными признаками для удаления тренда.
 
@@ -162,7 +167,55 @@ trends = [
 plot_trend(ts, trend_transform=trends, figsize=(7, 5))
 plt.show()
 
+
+# TODO SEASONE Методы Анализа Сезонности: plot_periodogram, seasonal_plot, stl_plot
+
 #%%
-# TODO Методы Анализа Сезонности
-dt = pd.read_csv('D:\Eduson_data\Employeers_customers3.csv')
-dt.head()
+# TODO визуализиция амплитуды компонент Фурье
+#  Spectral - разобрали на частоты по Фурье
+#  Power - нашли силу (вклад) каждой частоты,
+#  Density - распределили эту силу по оси частот
+
+plot_periodogram(ts,
+                 period=365.2425,
+                 amplitude_aggregation_mode="per-segment",
+                 xticks=[1, 2, 4, 6, 12, 26, 52, 104],
+                 figsize=(6, 3)
+                 )
+plt.show()
+
+#%%
+# TODO Визуализация STL разложения
+#   plot_periodogram - пик указал на период 1/52 года ~ неделя, этот период возьмём для stl_plot
+stl_plot(ts=ts, period=52, figsize=(6, 3))
+plt.show()
+
+#%%
+# TODO seasonal_plot - визуализация конкретного периода сезонности (час, день, неделя, месяц, квартал, год)
+seasonal_plot(ts=ts, cycle="quarter", figsize=(6, 3))
+plt.show()
+
+#%%
+# TODO distribution_plot - Распределение z-значений, сгруппированных по сегментам и временной частоте
+#  После z-нормирования сравниваем сегменты: Шум, Стабильность распределения, Выбросы
+distribution_plot(ts, freq="1Y", figsize=(5, 3))
+plt.show()
+
+#%%
+# TODO Outliers / Выбросы
+#  Метод медианы
+anomaly_dict = get_anomalies_median(ts, window_size=100)
+plot_anomalies(ts, anomaly_dict, figsize=(5, 3))
+
+#%%
+# TODO Метод определения плотности, локально на отрезках
+#  ищем аномалии через локальную плотность значений ряда
+anomaly_dict = get_anomalies_density(ts)
+plot_anomalies(ts, anomaly_dict, figsize=(5, 3))
+
+#%%
+#  TODO Добавим параметры:
+#   distance_coef=1 - дистанция не аномального расстояния до соседа
+#   n_neighbors=4 - число соседей меньше которого точка - аномальная
+anomaly_dict = get_anomalies_density(ts, window_size=18, distance_coef=1, n_neighbors=4)
+plot_anomalies(ts, anomaly_dict, figsize=(5, 3))

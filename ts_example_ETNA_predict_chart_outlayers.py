@@ -9,7 +9,6 @@ pd.set_option("display.max_columns", None)
 pd.set_option("display.width", None)
 pd.set_option("display.max_colwidth", None)
 
-
 import numpy as np
 
 from datetime import date, datetime, timedelta
@@ -93,7 +92,6 @@ plt.show()
 acf_plot(ts, lags=21, figsize=(5, 3))
 plt.show()
 
-
 #%%
 # TODO PACF то же через acf_plot
 acf_plot(ts, lags=21, figsize=(5, 3), partial=True)
@@ -111,7 +109,6 @@ plot_correlation_matrix(
     figsize=(10, 10)
 )
 plt.show()
-
 
 # %%
 # TODO Задаём  Лаги для plot_correlation_matrix
@@ -167,10 +164,16 @@ trends = [
 plot_trend(ts, trend_transform=trends, figsize=(7, 5))
 plt.show()
 
+#%%
+# TODO Удаляем тренд и обучаем модель
+transform = LinearTrendTransform(in_column="target", poly_degree=1)
+ts.fit_transform([transform])
 
-# TODO SEASONE Методы Анализа Сезонности: plot_periodogram, seasonal_plot, stl_plot
+ts.plot(figsize=(5, 3))
+plt.show()
 
 #%%
+#  SEASON Методы Анализа Сезонности: plot_periodogram, seasonal_plot, stl_plot
 # TODO визуализиция амплитуды компонент Фурье
 #  Spectral - разобрали на частоты по Фурье
 #  Power - нашли силу (вклад) каждой частоты,
@@ -185,7 +188,7 @@ plot_periodogram(ts,
 plt.show()
 
 #%%
-# TODO Визуализация STL разложения
+# TODO STL Визуализация разложения - Декомпозиция ряда
 #   plot_periodogram - пик указал на период 1/52 года ~ неделя, этот период возьмём для stl_plot
 stl_plot(ts=ts, period=52, figsize=(6, 3))
 plt.show()

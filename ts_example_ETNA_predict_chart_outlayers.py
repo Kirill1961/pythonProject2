@@ -40,8 +40,13 @@ from etna.analysis import (
     plot_periodogram,
     get_anomalies_density,
     get_anomalies_median,
-    plot_anomalies
+    plot_anomalies,
+    find_change_points,
+    plot_change_points_interactive,
+    plot_time_series_with_change_points
 )
+from ruptures.detection import Binseg
+
 from etna.transforms import LagTransform
 from etna.transforms import LinearTrendTransform
 
@@ -222,3 +227,6 @@ plot_anomalies(ts, anomaly_dict, figsize=(5, 3))
 #   n_neighbors=4 - число соседей меньше которого точка - аномальная
 anomaly_dict = get_anomalies_density(ts, window_size=18, distance_coef=1, n_neighbors=4)
 plot_anomalies(ts, anomaly_dict, figsize=(5, 3))
+
+#%%
+# TODO Change Point

@@ -10,7 +10,7 @@ print(pd.__version__)
 # TODO Читаем файл heart.csv по указанному пути
 # puth = 'D:\Eduson_data\heart.csv'
 
-puth = 'D:\Eduson_data\sibur_train_features.csv'
+puth = 'D:\Eduson_data\sb_train_features.csv'
 
 df = pd.read_csv(puth)
 print(df.head(5))

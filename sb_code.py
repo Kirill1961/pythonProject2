@@ -293,10 +293,10 @@ def restore_percent(data):
 # TODO 2 часть: подготовка данных с новыми адаптивными сдвигами
 
 # загрузка данных
-raw_train = pd.read_csv(r"D:\Eduson_data\sibur_train_features.csv")
-raw_test = pd.read_csv("D:\Eduson_data\sibur_test_features.csv")
-raw_targets = pd.read_csv("D:\Eduson_data\sibur_train_targets.csv")
-sample = pd.read_csv("D:\Eduson_data\sibur_sample_submission.csv")
+raw_train = pd.read_csv(r"D:\Eduson_data\sb_train_features.csv")
+raw_test = pd.read_csv("D:\Eduson_data\sb_test_features.csv")
+raw_targets = pd.read_csv("D:\Eduson_data\sb_train_targets.csv")
+sample = pd.read_csv("D:\Eduson_data\sb_sample_submission.csv")
 
 
 # удаление временных промежутков в train и test, но в таргетах оставляем, он нам нужен для мержда с основным пайплайном

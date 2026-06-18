@@ -34,13 +34,13 @@ from statsmodels.tsa.seasonal import seasonal_decompose, STL
 #%%
 # TODO data train test target
 
-df_tr = pd.read_csv("D:\Eduson_data\sibur_train_features.csv")
+df_tr = pd.read_csv("D:\Eduson_data\sb_train_features.csv")
 
-df_ts = pd.read_csv("D:\Eduson_data\sibur_test_features.csv")
+df_ts = pd.read_csv("D:\Eduson_data\sb_test_features.csv")
 
-df_tg = pd.read_csv("D:\Eduson_data\sibur_train_targets.csv")
+df_tg = pd.read_csv("D:\Eduson_data\sb_train_targets.csv")
 
-df_sb = pd.read_csv("D:\Eduson_data\sibur_sample_submission.csv")
+df_sb = pd.read_csv("D:\Eduson_data\sb_sample_submission.csv")
 
 print("train :\n", df_tr.columns, "\n")
 print("test  :\n", df_ts.columns, "\n")

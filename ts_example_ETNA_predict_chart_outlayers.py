@@ -230,3 +230,26 @@ plot_anomalies(ts, anomaly_dict, figsize=(5, 3))
 
 #%%
 # TODO Change Point
+#  Args:
+#          n_bkps (int): number of breakpoints to find before stopping.
+#          penalty (float): penalty value (>0), штраф (penalty) за добавление новой точки изменения.
+#          epsilon (float): reconstruction budget (>0)
+#          min_size (int, optional): minimum segment length, min num observer between two points, Defaults to 2 samples.
+
+change_points = find_change_points(ts=ts, in_column="target", change_point_model=Binseg(), pen=1e5)  # 1e5 = 100000
+plot_time_series_with_change_points(ts=ts, change_points=change_points, figsize=(5, 3))
+
+#%%
+# TODO интерактивные методы разведочного анализа данных (EDA)
+
+params_bounds = {"n_bkps": [1, 8, 2], "min_size": [0, 10, 3]}
+plot_change_points_interactive(
+    ts=ts,
+    change_point_model=Binseg,
+    model="l2",
+    params_bounds=params_bounds,
+    model_params=["min_size"],
+    predict_params=["n_bkps"],
+    figsize=(5, 3),
+)
+plt.show()

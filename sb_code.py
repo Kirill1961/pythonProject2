@@ -602,7 +602,8 @@ for i in range(final_data.shape[0] * 2 - 1):
 valid_data = valid_data.iloc[:, :14]
 # восстанавливаем имена столбцов
 valid_data = valid_data[final_data.columns]
-# интерполируем
+# пропущенные значения заполняются интерполяцией по соседним наблюдениям, а не средним или медианой.
+# Если признаков несколько, то интерполяция происходит по каждому столбцу независимо
 valid_data = valid_data.interpolate()
 valid_data = valid_data.reset_index(drop=True)
 
@@ -624,8 +625,9 @@ final_test = test.copy()
 cv = [[np.arange(0 + i * 456, 912 + i * 456), np.arange(0, 8215)] for i in range(16)]
 
 # в попытках настроить стабильную валидацию, некоторые фолды в итоге не использовались
-drop_folds = [0, 7, 3, 8, 13]
-cv = [cv[i] for i in range(len(cv)) if i not in drop_folds]
+# cv - индексы наблюдений отобранных для train/test
+# drop_folds = [0, 7, 3, 8, 13]
+# cv = [cv[i] for i in range(len(cv)) if i not in drop_folds]
 
 #%%
 # инициализация датафрейма с предсказаниями теста
@@ -647,7 +649,7 @@ for num, target in enumerate(final_targets.columns):
 
     # переменная для сохранения ошибки
     loss = 0
-    # сериес для записи результата предсказания
+    # Нулевой Series для записи результата предсказания
     res = pd.Series(np.zeros(final_train.shape[0]))
 
     # инициализируются фоллды
@@ -673,28 +675,28 @@ for num, target in enumerate(final_targets.columns):
         # предсказываем значения для теста
         submission[target] += model.predict(final_test) / len(cv)
 
-        # экспоненциальное сглаживание таргетов, коэфициенты подобраны на валидации
-        if target == 'B_C2H6':
-            res = exponential_smoothing(res, 0.65)
-            submission[target] = exponential_smoothing(submission[target], 0.65)
+    # экспоненциальное сглаживание таргетов, коэфициенты подобраны на валидации
+    if target == 'B_C2H6':
+        res = exponential_smoothing(res, 0.65)
+        submission[target] = exponential_smoothing(submission[target], 0.65)
 
-        if target == 'B_C3H8':
-            res = exponential_smoothing(res, 0.2)
-            submission[target] = exponential_smoothing(submission[target], 0.2)
+    if target == 'B_C3H8':
+        res = exponential_smoothing(res, 0.2)
+        submission[target] = exponential_smoothing(submission[target], 0.2)
 
-        if target == 'B_iC4H10':
-            res = exponential_smoothing(res, 1)
-            submission[target] = exponential_smoothing(submission[target], 1)
+    if target == 'B_iC4H10':
+        res = exponential_smoothing(res, 1)
+        submission[target] = exponential_smoothing(submission[target], 1)
 
-        if target == 'B_nC4H10':
-            res = exponential_smoothing(res, 0.35)
-            submission[target] = exponential_smoothing(submission[target], 0.35)
+    if target == 'B_nC4H10':
+        res = exponential_smoothing(res, 0.35)
+        submission[target] = exponential_smoothing(submission[target], 0.35)
 
-        # ошибка по таргету
-        loss = mean_abs_per_err(y_test, res)
+    # ошибка по таргету
+    loss = mean_abs_per_err(y_test, res)
 
-        total_loss += loss
-        print(round(loss, 5))
+    total_loss += loss
+    print(round(loss, 5))
 
 print()
 print('total_loss', round(total_loss, 5) / 4)

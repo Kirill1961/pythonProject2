@@ -584,7 +584,7 @@ valid_data = pd.DataFrame()
 # cчетчик
 j = 0
 # пустая строка для вставки, 👉 обязательно указать индекс иначе transpons не создаст строку
-none = pd.Series([np.nan] * 14, index=final_data.columns)
+none = pd.Series([np.nan] * 14, index=final_data.columns)  # none - Нулевой series из 15 строк
 
 # проходим в цикле и вставляем пустую строку между двух известных значений
 # 👉 Так как это оверсэмплинг, то число циклов увеличиваем final_data.shape[0] * 2 - 1
@@ -603,7 +603,7 @@ for i in range(final_data.shape[0] * 2 - 1):
         valid_data = pd.concat([valid_data, none.to_frame().T], axis=0, ignore_index=True)
 # отрезаем появившиеся лишние признаки
 valid_data = valid_data.iloc[:, :14]
-# восстанавливаем имена столбцов
+# восстанавливаем имена столбцов, синхронизация столбцов valid_data по числу и порядку, как в final_data
 valid_data = valid_data[final_data.columns]
 # пропущенные значения заполняются интерполяцией по соседним наблюдениям, а не средним или медианой.
 # Если признаков несколько, то интерполяция происходит по каждому столбцу независимо

@@ -40,7 +40,7 @@ from statsmodels.tsa.stattools import acf, pacf, ccf
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 from statsmodels.tsa.seasonal import seasonal_decompose, STL
 
-#%%
+
 # TODO ❗ data train test target
 
 # df_tr = pd.read_csv(r"D:\Eduson_data\sibur_train_features.csv")
@@ -72,7 +72,7 @@ from statsmodels.tsa.seasonal import seasonal_decompose, STL
 # df3 = pd.DataFrame(np.arange(1, 301).reshape(-1, 3), columns=list("ABC"))
 
 
-#%%
+
 # TODO ❗ exp init train
 # df_tr["timestamp"] = pd.to_datetime(df_tr["timestamp"])
 #
@@ -84,7 +84,7 @@ from statsmodels.tsa.seasonal import seasonal_decompose, STL
 # df_tg = df_tg.set_index("timestamp")
 
 
-#%%
+
 # TODO 1 часть: функции
 def mean_abs_per_err(y_true, y_pred):
     """
@@ -93,7 +93,7 @@ def mean_abs_per_err(y_true, y_pred):
     return (abs((y_true - y_pred) / y_true)).mean() * 100
 
 
-#%%
+
 def exponential_smoothing(series, alpha):
     """
     Функция экспоненциального сглаживания, Рекурсивно.
@@ -110,7 +110,7 @@ def exponential_smoothing(series, alpha):
     return pd.Series(result)
 
 
-#%%
+
 # TODO Кастомный ffill
 def A_B_rate_restore(a_rate, b_rate, window, sigma):
     """
@@ -214,7 +214,7 @@ def A_B_rate_restore(a_rate, b_rate, window, sigma):
 # A_B_rate_restore(df3.A, df3.B, 20, 5)
 
 
-#%%
+
 def chemical_data_restore(series, window, window_mean, window_resid, sigma):
     """
     Функция, которая восстанавливает значения химических элементов
@@ -258,7 +258,7 @@ def chemical_data_restore(series, window, window_mean, window_resid, sigma):
     return pd.Series(result)
 
 
-#%%
+
 # TODO Восстановления процентов
 def restore_percent(data):
     """
@@ -317,7 +317,7 @@ data = data[2200:].reset_index(drop=True)
 features = data.iloc[:, :10]
 targets = data.iloc[:, 10:]
 
-#%%
+
 # TODO features
 start = time.time()
 # чистим признаки по выше описаным функциям, некоторые параметры подбирались исходя из структуры изменения признака
@@ -338,7 +338,7 @@ features['A_C6H14'] = chemical_data_restore(features['A_C6H14'], 500, 20, 100, 1
 end = time.time()
 print(end - start)
 
-#%%
+
 # TODO Лаги и заполнение первых 190 строк, которые содержат NA
 #  заполняем таким способом потому что нет предшествующих наблюдений
 # считаем средний B_rate в скользящем окне
@@ -413,11 +413,11 @@ new_targets = data.iloc[:, 11:].reset_index(drop=True)
 train = new_features.copy()
 train_targets = new_targets.copy()
 
-#%%
+
 # загрузка данных
-raw_train = pd.read_csv("D:\Eduson_data\sibur_train_features.csv")
-raw_test = pd.read_csv("D:\Eduson_data\sibur_test_features.csv")
-raw_targets = pd.read_csv("D:\Eduson_data\sibur_train_targets.csv")
+raw_train = pd.read_csv("D:\Eduson_data\sb_train_features.csv")
+raw_test = pd.read_csv("D:\Eduson_data\sb_test_features.csv")
+raw_targets = pd.read_csv("D:\Eduson_data\sb_train_targets.csv")
 
 # удаление временных промежутков, в таргетах он нам нужен для мержда с новыми данными
 # 👉 в таргетах 'timestamp' нужен для мержда по on='timestamp'
@@ -445,7 +445,7 @@ raw_train = data.iloc[:size_train, :10].reset_index(drop=True)
 raw_targets = data.iloc[:size_train, 10:].reset_index(drop=True)
 raw_test = data.iloc[size_train:-shift, :10].reset_index(drop=True)
 
-#%%
+
 # предварительная чистка трейна
 # 👉 записываем в список трешевые индексы
 data = pd.concat([raw_train, raw_targets], axis=1)
@@ -465,7 +465,7 @@ data = data.drop(trash_indexes, axis=0).reset_index(drop=True)
 raw_train = data.iloc[:, :10]
 raw_targets = data.iloc[:, 10:]
 
-#%%
+
 # чтобы получить максимально чистые тренировочные данные, до процесса очистки и заполнения пропусков
 # 👉 руками были найденны аутлаеры/пропуски в трейне, которые будут удаленны после восстановления
 
@@ -508,7 +508,7 @@ trash_indexes += range(3638, 3641)
 trash_indexes += range(1341, 1349)
 trash_indexes += range(2835, 2837)
 
-#%%
+
 # TODO Восстановление train и %
 # восстановливаем только тренировочные данные, так как тестовые целиком будут взяты из данных с новыми сдвигами
 start = time.time()
@@ -529,7 +529,7 @@ print(end - start)
 # восстановление процентов
 raw_train = restore_percent(raw_train)
 
-#%%
+
 # данные для предсказания
 final_train = raw_train.copy()
 final_targets = raw_targets.copy()
@@ -543,7 +543,7 @@ data = data.reset_index(drop=True)
 final_train = data.iloc[:, :10].copy()
 final_targets = data.iloc[:, 10:].copy()
 
-#%%
+
 # еще щепотка чистки трейна
 data = pd.concat([final_train, final_targets], axis=1)
 data = data.drop([1353, 1354, 1355, 1437], axis=0).reset_index(drop=True)
@@ -553,7 +553,7 @@ data = data.drop([1353, 1354, 1355, 1437], axis=0).reset_index(drop=True)
 final_train = data.iloc[:, :11]
 final_targets = data.iloc[:, 11:]
 
-#%%
+
 # TODO final_train - старые данные, train - новые данны, мерджим для сохраниения структуры ряда
 # Как было упомянуто в начале ноутбука.
 # На данный момент мы имеем сэмпл трейна и тест посчитанный с новыми сдвигами
@@ -573,7 +573,7 @@ comb_train.iloc[idx] = comb_data[~comb_data['A_rate_y'].isnull()].iloc[:, 11:]
 # сохраняем тренировочную выборку
 final_train = comb_train.copy()
 
-#%%
+
 # TODO oversampling
 # оверсэмплинг трейна, 👉 вставляя между строк строку с NA добавляем данных
 # для сглаживания выборки, берем трейн, через один восстанавливаем пропуски и интерполируем
@@ -622,7 +622,7 @@ final_targets = final_data.iloc[:, 10:]
 final_test = test.copy()
 
 
-#%%
+
 # кастомная кросс валидация на 16 фолдов
 # инициализируем первый фолд как первые 912 значений, и предсказываем весь трейн
 # дальше проходим окном с шагом 456 по всему трейну
@@ -635,7 +635,7 @@ cv = [[np.arange(0 + i * 456, 912 + i * 456), np.arange(0, 8215)] for i in range
 drop_folds = [0, 7, 3, 8, 13]
 cv = [cv[i] for i in range(len(cv)) if i not in drop_folds]
 
-#%%
+
 # инициализация датафрейма с предсказаниями теста
 submission = sample.copy()
 submission.iloc[:, 1:] = 0
@@ -717,6 +717,6 @@ print('total_loss', round(total_loss, 5) / 4)
 # total_loss 2.0891525
 # '''
 
-#%%
+
 submission.to_csv('combinated_version_v_6.csv', index=False)
 

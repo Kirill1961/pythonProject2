@@ -69,3 +69,18 @@ with open("names.csv", "r") as n:
         print(n_)
         if not n_:
             break
+
+# Запись из редактора в папку
+path = r"C:\Users\Julia\Documents\results\forecast.txt"
+
+with open(path, "w", encoding="utf-8") as f:
+    f.write("Привет, мир!")
+
+
+# TODO Запись датсета в файл csv на диске через to_csv
+#  index=False — убирает лишний столбец индекса
+data.to_csv('D:/Eduson_data/1_wn.csv', index=False)
+
+
+# TODO Запись датсета в файл csv на диске через numpy - savetxt
+np.savetxt("D:/Eduson_data/2_wn.csv", data, delimiter=",")

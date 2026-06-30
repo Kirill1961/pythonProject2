@@ -40,7 +40,7 @@ from statsmodels.tsa.stattools import acf, pacf, ccf
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 from statsmodels.tsa.seasonal import seasonal_decompose, STL
 
-
+#%%
 # TODO ❗ data train test target
 
 # df_tr = pd.read_csv(r"D:\Eduson_data\sibur_train_features.csv")
@@ -83,7 +83,10 @@ from statsmodels.tsa.seasonal import seasonal_decompose, STL
 #
 # df_tg = df_tg.set_index("timestamp")
 
-
+# TODO Запись файлов в папку
+# raw_test.to_csv('D:/Project_reagents/raw_test.csv', index=False)
+# raw_train.to_csv('D:/Project_reagents/raw_train.csv', index=False)
+# raw_targets.to_csv('D:/Project_reagents/raw_targets.csv', index=False)
 
 # TODO 1 часть: функции
 def mean_abs_per_err(y_true, y_pred):
@@ -298,7 +301,7 @@ raw_test = pd.read_csv("D:\Eduson_data\sb_test_features.csv")
 raw_targets = pd.read_csv("D:\Eduson_data\sb_train_targets.csv")
 sample = pd.read_csv("D:\Eduson_data\sb_sample_submission.csv")
 
-
+#%%
 # удаление временных промежутков в train и test, но в таргетах оставляем, он нам нужен для мержда с основным пайплайном
 raw_train.drop('timestamp', axis=1, inplace=True)
 raw_test.drop('timestamp', axis=1, inplace=True)

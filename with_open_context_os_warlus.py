@@ -76,11 +76,21 @@ path = r"C:\Users\Julia\Documents\results\forecast.txt"
 with open(path, "w", encoding="utf-8") as f:
     f.write("Привет, мир!")
 
+#%%
+import numpy as np
+import pandas as pd
+
+
+data_new = pd.DataFrame(np.arange(1, 13).reshape(3, -1))
 
 # TODO Запись датсета в файл csv на диске через to_csv
 #  index=False — убирает лишний столбец индекса
-data.to_csv('D:/Eduson_data/1_wn.csv', index=False)
+data_new.to_csv('D:/Eduson_data/data_new.csv', index=False)
 
 
 # TODO Запись датсета в файл csv на диске через numpy - savetxt
-np.savetxt("D:/Eduson_data/2_wn.csv", data, delimiter=",")
+np.savetxt("D:/Eduson_data/2_wn.csv", data_new, delimiter=",")
+
+#  TODO Создать папку в директории для файлов
+import os
+os.makedirs('D:/PROB')

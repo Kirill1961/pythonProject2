@@ -94,3 +94,6 @@ np.savetxt("D:/Eduson_data/2_wn.csv", data_new, delimiter=",")
 #  TODO Создать папку в директории для файлов
 import os
 os.makedirs('D:/PROB')
+
+# TODO Запись файла с DF в папку которая в дереве проекта
+data_new.to_csv(r'C:\Users\Kirill\PycharmProjects\Practica\dataset\data_new.csv', index=False)

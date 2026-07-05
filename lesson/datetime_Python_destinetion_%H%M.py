@@ -100,3 +100,33 @@ time.sleep(2)  # приостановка, время останова в арг
 print('Good')
 
 print(f'Итоговое время: {time.time() - start} sec')
+
+#%%
+# TODO Выручка за Квартал, 90 дней, 180 дней
+import pandas as pd
+df = pd.read_csv(r"D:\Eduson_data\monthly_australian_wine_sales.csv", parse_dates=["month"])
+
+# today = pd.Timestamp(date.today())  #Для варианта если последняя дата сегодня
+today = df['month'].iloc[-1]
+
+print('Последняя Дата Ряда', today, '\n')
+
+# Отсчитываем назад 1 месяц от сегодня
+rev_30d = df[df["month"] >= today - timedelta(days=90)]["sales"].sum()
+
+# Отсчитываем назад 0,5 года от сегодня
+rev_90d = df[df["month"] >= today - timedelta(days=180)]["sales"].sum()
+
+# Отсчитываем 1 квартал от сегодня, today.quarter - август это 3-й квартал
+# today.quarter - 1 -> предыдущий квартал
+# (today.quarter - 1) * 3 + 1 -> это 1-й месяц квартала
+# day: 1 -> 1-й день месяца
+quarter_start_month = (today.quarter - 1) * 3 + 1
+
+quarter_start = pd.Timestamp(date(today.year, quarter_start_month, 1))
+
+rev_quarter = df[df["month"] >= quarter_start]["sales"].sum()
+
+print(f"Выручка за  90 дней: {rev_30d}")
+print(f"Выручка за  180 дней: {rev_90d}")
+print(f"Выручка за Квартал: {rev_quarter}")

@@ -1,10 +1,11 @@
 
 def before():
-    return 'BEFORE MAIN'
+    return 'ПРИ ПРЯМОМ ЗАПУСКЕ ЗАПУСКАЕТСЯ ВЕСЬ КОД в тч BEFORE MAIN'
 
 def after():
-    return 'AFTER MAIN'
+    return 'ПРИ ПРЯМОМ ЗАПУСКЕ ЗАПУСКАЕТСЯ ВЕСЬ КОД в тч AFTER'
 
+print(after())
 
 print("Executed during import")
 

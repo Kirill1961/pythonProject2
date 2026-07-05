@@ -62,3 +62,37 @@ for word, count in counter.most_common(num_words): #  через sys.stdout вы
 
 
 
+#%%
+import sys, re
+from collections import Counter
+
+def read_line():
+    return sys.stdin.readline().rstrip('\n')  # Ввод строки в код
+
+
+def write(value):
+    print(f'Самая Частая Категория :')
+    sys.stdout.write(str(value))  # Вывод строки из кода
+    # sys.stdout.write(str(value))
+
+
+def writeln(value=''):
+    sys.stdout.write(str(value) + '\n')  # - Лишняя операция
+
+
+
+def solve():
+    n = [i for i in read_line().split(',')]  # Список элементов для передачи в Counter
+
+    cnt = Counter(n)  # Счёт числа элементов коллекции
+
+    val_max = max(cnt, key=cnt.get)  # Ключ с наибольшим value
+
+    write(val_max)  # Преобразование в строку и Передача данных в Интерпретатор
+
+    # writeln(val_max)  # - Лишняя операция
+
+
+if __name__ == '__main__':
+    solve()
+# 'category1, category2, category2, category3'

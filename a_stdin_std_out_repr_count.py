@@ -1,3 +1,7 @@
+'''
+sys.stdin (ввод), sys.stdout (вывод), sys.stderr (ошибки). Это файлоподобные объекты
+'''
+
 import sys, re
 import csv
 from collections import Counter
@@ -63,7 +67,9 @@ for word, count in counter.most_common(num_words): #  через sys.stdout вы
 
 
 #%%
-import sys, re
+# TODO sys.stdin (ввод), sys.stdout (вывод), sys.stderr (ошибки). Это файлоподобные объекты
+
+import sys
 from collections import Counter
 
 def read_line():
@@ -80,12 +86,11 @@ def writeln(value=''):
     sys.stdout.write(str(value) + '\n')  # - Лишняя операция
 
 
-
 def solve():
     n = [i for i in read_line().split(',')]  # Список элементов для передачи в Counter
 
     cnt = Counter(n)  # Счёт числа элементов коллекции
-
+    print(cnt)
     val_max = max(cnt, key=cnt.get)  # Ключ с наибольшим value
 
     write(val_max)  # Преобразование в строку и Передача данных в Интерпретатор
@@ -95,4 +100,136 @@ def solve():
 
 if __name__ == '__main__':
     solve()
-# 'category1, category2, category2, category3'
+# 'category1, category3, category3, category2, category2,'
+
+#%%
+# TODO HERE Анализ Конверсии
+#  0 - Клиент не произвёл действие, 1 - клиент произвёл действие
+#  Сколько % не произвёли действие
+import sys
+
+def read_line():
+    return sys.stdin.readline().rstrip('\n')
+    # return int(sys.stdin.readline().rstrip('\n'))  # str to int на лету
+
+
+def write(value):
+    sys.stdout.write(str(value))
+
+
+def writeln(value=''):
+    sys.stdout.write(str(value) + '\n')
+
+
+def solve():
+    str = read_line().strip("'")  # Если ввод в консоль строка, то strip("'") нужен
+    # str = read_line()  # Если ввод в консоль числа, то strip("'") не нужен
+
+    print(repr(str))
+
+    data = list(map(int, str.split(' ')))
+    print(data)
+
+    total = len(data)
+    zeros = data.count(0)
+
+    percent = (zeros / total) * 100
+
+    writeln(f"{percent:.2f}")
+
+
+if __name__ == '__main__':
+    solve()
+    # '1 1 1 0 1 0 1 1' или 1 1 1 0 1 0 1 1
+
+#%%
+# TODO Потоки, sys.stdin, sys.stdout
+import sys
+
+
+def r_line():
+    return sys.stdin.readline()
+
+
+def write(x):
+    return sys.stdout.write(x)
+
+
+def solve():
+    d = r_line().strip("'\n")  # Обрезка не нужных символов
+    print('Получил из потока в Код :', repr(d))  # Контроль Не нужных символов через repr
+    data = int(d) * 2
+    write(str(data))
+
+
+if __name__ == '__main__':
+    solve()
+
+
+# TODO MY через Преобразование str - int - str
+#  Потоки, sys.stdin, sys.stdout
+import sys
+
+
+def r_line():
+    return sys.stdin.readline()
+
+
+def write(x):
+    return sys.stdout.write(x)
+
+
+def solve():
+    d = r_line().strip("'\n")  # Обрезка не нужных символов
+    print('Получил из потока в Код :', repr(d))  # Контроль Не нужных символов через repr
+
+    data = d.split(' ')  # Деление по Пробелам
+    print(repr(data))
+    data = list(map(int, data))  # Преобразование str to int
+
+    print(repr(data))
+
+    n_total = len(data)
+
+    n_0 = data.count(0)
+
+    res = n_0 / n_total
+
+    write(str(res))  # Вывод в Поток результата
+
+
+if __name__ == '__main__':
+    solve()
+# 1 1 1 0 1 0 1 1
+
+#%%
+# TODO MY Анализ Конверсии
+#  0 - Клиент не произвёл действие, 1 - клиент произвёл действие
+#  Сколько % не произвёли действие
+import sys
+
+
+def r_line():
+    return sys.stdin.readline()
+
+
+def write(x):
+    return sys.stdout.write(x)
+
+
+def solve():
+    d = r_line().strip("'\n")  # Обрезка не нужных символов
+    print('Получил из потока в Код :', repr(d))  # Контроль Не нужных символов через repr
+
+    n_0 = d.count('0')  # Число Нулей в строке
+    n_1 = d.count('1')  # Число Единиц в строке
+    n_total = n_0 + n_1
+
+    res = n_0 / n_total
+
+    write(str(res))  # Вывод в Поток результата
+
+
+if __name__ == '__main__':
+    solve()
+# 1 1 1 0 1 0 1 1

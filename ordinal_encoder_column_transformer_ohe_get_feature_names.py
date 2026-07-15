@@ -44,7 +44,7 @@ preprocessor = ColumnTransformer(
 # Применяем трансформации
 X_processed = preprocessor.fit_transform(df1)
 
-print(X_processed)  # если Вернёт sparse matrix
+print(X_processed, '>>>>>>')  # если Вернёт sparse matrix
 
 # TODO если OHE вернёт sparse matrix
 # print(X_processed.toarray())

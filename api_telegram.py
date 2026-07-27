@@ -7,8 +7,8 @@ import asyncio
 from telethon import TelegramClient
 
 
-API_ID = 32818677
-API_HASH = "e77003c295d40288e495464e52d7d41e"
+API_ID = 123
+API_HASH = "..."
 
 CHANNEL = "t.me/Kirill_50plus_DS"
 

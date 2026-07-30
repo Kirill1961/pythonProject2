@@ -251,7 +251,7 @@ f = foo(2)
 
 one, two, three = [next(f) for _ in range(3)]
 print(f'Вызов второго значения: {two}')
-
+#%%
 # 3-й Вариант через list
 f = foo(2)
 one, two, three = islice(f, 3)

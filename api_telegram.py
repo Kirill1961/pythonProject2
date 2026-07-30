@@ -11,7 +11,7 @@ from telethon import TelegramClient
 # API_HASH = "..."
 
 API_ID = 328186771928
-API_HASH = "e77003c295d40288e495464e52d7d41e1961km1"
+API_HASH = "e77003c295d40288e495464e52d7d41e19km161"
 
 # CHANNEL = "t.me/Kirill_50plus_DS"
 CHANNEL = "https://t.me/tbaudiobook"

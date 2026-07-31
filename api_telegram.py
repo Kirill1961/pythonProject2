@@ -1,11 +1,19 @@
 '''
 client — это клиент, через которого мы общаемся с Telegram.
 message — это конкретное сообщение, которое мы получили от Telegram.
+Библиотеки для приложений Telethon, duckdb, boto3, loguru, pydantic, prefect, python-dotenv
 '''
-import asyncio
 
+from typing import AsyncGenerator
+import telethon.tl.types
 from telethon import TelegramClient
-
+from telethon.tl.types import (MessageMediaDocument,
+                               MessageMediaPhoto,
+                               DocumentAttributeAudio,
+                                DocumentAttributeFilename
+                               )
+import asyncio
+from dataclasses import dataclass
 
 # API_ID = 123
 # API_HASH = "..."
@@ -23,50 +31,131 @@ client = TelegramClient(
     API_HASH
 )
 
-async def main():
-
-    await client.start()
-
-    print("Подключение к Telegram успешно!")
-
-    async for message in client.iter_messages(
-        CHANNEL,
-        limit=4000
-    ):
-
-        print(
-            message.id,
-            message.date,
-            message.text,
-            message.file
-        )
-        if message.file:
-            print(
-                "НАЙДЕН ФАЙЛ:",
-                message.file.name,
-                message.file.size
-            )
-
-    # await main()
-asyncio.run(main())
-
 # async def main():
 #
-#     await client.start()  # Подключились к Telegram
+#     await client.start()
 #
 #     print("Подключение к Telegram успешно!")
 #
-#     async for message in client.iter_messages(  # Получаем сообщения
+#     async for message in client.iter_messages(
 #         CHANNEL,
 #         limit=4000
 #     ):
 #
 #         print(
-#             "ID:", message.id,
-#             "| Дата:", message.date,
-#             "| Текст:", message.text,
-#             "| Файл:", message.file
+#             message.id,
+#             message.date,
+#             message.text,
+#             message.file
 #         )
+#         if message.file:
+#             print(
+#                 "НАЙДЕН ФАЙЛ:",
+#                 message.file.name,
+#                 message.file.size
+#             )
 #
-#
+#     # await main()
 # asyncio.run(main())
+
+
+
+
+@dataclass
+class ChapterMetadata:
+    book_name: str
+    chapter_number: int
+    file_extension: str
+    message_id: int
+
+async def extract_metadata(max_book: int=0) -> AsyncGenerator[ChapterMetadata, None]:
+
+    await client.start()  # Подключились к Telegram
+
+    print("Подключение к Telegram успешно!")
+
+    def sanitize_book_name(text):
+        text = "Темная башня"
+        return text
+
+    current_book = 'Неизвестная книга'
+    chapter_num = 0
+    books_with_chapters = 0
+
+    async for msg in client.iter_messages(  # Получаем сообщения
+        CHANNEL,
+        reverse=True,
+        limit=1000
+    ):
+        # Проверка объектов message и photo - если фото значит обложка.
+        is_cover = msg.message and msg.photo
+        if is_cover:
+            current_book = sanitize_book_name(msg.message)
+            chapter_num = 0
+
+            # Вытаскиваем атрибуты проверяем на mp3
+        if msg.media and isinstance(msg.media, MessageMediaDocument):
+            is_audio = any(isinstance(attr, DocumentAttributeAudio) for attr in msg.media.document.attributes)
+
+            if is_audio:
+                for attr in msg.media.document.attributes:
+                    if isinstance(attr, DocumentAttributeFilename):
+                        ext = attr.file_name.split('.').lower()
+                        break
+                chapter_num += 1
+                yield ChapterMetadata(
+                    book_name=current_book,
+                    chapter_number=chapter_num,
+                    file_extension=ext,
+                    message_id=msg.id
+                )
+
+        # print(
+        #     "ID:", message.id,
+        #     "| Дата:", message.date,
+        #     "| Текст:", message.text,
+        #     "| Файл:", message.file
+        # )
+# TODO Вывод Типов
+        # print("=" * 10)
+        #
+        # # сам объект Message
+        # print("Тип msg:", type(msg))
+        #
+        # # ID сообщения
+        # print("ID:", msg.id)
+        #
+        # # дата
+        # print("Дата:", msg.date)
+        #
+        # # 1. Текст сообщения
+        # if msg.message:
+        #     print("Текст:", msg.message)
+
+        # TODO 2. Проверяем media
+        if msg.media:
+            ...
+            # print("Тип media:", type(msg.media))
+
+            # Документ (файл)
+            if isinstance(msg.media, MessageMediaDocument):
+                ...
+                # print("Это документ!")
+                #
+                # print("Имя файла:", msg.file.name)
+                #
+                # print("Размер:", msg.file.size)
+
+
+            # Фото
+            elif isinstance(msg.media, MessageMediaPhoto):
+                ...
+                # print("Это фотография!")
+
+
+        else:
+            ...
+            # print("Вложения нет")
+
+
+asyncio.run(extract_metadata(10))

@@ -1,8 +1,73 @@
-'''
+"""
 client — это клиент, через которого мы общаемся с Telegram.
 message — это конкретное сообщение, которое мы получили от Telegram.
 Библиотеки для приложений Telethon, duckdb, boto3, loguru, pydantic, prefect, python-dotenv
-'''
+Архитектура Моя :
+Telegram канал
+       │
+       ▼
+client.iter_messages(...)
+       │
+       ▼
+Message
+       │
+       ▼
+extract_metadata()
+       │
+       ▼
+yield ChapterMetadata(...)
+       │
+       ▼
+process_chapter_batch_task(...)
+       │
+       ▼
+DuckDB
+===========================================
+Архитектура Урока:
+                 main.py
+                    │
+      ┌─────────────┼──────────────┐
+      │             │              │
+      ▼             ▼              ▼
+ config.py     extractor.py    database.py
+      │             │              │
+      │             │              │
+      ▼             ▼              ▼
+  setting    ChapterMetadata   init_database()
+                    │
+                    ▼
+             extract_metadata()
+                    │
+                    ▼
+              storage.py
+                    │
+                    ▼
+             get_storage()
+======================================
+            Блок Схема::
+            Extract
+            ──────────────
+            extractor.py
+            Telethon
+            iter_messages()
+
+            ↓
+
+            Transform
+            ──────────────
+            ChapterMetadata
+
+            ↓
+
+            Load
+            ──────────────
+            storage.py
+
+            ↓
+
+            database.py
+            DuckDB
+"""
 
 from typing import AsyncGenerator
 import telethon.tl.types
@@ -69,12 +134,17 @@ class ChapterMetadata:
     message_id: int
 
 async def extract_metadata(max_book: int=0) -> AsyncGenerator[ChapterMetadata, None]:
-
+    """
+    Вытаскиваем файлы из источника
+    """
     await client.start()  # Подключились к Telegram
 
     print("Подключение к Telegram успешно!")
 
     def sanitize_book_name(text):
+        """
+        Проверка Имени книги, если text - фото, то это обложка
+        """
         text = "Темная башня"
         return text
 
@@ -100,7 +170,7 @@ async def extract_metadata(max_book: int=0) -> AsyncGenerator[ChapterMetadata, N
             if is_audio:
                 for attr in msg.media.document.attributes:
                     if isinstance(attr, DocumentAttributeFilename):
-                        ext = attr.file_name.split('.').lower()
+                        ext = attr.file_name.split('.')[-1].lower()  # Расширение
                         break
                 chapter_num += 1
                 yield ChapterMetadata(
@@ -158,4 +228,11 @@ async def extract_metadata(max_book: int=0) -> AsyncGenerator[ChapterMetadata, N
             # print("Вложения нет")
 
 
-asyncio.run(extract_metadata(10))
+async def main():
+
+    async for chapter in extract_metadata(10):
+        ...
+        # print(chapter)
+
+if __name__ == "__main__":
+    asyncio.run(main())

@@ -160,6 +160,7 @@ async def extract_metadata(max_book: int=0) -> AsyncGenerator[ChapterMetadata, N
         # Проверка объектов message и photo - если фото значит обложка.
         is_cover = msg.message and msg.photo
         if is_cover:
+            #  Если current_book - обложка, то № главы = 0
             current_book = sanitize_book_name(msg.message)
             chapter_num = 0
 
@@ -227,7 +228,7 @@ async def extract_metadata(max_book: int=0) -> AsyncGenerator[ChapterMetadata, N
             ...
             # print("Вложения нет")
 
-
+# maun - Отвечает за оркестрацию
 async def main():
 
     async for chapter in extract_metadata(10):

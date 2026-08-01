@@ -1,6 +1,14 @@
+"""
+* @dataclass → когда класс просто хранит данные (DTO, модели, структуры).
+* обычный class → когда объект имеет поведение, логику, управление состоянием.
+* @dataclass в архитектуре чаще всего находится на границе
+ между слоями — как объект передачи данных между компонентами
+ (его ещё называют DTO — Data Transfer Object).
+"""
+
 from dataclasses import dataclass, asdict
 
-
+#%%
 # TODO Стандартное Создание класса
 class Trench:
     def __init__(self, lenght, widht, depth):
@@ -58,3 +66,22 @@ print('Автоматический __repr__ -> вывод инф. по объе
 
 # TODO __eq__ -> Автоматическое сравнение  размеров двух кубов
 print('Автоматическое сравнение  размеров двух кубов : \n', cube_one == cube_three)
+
+#%%
+# TODO @dataclass → когда класс просто хранит данные (DTO, модели, структуры) по сути контейнер.
+@dataclass
+class A:
+    vala: int
+    valb: str
+
+#%%
+# TODO Записываем построчно  через yield значения в переменные vala и valb
+x = [1, 2, 3]
+y = list('asd')
+def foo(n, m):
+    for i, j in zip(n, m):
+        yield A(vala=i, valb=j)
+f = foo(x, y)
+# print(f)
+print(next(f), "\n", next(f))
+

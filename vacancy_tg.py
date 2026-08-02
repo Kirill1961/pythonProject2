@@ -12,6 +12,8 @@ from telethon.tl.types import (
     MessageMediaDocument,
     DocumentAttributeFilename,
 )
+from dotenv import load_dotenv
+import os
 
 
 @dataclass
@@ -21,9 +23,10 @@ class MessageMetadata:
     vacancy_name: str
     resume_link: str
 
+load_dotenv()
 
-API_ID = 328186771928
-API_HASH = "e77003c295d40288e495464e52d7d41e19km161"
+API_ID = os.getenv("API_ID")
+API_HASH = os.getenv("API_HASH")
 
 SESSION_NAME = "vacancy_parser"
 

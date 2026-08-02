@@ -82,9 +82,6 @@ from dataclasses import dataclass
 from dotenv import load_dotenv
 import os
 
-# API_ID = 123
-# API_HASH = "..."
-
 load_dotenv()
 
 API_ID = os.getenv("API_ID")

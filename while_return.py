@@ -191,7 +191,7 @@ while index < length:
     index += 1
 
 
-# while -  вызывает функцию и крутим до условия в теле функции
+# while - вызывает функцию и крутим до условия в теле функции
 def foo(x):
     if x < 10:  # условие останова цикла
         print(x, end=",")
@@ -228,3 +228,18 @@ f1 = (fib(1, 2, flag=False))
 # next(f1)
 # next(f1)
 
+#%%
+# TODO генератор yield через while и try - except
+
+def foo(x):
+    for i in x:
+       yield i
+
+f = foo([1, 2, 3])
+
+while True:
+    try:
+        x = next(f)
+        print(x)
+    except StopIteration:
+        break

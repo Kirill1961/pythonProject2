@@ -327,3 +327,19 @@ a = f()
 print(next(a))
 print(a.send(20))
 print(a.send(20))
+
+#%%
+# TODO генератор yield через while и try - except
+
+def foo(x):
+    for i in x:
+       yield i
+
+f = foo([1, 2, 3])
+
+while True:
+    try:
+        x = next(f)
+        print(x)
+    except StopIteration:
+        break

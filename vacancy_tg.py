@@ -22,8 +22,8 @@ class MessageMetadata:
     resume_link: str
 
 
-API_ID = 32818677
-API_HASH = "e77003c295d40288e495464e52d7d41e"
+API_ID = 328186771928
+API_HASH = "e77003c295d40288e495464e52d7d41e19km161"
 
 SESSION_NAME = "vacancy_parser"
 

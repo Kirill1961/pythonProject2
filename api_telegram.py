@@ -79,12 +79,16 @@ from telethon.tl.types import (MessageMediaDocument,
                                )
 import asyncio
 from dataclasses import dataclass
+from dotenv import load_dotenv
+import os
 
 # API_ID = 123
 # API_HASH = "..."
 
-API_ID = 328186771928
-API_HASH = "e77003c295d40288e495464e52d7d41e19km161"
+load_dotenv()
+
+API_ID = os.getenv("API_ID")
+API_HASH = os.getenv("API_HASH")
 
 # CHANNEL = "t.me/Kirill_50plus_DS"
 CHANNEL = "https://t.me/tbaudiobook"

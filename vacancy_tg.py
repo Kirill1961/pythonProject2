@@ -59,7 +59,24 @@ client = TelegramClient(
     API_HASH,
 )
 
-
+WORDS = [
+'#python',
+ '#vacancy',
+ '#job',
+ '#вакансия',
+ '#удалённая',
+ 'работа',
+ '#remote',
+ '#DataAnalyst',
+ '#DataScience',
+ '#удалёнка',
+ '#работа',
+ '#удалённо',
+ '#стажёр',
+ 'стажёр',
+ '#junior',
+ 'junior'
+]
 async def extract_messages(chanel):
     async for msg in client.iter_messages(chanel, limit=10, reverse=False):
         # print(msg)
@@ -79,8 +96,13 @@ async def main():
     #     print(message.id)
     for name, link in CHANNELS.items():
         print(name)
-        async for channel in extract_messages(link):  # Вызов генератора
-            print(channel)
+        # Вызов генератора
+        async for message in extract_messages(link):
+            if isinstance(message.text, str):
+                texts = message.text.lower()
+                word = [w for w in texts.split(" ")]
+                print(word)
+            # print((re.findall(r"\D+", channel.text)))
 
     await client.disconnect()
 

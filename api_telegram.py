@@ -156,7 +156,7 @@ async def extract_metadata(max_book: int=0) -> AsyncGenerator[ChapterMetadata, N
     async for msg in client.iter_messages(  # Получаем сообщения
         CHANNEL,
         reverse=True,
-        limit=1000
+        limit=10
     ):
         # Проверка объектов message и photo - если фото значит обложка.
         is_cover = msg.message and msg.photo

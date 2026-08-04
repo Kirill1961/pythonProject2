@@ -59,24 +59,42 @@ client = TelegramClient(
     API_HASH,
 )
 
-WORDS = [
-'#python',
- '#vacancy',
- '#job',
- '#вакансия',
- '#удалённая',
- 'работа',
- '#remote',
- '#DataAnalyst',
- '#DataScience',
- '#удалёнка',
- '#работа',
- '#удалённо',
- '#стажёр',
- 'стажёр',
- '#junior',
- 'junior'
+# PREFIX = [
+# '#python',
+#  '#vacancy',
+#  '#job',
+#  '#вакансия',
+#  '#удалённая',
+#  'работа',
+#  '#remote',
+#  '#datanalyst',
+#  '#datascience',
+#  '#удалёнка',
+#  '#работа',
+#  '#удалённо',
+#  '#стажёр',
+#  'стажёр',
+#  '#junior',
+#  'junior',
+#  'аналитик'
+# ]
+PREFIX = [
+    'python',
+    'vacancy',
+    'job',
+    'ваканс',
+    'удалён',
+    'remote',
+    'datanalyst',
+    'datas',
+    'scientist',
+    'стажё',
+    'стаже',
+    'junior',
+    'аналит'
 ]
+
+
 async def extract_messages(chanel):
     async for msg in client.iter_messages(chanel, limit=10, reverse=False):
         # print(msg)
@@ -94,14 +112,37 @@ async def main():
 
     # async for message in extract_messages(CHANNELS):
     #     print(message.id)
+    n = 0
     for name, link in CHANNELS.items():
         print(name)
         # Вызов генератора
         async for message in extract_messages(link):
+            n += 1
+            # print(message.message.split(" "))
+
             if isinstance(message.text, str):
-                texts = message.text.lower()
-                word = [w for w in texts.split(" ")]
-                print(word)
+                # print(message.message.split(" "))
+                texts = message.text.lower().split(" ")
+                # print(n, ">>>>>>>>>>>", texts)
+                # word = [w for w in texts.split(" ")]
+                for word_text in texts:
+                    word_list = re.findall(r"\w+", word_text)
+                    # print(n,  word_list)
+
+                    word = ",".join(word_list)
+                    # print("<<<<", message.id, " ".join(word.split(",")))
+                    w = " ".join(word.split(","))
+                    for start in word_list:
+                        # print(start)
+
+                        for pref in PREFIX:
+                            # print(n, pref, start, start.startswith(pref))
+                            if start.startswith(pref) == True:
+                                # ...
+                                print(n, pref, start)
+                        # if w.startswith(start) == True:
+
+                            # print(n, start, message.id, w)
             # print((re.findall(r"\D+", channel.text)))
 
     await client.disconnect()

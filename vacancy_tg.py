@@ -129,9 +129,9 @@ async def main():
                     word_list = re.findall(r"\w+", word_text)
                     # print(n,  word_list)
 
-                    word = ",".join(word_list)
+                    # word = ",".join(word_list)
                     # print("<<<<", message.id, " ".join(word.split(",")))
-                    w = " ".join(word.split(","))
+                    # w = " ".join(word.split(","))
                     for start in word_list:
                         # print(start)
 

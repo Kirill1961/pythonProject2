@@ -75,6 +75,7 @@ PREFIX = [
     'удален',
     'remote',
     'datanalyst',
+    'analys',
     'datas',
     'scientist',
     'стажё',
@@ -84,6 +85,19 @@ PREFIX = [
     'аналит'
 ]
 
+# mb = {'CHANNEL_NAME': [ "jun", "intern", "стаже", "стажё"],
+#  'LOCATION': [ 'удалён', 'remote'],
+#  'MESSAGE_DATE':  message.datetime,
+#  'RATE':  ["jun", "intern", "стаже", "стажё"],
+#  'RESUME_LINK': CHANNELS.value(),
+#  'VACANCY_NAME': CHANNELS.key()}
+
+RATE = ["jun", "intern", "стаже", "стажё"]
+VACANCY_NAME = ["datanalyst", "analys", "datas", "scientist", "аналит"]
+LOCATION = ['удалён', 'remote']
+MESSAGE_DATE = str()
+RESUME_LINK = str()
+CHANNEL_NAME = str()
 
 async def extract_messages(chanel):
     async for msg in client.iter_messages(chanel, limit=3, reverse=False):
@@ -105,12 +119,13 @@ async def main():
     n = 0
     for name, link in CHANNELS.items():
         print(f"{name} : {link}")
+
         # Вызов генератора
         async for message in extract_messages(link):
             n += 1
 
             if isinstance(message.text, str):
-                print(message)
+                # print(message)
                 texts = message.text.lower().split()
 
                 for word_text in texts:
@@ -121,8 +136,13 @@ async def main():
                         for pref in PREFIX:
 
                             if word.startswith(pref):
-                                # ...
-                                print(n, pref, word)
+
+                                # print(n, pref, word)
+
+                                w = word if pref in RATE else ""
+                                # vc = word if pref in VACANCY_NAME else ""
+
+                                print(n, w)
             else:
                 print(" No messages")
                         # if w.startswith(word) == True:

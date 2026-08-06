@@ -74,14 +74,13 @@ class A:
     vala: int
     valb: str
 
-#%%
 # TODO Записываем построчно  через yield значения в переменные vala и valb
 x = [1, 2, 3]
 y = list('asd')
 def foo(n, m):
     for i, j in zip(n, m):
-        yield A(vala=i, valb=j)
+        yield A(i, j)
 f = foo(x, y)
-# print(f)
+
 print(next(f), "\n", next(f))
 

@@ -117,7 +117,8 @@ def comparison(num_msg, word):
 
             if word.startswith(pref):
                 value_metadata = word
-                print(num_msg, name_mdata, pref, value_metadata)
+                # print(num_msg, name_mdata, pref, value_metadata)
+                return num_msg, name_mdata, pref, value_metadata
 
 
 async def main():
@@ -147,8 +148,10 @@ async def main():
                     word_list = re.findall(r"\w+", word_text)
 
                     for words in word_list:
-                        comparison(num_msg, words)
-
+                        compar = comparison(num_msg, words)
+                        if compar:
+                            num_msg, name_mdata, pref, value_metadata = compar
+                            print(num_msg, name_mdata, pref, value_metadata)
 
 
 

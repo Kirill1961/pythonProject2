@@ -36,7 +36,7 @@ import os
 @dataclass
 class MessageMetadata:
     vacancy_name: str
-    rate: str
+    grade: str
     location: str
     channel_name: str
     resume_link: str
@@ -65,7 +65,7 @@ client = TelegramClient(
     API_HASH,
 )
 
-
+#  Префиксы общие
 PREFIX = [
     'python',
     'vacancy',
@@ -85,24 +85,39 @@ PREFIX = [
     'аналит'
 ]
 
-# mb = {'CHANNEL_NAME': [ "jun", "intern", "стаже", "стажё"],
-#  'LOCATION': [ 'удалён', 'remote'],
-#  'MESSAGE_DATE':  message.datetime,
-#  'RATE':  ["jun", "intern", "стаже", "стажё"],
-#  'RESUME_LINK': CHANNELS.value(),
-#  'VACANCY_NAME': CHANNELS.key()}
+#  Префиксы по группам
+metadata = {
+    # 'VACANCY_NAME': ["datanalyst", "analys", "datas", "scientist", "аналит"],
+     'GRADE':  ["jun", "intern", "стаже", "стажё"]
+    , 'LOCATION': ['удалён', 'remote']
+    # , 'CHANNEL_NAME': []
+    # , 'MESSAGE_DATE':  []
+    # , 'RESUME_LINK': []
 
-RATE = ["jun", "intern", "стаже", "стажё"]
-VACANCY_NAME = ["datanalyst", "analys", "datas", "scientist", "аналит"]
-LOCATION = ['удалён', 'remote']
-MESSAGE_DATE = str()
-RESUME_LINK = str()
-CHANNEL_NAME = str()
+      }
 
+# GRADE = ["jun", "intern", "стаже", "стажё"]
+# VACANCY_NAME = ["datanalyst", "analys", "datas", "scientist", "аналит"]
+# LOCATION = ['удалён', 'remote']
+# MESSAGE_DATE = str()
+# RESUME_LINK = str()
+# CHANNEL_NAME = str()
+
+# TODO Ответ от источника надо ждать поэтому async
 async def extract_messages(chanel):
     async for msg in client.iter_messages(chanel, limit=3, reverse=False):
         # print(msg)
         yield msg
+
+# TODO Ответ ждать не надо поэтому не async
+def comparison(num_msg, word):
+    # for pref in PREFIX:
+    for name_mdata, pref_total in metadata.items():
+        for pref in pref_total:
+
+            if word.startswith(pref):
+                value_metadata = word
+                print(num_msg, name_mdata, pref, value_metadata)
 
 
 async def main():
@@ -116,13 +131,13 @@ async def main():
 
     # async for message in extract_messages(CHANNELS):
     #     print(message.id)
-    n = 0
+    num_msg = 0
     for name, link in CHANNELS.items():
         print(f"{name} : {link}")
 
         # Вызов генератора
         async for message in extract_messages(link):
-            n += 1
+            num_msg += 1
 
             if isinstance(message.text, str):
                 # print(message)
@@ -131,18 +146,12 @@ async def main():
                 for word_text in texts:
                     word_list = re.findall(r"\w+", word_text)
 
-                    for word in word_list:
+                    for words in word_list:
+                        comparison(num_msg, words)
 
-                        for pref in PREFIX:
 
-                            if word.startswith(pref):
 
-                                # print(n, pref, word)
 
-                                w = word if pref in RATE else ""
-                                # vc = word if pref in VACANCY_NAME else ""
-
-                                print(n, w)
             else:
                 print(" No messages")
                         # if w.startswith(word) == True:

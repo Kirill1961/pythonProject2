@@ -19,7 +19,6 @@ import asyncio
 import re
 
 from dataclasses import dataclass
-from datetime import datetime
 
 import duckdb
 
@@ -32,6 +31,9 @@ from telethon.tl.types import (
 from dotenv import load_dotenv
 import os
 
+from collections import defaultdict
+
+from datetime import date, datetime, timedelta
 
 @dataclass
 class MessageMetadata:
@@ -87,11 +89,11 @@ PREFIX = [
 
 #  Префиксы по группам
 metadata = {
-    # 'VACANCY_NAME': ["datanalyst", "analys", "datas", "scientist", "аналит"],
-     'GRADE':  ["jun", "intern", "стаже", "стажё"]
+    'VACANCY_NAME': ["datanalyst", "analys", "datas", "scientist", "аналит", "разраб"],
+     'GRADE':  ["jun", "intern", "стаже", "стажё", "middle"]
     , 'LOCATION': ['удалён', 'remote']
     # , 'CHANNEL_NAME': []
-    # , 'MESSAGE_DATE':  []
+    , 'MESSAGE_DATE':  []
     # , 'RESUME_LINK': []
 
       }
@@ -108,17 +110,20 @@ async def extract_messages(chanel):
     async for msg in client.iter_messages(chanel, limit=3, reverse=False):
         # print(msg)
         yield msg
-
+d = defaultdict(set)
 # TODO Ответ ждать не надо поэтому не async
-def comparison(num_msg, word):
+def comparison(msg_id, word):
     # for pref in PREFIX:
+
     for name_mdata, pref_total in metadata.items():
         for pref in pref_total:
 
             if word.startswith(pref):
                 value_metadata = word
                 # print(num_msg, name_mdata, pref, value_metadata)
-                return num_msg, name_mdata, pref, value_metadata
+                # print(date)
+                d[f"msg id {msg_id} {name_mdata}"].add(value_metadata)
+                return dict(d)
 
 
 async def main():
@@ -139,19 +144,26 @@ async def main():
         # Вызов генератора
         async for message in extract_messages(link):
             num_msg += 1
+            # print(message)
 
             if isinstance(message.text, str):
-                # print(message)
+                # print(message.date.date())
                 texts = message.text.lower().split()
 
+                # Сохраняем две даты для вывода в строчном формате и для метадаты для в питоновском datetime.datetime
+                date_temporary = message.date.date().strftime('%Y-%m-%d')
+                date_metadata = message.date
                 for word_text in texts:
                     word_list = re.findall(r"\w+", word_text)
 
                     for words in word_list:
-                        compar = comparison(num_msg, words)
+                        compar = comparison(message.id, words)
+
                         if compar:
-                            num_msg, name_mdata, pref, value_metadata = compar
-                            print(num_msg, name_mdata, pref, value_metadata)
+                            compar["DATE"] = date_temporary
+                            print(compar)
+                        #     num_msg, name_mdata, pref, value_metadata = compar
+                        #     print(num_msg, name_mdata, pref, value_metadata)
 
 
 

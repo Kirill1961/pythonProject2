@@ -110,7 +110,8 @@ async def extract_messages(chanel):
     async for msg in client.iter_messages(chanel, limit=3, reverse=False):
         # print(msg)
         yield msg
-d = defaultdict(set)
+# d = defaultdict(set)
+d = defaultdict(lambda: defaultdict(set))
 # TODO Ответ ждать не надо поэтому не async
 def comparison(msg_id, word):
     # for pref in PREFIX:
@@ -122,7 +123,8 @@ def comparison(msg_id, word):
                 value_metadata = word
                 # print(num_msg, name_mdata, pref, value_metadata)
                 # print(date)
-                d[f"msg id {msg_id} {name_mdata}"].add(value_metadata)
+                # d[f"msg id {msg_id} {name_mdata}"].add(value_metadata)
+                d[msg_id][name_mdata].add(value_metadata)
                 return dict(d)
 
 
@@ -160,7 +162,7 @@ async def main():
                         compar = comparison(message.id, words)
 
                         if compar:
-                            compar["DATE"] = date_temporary
+                            # compar["DATE"] = date_temporary
                             print(compar)
                         #     num_msg, name_mdata, pref, value_metadata = compar
                         #     print(num_msg, name_mdata, pref, value_metadata)

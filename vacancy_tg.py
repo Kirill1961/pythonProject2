@@ -89,7 +89,7 @@ PREFIX = [
 
 #  Префиксы по группам
 metadata = {
-    'VACANCY_NAME': ["datanalyst", "analys", "datas", "scientist", "аналит", "разраб"],
+    'VACANCY_NAME': ["datanalyst", "analys", "datas", "scientist", "data scientist", "аналит", "разраб"],
      'GRADE':  ["jun", "intern", "стаже", "стажё", "middle"]
     , 'LOCATION': ['удалён', 'remote']
     # , 'CHANNEL_NAME': []
@@ -111,6 +111,9 @@ async def extract_messages(chanel):
         # print(msg)
         yield msg
 # d = defaultdict(set)
+
+# TODO создаём словарь словарей, для этого defaultdict(set) оборачиваем в функцию
+#  lambda не вызывается скобками а просто обращается к ячейке,
 d = defaultdict(lambda: defaultdict(set))
 # TODO Ответ ждать не надо поэтому не async
 def comparison(msg_id, word):

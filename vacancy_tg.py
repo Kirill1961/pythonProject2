@@ -91,7 +91,7 @@ PREFIX = [
 metadata = {
     'VACANCY_NAME': ["datanalyst", "analys", "datas", "scientist", "data scientist", "аналит", "разраб"],
      'GRADE':  ["jun", "intern", "стаже", "стажё", "middle"]
-    , 'LOCATION': ['удалён', 'remote']
+    , 'LOCATION': ['удалён', 'remote', 'удален']
     # , 'CHANNEL_NAME': []
     , 'MESSAGE_DATE':  []
     # , 'RESUME_LINK': []
@@ -127,8 +127,8 @@ def comparison(msg_id, word):
                 # print(num_msg, name_mdata, pref, value_metadata)
                 # print(date)
                 # d[f"msg id {msg_id} {name_mdata}"].add(value_metadata)
-                d[msg_id][name_mdata].add(value_metadata)
-                return dict(d)
+                d[msg_id][name_mdata].add(value_metadata)  # msg_id нужен для группировки метадаты
+                return dict(d[msg_id])
 
 
 async def main():
@@ -166,7 +166,7 @@ async def main():
 
                         if compar:
                             # compar["DATE"] = date_temporary
-                            print(compar)
+                            print(message.id, compar)
                         #     num_msg, name_mdata, pref, value_metadata = compar
                         #     print(num_msg, name_mdata, pref, value_metadata)
 

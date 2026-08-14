@@ -114,21 +114,33 @@ async def extract_messages(chanel):
 
 # TODO создаём словарь словарей, для этого defaultdict(set) оборачиваем в функцию
 #  lambda не вызывается скобками а просто обращается к ячейке,
-d = defaultdict(lambda: defaultdict(set))
-# TODO Ответ ждать не надо поэтому не async
-def comparison(msg_id, word):
-    # for pref in PREFIX:
+# d = defaultdict(lambda: defaultdict(set))
 
+d = {}
+# TODO Ответ ждать не надо поэтому не async
+def comparison(msg_id, word, meta_date):
+    """
+    * msg_id - нужен для группировки метадаты
+    """
     for name_mdata, pref_total in metadata.items():
+
         for pref in pref_total:
+
+            # if name_mdata in ['CHANNEL_NAME', 'MESSAGE_DATE', 'RESUME_LINK']:
 
             if word.startswith(pref):
                 value_metadata = word
-                # print(num_msg, name_mdata, pref, value_metadata)
-                # print(date)
-                # d[f"msg id {msg_id} {name_mdata}"].add(value_metadata)
-                d[msg_id][name_mdata].add(value_metadata)  # msg_id нужен для группировки метадаты
-                return dict(d[msg_id])
+
+                # d[msg_id][name_mdata].add(value_metadata)  # msg_id нужен для группировки метадаты
+
+                d.setdefault(msg_id, {}).setdefault('MESSAGE_DATE', meta_date.date().strftime("%Y-%m-%d"))
+
+                d[msg_id].update({name_mdata: value_metadata})
+
+                if d[msg_id].get("GRADE"):
+
+                    print(msg_id, d[msg_id])
+
 
 
 async def main():
@@ -156,19 +168,18 @@ async def main():
                 texts = message.text.lower().split()
 
                 # Сохраняем две даты для вывода в строчном формате и для метадаты для в питоновском datetime.datetime
-                date_temporary = message.date.date().strftime('%Y-%m-%d')
+                # date_temporary = message.date.date().strftime('%Y-%m-%d')
                 date_metadata = message.date
                 for word_text in texts:
                     word_list = re.findall(r"\w+", word_text)
 
                     for words in word_list:
-                        compar = comparison(message.id, words)
+                        compar = comparison(message.id, words, date_metadata)
 
                         if compar:
-                            # compar["DATE"] = date_temporary
-                            print(message.id, compar)
-                        #     num_msg, name_mdata, pref, value_metadata = compar
-                        #     print(num_msg, name_mdata, pref, value_metadata)
+                            ...
+                            # print(num_msg, message.id, compar)
+
 
 
 

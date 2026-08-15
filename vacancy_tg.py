@@ -116,12 +116,14 @@ async def extract_messages(chanel):
 #  lambda не вызывается скобками а просто обращается к ячейке,
 # d = defaultdict(lambda: defaultdict(set))
 
-d = {}
+d = {}  # Словарь для заполнения метадатой
 # TODO Ответ ждать не надо поэтому не async
 def comparison(msg_id, word, meta_date):
     """
     * msg_id - нужен для группировки метадаты
     """
+    # print(word)
+    # d = {}
     for name_mdata, pref_total in metadata.items():
 
         for pref in pref_total:
@@ -139,7 +141,8 @@ def comparison(msg_id, word, meta_date):
 
                 if d[msg_id].get("GRADE"):
 
-                    print(msg_id, d[msg_id])
+                    print( d[msg_id])
+                    return d[msg_id]
 
 
 
@@ -155,6 +158,7 @@ async def main():
     # async for message in extract_messages(CHANNELS):
     #     print(message.id)
     num_msg = 0
+    res = {}  # Словарь Для последней строки
     for name, link in CHANNELS.items():
         print(f"{name} : {link}")
 
@@ -169,29 +173,26 @@ async def main():
 
                 # Сохраняем две даты для вывода в строчном формате и для метадаты для в питоновском datetime.datetime
                 # date_temporary = message.date.date().strftime('%Y-%m-%d')
+
                 date_metadata = message.date
                 for word_text in texts:
                     word_list = re.findall(r"\w+", word_text)
 
                     for words in word_list:
+
                         compar = comparison(message.id, words, date_metadata)
 
                         if compar:
-                            ...
-                            # print(num_msg, message.id, compar)
-
-
+                            res[message.id] = compar
 
 
             else:
                 print(" No messages")
-                        # if w.startswith(word) == True:
 
-                            # print(n, word, message.id, w)
-            # print((re.findall(r"\D+", channel.text)))
+        return res
 
     await client.disconnect()
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+   print( asyncio.run(main()))

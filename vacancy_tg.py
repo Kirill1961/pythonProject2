@@ -30,23 +30,24 @@ from telethon.tl.types import (
 )
 from dotenv import load_dotenv
 import os
-
+from pydantic import BaseModel, ConfigDict
 from collections import defaultdict
 
 from datetime import date, datetime, timedelta
 
-@dataclass
-class MessageMetadata:
-    vacancy_name: str
+
+# @dataclass
+class MessageMetadata(BaseModel):
+    model_config = ConfigDict(frozen=True)
+    """Модель для таблицы метаданных."""
+    # model_config = ConfigDict(frozen=True)
+    message_date: str
     grade: str
-    location: str
-    channel_name: str
-    resume_link: str
-    message_date: datetime
-
-
-
-
+    id: int
+    # vacancy_name: str
+    # location: str
+    # channel_name: str
+    # resume_link: str
 
 load_dotenv()
 
@@ -88,15 +89,17 @@ PREFIX = [
 ]
 
 #  Префиксы по группам
-metadata = {
+pref_metadata = {
     'VACANCY_NAME': ["datanalyst", "analys", "datas", "scientist", "data scientist", "аналит", "разраб"],
-     'GRADE':  ["jun", "intern", "стаже", "стажё", "middle"]
+    'GRADE': ["jun", "intern", "стаже", "стажё", "middle"]
     , 'LOCATION': ['удалён', 'remote', 'удален']
     # , 'CHANNEL_NAME': []
-    , 'MESSAGE_DATE':  []
+    , 'MESSAGE_DATE': []
+    , "ID": []
     # , 'RESUME_LINK': []
 
-      }
+}
+
 
 # GRADE = ["jun", "intern", "стаже", "стажё"]
 # VACANCY_NAME = ["datanalyst", "analys", "datas", "scientist", "аналит"]
@@ -110,6 +113,23 @@ async def extract_messages(chanel):
     async for msg in client.iter_messages(chanel, limit=3, reverse=False):
         # print(msg)
         yield msg
+
+
+
+def metadata_messages(id, mtd_dict):
+
+    print(id, mtd_dict)
+
+    metadata = MessageMetadata(
+        message_date=mtd_dict.get("MESSAGE_DATE"),
+        grade=mtd_dict.get("GRADE"),
+        id=id
+    )
+
+    # print("METADATA:", metadata)
+
+    return id, metadata
+
 # d = defaultdict(set)
 
 # TODO создаём словарь словарей, для этого defaultdict(set) оборачиваем в функцию
@@ -117,14 +137,13 @@ async def extract_messages(chanel):
 # d = defaultdict(lambda: defaultdict(set))
 
 d = {}  # Словарь для заполнения метадатой
+
 # TODO Ответ ждать не надо поэтому не async
 def comparison(msg_id, word, meta_date):
     """
     * msg_id - нужен для группировки метадаты
     """
-    # print(word)
-    # d = {}
-    for name_mdata, pref_total in metadata.items():
+    for name_mdata, pref_total in pref_metadata.items():
 
         for pref in pref_total:
 
@@ -140,10 +159,10 @@ def comparison(msg_id, word, meta_date):
                 d[msg_id].update({name_mdata: value_metadata})
 
                 if d[msg_id].get("GRADE"):
+                    # print(d[msg_id])
+                    # metadt = metadata_messages(d, msg_id)
 
-                    print( d[msg_id])
                     return d[msg_id]
-
 
 
 async def main():
@@ -155,10 +174,9 @@ async def main():
     print(f"Имя: {me.first_name}")
     print(f"ID: {me.id}")
 
-    # async for message in extract_messages(CHANNELS):
-    #     print(message.id)
     num_msg = 0
-    res = {}  # Словарь Для последней строки
+    dict_mdata = {}  # Словарь Для последней строки
+    metadata_list = []
     for name, link in CHANNELS.items():
         print(f"{name} : {link}")
 
@@ -183,16 +201,29 @@ async def main():
                         compar = comparison(message.id, words, date_metadata)
 
                         if compar:
-                            res[message.id] = compar
+                            # dict_mdata[message.id] = compar
+                            #
+                            # print(dict_mdata[message.id])
+                            # print(compar)
+
+
+                            metadt = metadata_messages(message.id, compar)
+
+                            # if metadt:
+
+                            metadata_list.append(metadt)
+
+
 
 
             else:
                 print(" No messages")
 
-        return res
+    print(metadata_list)
 
     await client.disconnect()
+    return dict_mdata
 
 
 if __name__ == "__main__":
-   print( asyncio.run(main()))
+    print(asyncio.run(main()))

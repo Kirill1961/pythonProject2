@@ -36,18 +36,22 @@ from collections import defaultdict
 from datetime import date, datetime, timedelta
 
 
+# TODO Порядок расстановки в классе определит порядок в выводе
 # @dataclass
 class MessageMetadata(BaseModel):
+    """ Модель для таблицы метаданных.
+        str | None = None   ---  это говорит что значение может быть строкой или None
+    """
     model_config = ConfigDict(frozen=True)
-    """Модель для таблицы метаданных."""
-    # model_config = ConfigDict(frozen=True)
-    message_date: str
-    grade: str
+
     id: int
-    # vacancy_name: str
-    # location: str
-    # channel_name: str
-    # resume_link: str
+    message_date: str | None = None
+    grade: str | None = None
+    vacancy_name: str | None = None
+    location: str | None = None
+    channel_name: str | None = None
+    resume_link: str | None = None
+
 
 load_dotenv()
 
@@ -93,7 +97,7 @@ pref_metadata = {
     'VACANCY_NAME': ["datanalyst", "analys", "datas", "scientist", "data scientist", "аналит", "разраб"],
     'GRADE': ["jun", "intern", "стаже", "стажё", "middle"]
     , 'LOCATION': ['удалён', 'remote', 'удален']
-    # , 'CHANNEL_NAME': []
+    , 'CHANNEL_NAME': []
     , 'MESSAGE_DATE': []
     , "ID": []
     # , 'RESUME_LINK': []
@@ -115,20 +119,23 @@ async def extract_messages(chanel):
         yield msg
 
 
-
-def metadata_messages(id, mtd_dict):
-
-    print(id, mtd_dict)
+def metadata_messages(id, compar, chanel_name, chanel_link):
+    # print(compar.get("VACANCY_NAME"))
 
     metadata = MessageMetadata(
-        message_date=mtd_dict.get("MESSAGE_DATE"),
-        grade=mtd_dict.get("GRADE"),
         id=id
+        , message_date=compar.get("MESSAGE_DATE")
+        , grade=compar.get("GRADE")
+        , vacancy_name=compar.get("VACANCY_NAME")
+        , location=compar.get("LOCATION")
+        , channel_name=chanel_name
+        , resume_link=chanel_link
     )
 
     # print("METADATA:", metadata)
 
-    return id, metadata
+    return metadata
+
 
 # d = defaultdict(set)
 
@@ -137,6 +144,7 @@ def metadata_messages(id, mtd_dict):
 # d = defaultdict(lambda: defaultdict(set))
 
 d = {}  # Словарь для заполнения метадатой
+
 
 # TODO Ответ ждать не надо поэтому не async
 def comparison(msg_id, word, meta_date):
@@ -176,12 +184,12 @@ async def main():
 
     num_msg = 0
     dict_mdata = {}  # Словарь Для последней строки
-    metadata_list = []
-    for name, link in CHANNELS.items():
-        print(f"{name} : {link}")
+    # metadata_list = []
+    for chanel_name, chanel_link in CHANNELS.items():
+        print(f"{chanel_name} : {chanel_link}")
 
         # Вызов генератора
-        async for message in extract_messages(link):
+        async for message in extract_messages(chanel_link):
             num_msg += 1
             # print(message)
 
@@ -204,14 +212,13 @@ async def main():
                             # dict_mdata[message.id] = compar
                             #
                             # print(dict_mdata[message.id])
-                            # print(compar)
+                            print(compar)
 
-
-                            metadt = metadata_messages(message.id, compar)
+                            dict_mdata[message.id] = metadata_messages(message.id, compar, chanel_name, chanel_link)
 
                             # if metadt:
 
-                            metadata_list.append(metadt)
+                            # metadata_list.append(metadt)
 
 
 
@@ -219,11 +226,11 @@ async def main():
             else:
                 print(" No messages")
 
-    print(metadata_list)
+    print(dict_mdata)
 
     await client.disconnect()
     return dict_mdata
 
 
 if __name__ == "__main__":
-    print(asyncio.run(main()))
+    asyncio.run(main())

@@ -35,6 +35,41 @@ from collections import defaultdict
 
 from datetime import date, datetime, timedelta
 
+from pathlib import Path
+
+DB_PATH = Path("data/metadata.duckdb")
+
+# TODO exist_ok=True - если директория уже существует, то новая не создаётся
+DB_PATH.parent.mkdir(parents=True, exist_ok=True)
+
+def init_database():
+    """
+    Если будет ошибка, то finally гарантирует закрытие соединения в любом случае.
+    """
+    DB_PATH.parent.mkdir(parents=True, exist_ok=True)
+
+    conn = duckdb.connect(str(DB_PATH))
+
+    try:
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS metadata (
+                id INTEGER,
+                message_date DATE,
+                grade VARCHAR,
+                vacancy_name VARCHAR,
+                location VARCHAR,
+                channel_name VARCHAR,
+                resume_link VARCHAR
+            )
+        """)
+
+        conn.execute("""
+            CREATE INDEX IF NOT EXISTS idx_metadata_id
+            ON metadata(id)
+        """)
+
+    finally:
+        conn.close()
 
 # TODO Порядок расстановки в классе определит порядок в выводе
 # @dataclass
@@ -173,7 +208,32 @@ def comparison(msg_id, word, meta_date):
                     return d[msg_id]
 
 
+def save_metadata(metadata):
+    print((">>>", metadata.values()))
+    k, v = metadata.items()
+    print((k, v))
+    conn = duckdb.connect(str(DB_PATH))
+
+    # try:
+    #     conn.execute("""
+    #         INSERT INTO metadata
+    #         VALUES (?, ?, ?, ?, ?, ?, ?)
+    #     """, (
+    #         metadata.id,
+    #         metadata.message_date,
+    #         metadata.grade,
+    #         metadata.vacancy_name,
+    #         metadata.location,
+    #         metadata.channel_name,
+    #         metadata.resume_link,
+    #     ))
+    #
+    # finally:
+    #     conn.close()
+
 async def main():
+    init_database()
+
     await client.start()
 
     me = await client.get_me()
@@ -212,7 +272,7 @@ async def main():
                             # dict_mdata[message.id] = compar
                             #
                             # print(dict_mdata[message.id])
-                            print(compar)
+                            # print(compar)
 
                             dict_mdata[message.id] = metadata_messages(message.id, compar, chanel_name, chanel_link)
 
@@ -226,9 +286,11 @@ async def main():
             else:
                 print(" No messages")
 
+
     print(dict_mdata)
 
     await client.disconnect()
+    save_metadata(dict_mdata)
     return dict_mdata
 
 

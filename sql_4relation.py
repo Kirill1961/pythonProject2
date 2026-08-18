@@ -46,6 +46,8 @@ CREATE TABLE IF NOT EXISTS Sales (
 
 con.commit()
 
+#TODO VALUES (?, ?, ?) - плейсхолдеры, говорит «Здесь будет 3 значения Поставь их сюда по порядку».
+
 # Пример ввода данных
 # Вставка в таблицу Shop
 cur.execute("INSERT OR IGNORE INTO Shop (data) VALUES (?)", ("01.10.24",))

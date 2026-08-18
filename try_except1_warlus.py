@@ -74,12 +74,10 @@ except:
 division by zero
 <traceback object at 0x000001821F8B0F80>"""
 
-
 # Читаем из txt и обрабатываем строки в своей директории
 with open('file.txt') as f:
     while line := f.readline():
         print(f"Прочитана строка: {line.strip()}")
-
 
 # Список, в котором нужно находить и сохранять длины строк больше 3
 data = ["abc", "de", "fghi", "jklm"]
@@ -96,27 +94,30 @@ while (n := len(numbers)) > 0:
     print(f"Длина списка: {n}")
     numbers.pop()
 
-
 # warlus - Пример использования в условии if
 numbers = [1, 2, 3, 4, 51, 2, 3, 4, 5]
 if (m := len(numbers)) > 0:
     print(f"Длина списка: {m}")
 
-
 # TODO  warlus - результат движется "туда - обратно"
 #  - в данном примере w дальше не используется
 lista = [2, 5, 8, 9, 12]
+
+
 def foo(b):
     (w := list(filter(lambda x: x % 2 == 0, b))).append(55)
     return w
+
+
 print(foo(lista), "warlus - это действие с действием")
 
 
 # warlus - простое и понятное применение
 def foo(x):
     return x ** 2
-print(f := foo(5), "warlus - простое и понятное применение")
 
+
+print(f := foo(5), "warlus - простое и понятное применение")
 
 # warlus многократное применение
 data = [10, 20, 30, 40]
@@ -125,8 +126,6 @@ data = [10, 20, 30, 40]
 result = [(y := x + 5, z := y * 2, z - 3) for x in data]
 
 print(result, "warlus многократное применение")
-
-
 
 """try, except - каскад"""
 
@@ -168,6 +167,10 @@ else:
     # Этот код выполняется, если исключения не возникло
     print("Результат деления: ", result)
 
+#TODO
+# except — реагирует на ошибку, возникшую в try, и мы в except определяем что делать после ошибки
+# finally — выполняет свой код после try в любом случае, была ошибка или нет, и мы в контексте try определяем
+# дальнейшее действие, часто закрытие ресурса close(), disconnect()
 
 """finally"""
 

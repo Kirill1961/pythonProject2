@@ -42,6 +42,7 @@ DB_PATH = Path("data/metadata.duckdb")
 # TODO exist_ok=True - если директория уже существует, то новая не создаётся
 DB_PATH.parent.mkdir(parents=True, exist_ok=True)
 
+
 def init_database():
     """
     Если будет ошибка, то finally гарантирует закрытие соединения в любом случае.
@@ -70,6 +71,7 @@ def init_database():
 
     finally:
         conn.close()
+
 
 # TODO Порядок расстановки в классе определит порядок в выводе
 # @dataclass
@@ -209,27 +211,60 @@ def comparison(msg_id, word, meta_date):
 
 
 def save_metadata(metadata):
-    print((">>>", metadata.values()))
-    k, v = metadata.items()
-    print((k, v))
     conn = duckdb.connect(str(DB_PATH))
 
-    # try:
-    #     conn.execute("""
-    #         INSERT INTO metadata
-    #         VALUES (?, ?, ?, ?, ?, ?, ?)
-    #     """, (
-    #         metadata.id,
-    #         metadata.message_date,
-    #         metadata.grade,
-    #         metadata.vacancy_name,
-    #         metadata.location,
-    #         metadata.channel_name,
-    #         metadata.resume_link,
-    #     ))
-    #
-    # finally:
-    #     conn.close()
+    try:
+        for content in metadata.values():
+            conn.execute("""
+                INSERT INTO metadata
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            """, (
+                content.id,
+                content.message_date,
+                content.grade,
+                content.vacancy_name,
+                content.location,
+                content.channel_name,
+                content.resume_link,
+            ))
+
+    finally:
+        conn.close()
+
+
+def table_data():
+    """
+    Три варианта вывода таблицы
+    """
+
+    conn = duckdb.connect(str(DB_PATH))
+
+    # Вариант 1
+    # table = conn.execute("""
+    #     select *
+    #     from metadata
+    # """).fetchall()
+
+    # Вариант 2
+    table = conn.sql("""
+        SELECT *
+        FROM metadata
+    """)
+
+
+    # Вариант 3
+
+    # table = conn.execute("""
+    #         SELECT *
+    #         FROM metadata
+    #     """).fetchdf()
+
+    print(table)
+
+    conn.close()
+
+    return table
+
 
 async def main():
     init_database()
@@ -286,11 +321,14 @@ async def main():
             else:
                 print(" No messages")
 
-
-    print(dict_mdata)
+    # print(dict_mdata)
 
     await client.disconnect()
-    save_metadata(dict_mdata)
+
+    # save_metadata(dict_mdata)
+
+    table_data()
+
     return dict_mdata
 
 

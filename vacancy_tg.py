@@ -46,6 +46,7 @@ DB_PATH.parent.mkdir(parents=True, exist_ok=True)
 def init_database():
     """
     Если будет ошибка, то finally гарантирует закрытие соединения в любом случае.
+    id INTEGER PRIMARY KEY - вариант для контроля дубликатов id сообщений
     """
     DB_PATH.parent.mkdir(parents=True, exist_ok=True)
 
@@ -54,7 +55,8 @@ def init_database():
     try:
         conn.execute("""
             CREATE TABLE IF NOT EXISTS metadata (
-                id INTEGER,
+                --id INTEGER PRIMARY KEY,
+                id INTEGER ,
                 message_date DATE,
                 grade VARCHAR,
                 vacancy_name VARCHAR,
@@ -211,25 +213,38 @@ def comparison(msg_id, word, meta_date):
 
 
 def save_metadata(metadata):
+    """
+    ON CONFLICT (id) DO NOTHING - вариант для отказ записи Дубликата
+    """
+
     conn = duckdb.connect(str(DB_PATH))
+
+    table = conn.execute("""
+            SELECT id
+            FROM metadata
+        """).fetchdf()
+    id_msg = set(table.id)
 
     try:
         for content in metadata.values():
-            conn.execute("""
-                INSERT INTO metadata
-                VALUES (?, ?, ?, ?, ?, ?, ?)
-            """, (
-                content.id,
-                content.message_date,
-                content.grade,
-                content.vacancy_name,
-                content.location,
-                content.channel_name,
-                content.resume_link,
-            ))
+            if content.id not in id_msg:
+                conn.execute("""
+                    INSERT INTO metadata
+                    VALUES (?, ?, ?, ?, ?, ?, ?)
+                    --ON CONFLICT (id) DO NOTHING
+                """, (
+                    content.id,
+                    content.message_date,
+                    content.grade,
+                    content.vacancy_name,
+                    content.location,
+                    content.channel_name,
+                    content.resume_link,
+                ))
 
     finally:
         conn.close()
+
 
 
 def table_data():
@@ -239,27 +254,28 @@ def table_data():
 
     conn = duckdb.connect(str(DB_PATH))
 
-    # Вариант 1
+    # TODO Вариант 1
     # table = conn.execute("""
     #     select *
     #     from metadata
     # """).fetchall()
 
-    # Вариант 2
+    # TODO Вариант 2
+
     table = conn.sql("""
         SELECT *
         FROM metadata
     """)
+    print(table)
 
-
-    # Вариант 3
+    # TODO Вариант 3
 
     # table = conn.execute("""
     #         SELECT *
     #         FROM metadata
     #     """).fetchdf()
-
-    print(table)
+    #
+    # print(table)
 
     conn.close()
 
@@ -325,7 +341,7 @@ async def main():
 
     await client.disconnect()
 
-    # save_metadata(dict_mdata)
+    save_metadata(dict_mdata)
 
     table_data()
 

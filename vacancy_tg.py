@@ -48,28 +48,33 @@ def init_database():
     Если будет ошибка, то finally гарантирует закрытие соединения в любом случае.
     id INTEGER PRIMARY KEY - вариант для контроля дубликатов id сообщений
     """
+
     DB_PATH.parent.mkdir(parents=True, exist_ok=True)
 
     conn = duckdb.connect(str(DB_PATH))
 
     try:
         conn.execute("""
-            CREATE TABLE IF NOT EXISTS metadata (
-                --id INTEGER PRIMARY KEY,
-                id INTEGER ,
-                message_date DATE,
-                grade VARCHAR,
-                vacancy_name VARCHAR,
-                location VARCHAR,
-                channel_name VARCHAR,
-                resume_link VARCHAR
-            )
-        """)
+                    CREATE TABLE IF NOT EXISTS metadata (
+                        id INTEGER,
+                        message_date DATE,
+                        grade VARCHAR,
+                        vacancy_name VARCHAR,
+                        location VARCHAR,
+                        channel_name VARCHAR,
+                        channel_link VARCHAR,
+                        PRIMARY KEY (channel_link, id)
+                    )
+                """)
 
         conn.execute("""
             CREATE INDEX IF NOT EXISTS idx_metadata_id
             ON metadata(id)
         """)
+
+        # conn.execute("""
+        # DROP TABLE metadata;
+        # """)
 
     finally:
         conn.close()
@@ -89,7 +94,7 @@ class MessageMetadata(BaseModel):
     vacancy_name: str | None = None
     location: str | None = None
     channel_name: str | None = None
-    resume_link: str | None = None
+    channel_link: str | None = None
 
 
 load_dotenv()
@@ -99,8 +104,25 @@ API_HASH = os.getenv("API_HASH")
 
 CHANNELS = {
     "Мой канал": "@Kirill_50plus_DS",
-    "Тёмная Башня": "@tbaudiobook",
-    "Работа и вакансии в IT": "@proglib_jobs"
+    # "Тёмная Башня": "@tbaudiobook",
+    "Работа и вакансии в IT": "@proglib_jobs",
+    "Доска AI-объявлений": "@DS_avitotech",
+    "Вакансии ИТ": "@prog_itjobs",
+    "Machine Learning Jobs": "@Machinelearning_Jobs",
+    "Data Science Jobs": "@datascienceml_jobs",
+    "ML & Data Science Jobs": "https://t.me/+dJGMlUsazwU4NGRi",
+    "Data jobs": "@datajob",
+    "ML / DS_Jobs": "@ml_data_science_job",
+    "Data Analyst/Science Jobs": "@data_analyst_science_jobs",
+    "Data science: Remote job of the day": "@data_science_remote_jobs",
+    "Data Science jobs": "https://t.me/datascience_job",
+    "getmatch": "https://t.me/g_jobbot",
+    "Python Django Jobs": "@python_django_work",
+    "Python Jobs": "@python_djangojobs",
+    "Ит Вакансии ": "@hr_itwork"
+
+
+
 }
 
 SESSION_NAME = "vacancy_parser"
@@ -134,8 +156,8 @@ PREFIX = [
 #  Префиксы по группам
 pref_metadata = {
     'VACANCY_NAME': ["datanalyst", "analys", "datas", "scientist", "data scientist", "аналит", "разраб"],
-    'GRADE': ["jun", "intern", "стаже", "стажё", "middle"]
-    , 'LOCATION': ['удалён', 'remote', 'удален']
+    'GRADE': ["jun", "intern", "стаже", "стажё", "middle", "стажир"]
+    , 'LOCATION': ["удалён", "remote", "удален"]
     , 'CHANNEL_NAME': []
     , 'MESSAGE_DATE': []
     , "ID": []
@@ -153,7 +175,7 @@ pref_metadata = {
 
 # TODO Ответ от источника надо ждать поэтому async
 async def extract_messages(chanel):
-    async for msg in client.iter_messages(chanel, limit=3, reverse=False):
+    async for msg in client.iter_messages(chanel, limit=100, reverse=False):
         # print(msg)
         yield msg
 
@@ -168,7 +190,7 @@ def metadata_messages(id, compar, chanel_name, chanel_link):
         , vacancy_name=compar.get("VACANCY_NAME")
         , location=compar.get("LOCATION")
         , channel_name=chanel_name
-        , resume_link=chanel_link
+        , channel_link=chanel_link
     )
 
     # print("METADATA:", metadata)
@@ -182,7 +204,7 @@ def metadata_messages(id, compar, chanel_name, chanel_link):
 #  lambda не вызывается скобками а просто обращается к ячейке,
 # d = defaultdict(lambda: defaultdict(set))
 
-d = {}  # Словарь для заполнения метадатой
+dict_metadata = {}  # Словарь для заполнения метадатой
 
 
 # TODO Ответ ждать не надо поэтому не async
@@ -201,15 +223,15 @@ def comparison(msg_id, word, meta_date):
 
                 # d[msg_id][name_mdata].add(value_metadata)  # msg_id нужен для группировки метадаты
 
-                d.setdefault(msg_id, {}).setdefault('MESSAGE_DATE', meta_date.date().strftime("%Y-%m-%d"))
+                dict_metadata.setdefault(msg_id, {}).setdefault('MESSAGE_DATE', meta_date.date().strftime("%Y-%m-%d"))
 
-                d[msg_id].update({name_mdata: value_metadata})
+                dict_metadata[msg_id].update({name_mdata: value_metadata})
 
-                if d[msg_id].get("GRADE"):
+                if dict_metadata[msg_id].get("GRADE"):
                     # print(d[msg_id])
                     # metadt = metadata_messages(d, msg_id)
 
-                    return d[msg_id]
+                    return dict_metadata[msg_id]
 
 
 def save_metadata(metadata):
@@ -231,7 +253,7 @@ def save_metadata(metadata):
                 conn.execute("""
                     INSERT INTO metadata
                     VALUES (?, ?, ?, ?, ?, ?, ?)
-                    --ON CONFLICT (id) DO NOTHING
+                    ON CONFLICT (channel_link, id) DO NOTHING
                 """, (
                     content.id,
                     content.message_date,
@@ -239,7 +261,7 @@ def save_metadata(metadata):
                     content.vacancy_name,
                     content.location,
                     content.channel_name,
-                    content.resume_link,
+                    content.channel_link,
                 ))
 
     finally:

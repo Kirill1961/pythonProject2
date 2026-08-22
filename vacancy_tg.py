@@ -13,6 +13,25 @@ parse_message() сделать MessageMetadata
 save_message() записать в DuckDB
         │
         ▼
+
+Архитектура проекта:
+
+project/
+├── src/
+├── data/
+│   └── metadata.duckdb
+├── .env
+└── ...
+
+src - организационная папка для исходного кода проекта.
+│
+├── config      → настройки
+├── extractor   → получить данные
+├── processor   → обработать
+├── storage     → сохранить
+├── database    → работать с БД
+└── pipeline    → запустить весь процесс
+
 """
 
 import asyncio
@@ -36,6 +55,18 @@ from collections import defaultdict
 from datetime import date, datetime, timedelta
 
 from pathlib import Path
+
+from prefect import flow, task
+
+__doc__ = """
+@task          @task
+  ↓              ↓
+extract       save
+     \          /
+      \        /
+       @flow
+      pipeline
+"""
 
 DB_PATH = Path("data/metadata.duckdb")
 
@@ -121,8 +152,6 @@ CHANNELS = {
     "Python Jobs": "@python_djangojobs",
     "Ит Вакансии ": "@hr_itwork"
 
-
-
 }
 
 SESSION_NAME = "vacancy_parser"
@@ -161,21 +190,13 @@ pref_metadata = {
     , 'CHANNEL_NAME': []
     , 'MESSAGE_DATE': []
     , "ID": []
-    # , 'RESUME_LINK': []
 
 }
 
 
-# GRADE = ["jun", "intern", "стаже", "стажё"]
-# VACANCY_NAME = ["datanalyst", "analys", "datas", "scientist", "аналит"]
-# LOCATION = ['удалён', 'remote']
-# MESSAGE_DATE = str()
-# RESUME_LINK = str()
-# CHANNEL_NAME = str()
-
 # TODO Ответ от источника надо ждать поэтому async
 async def extract_messages(chanel):
-    async for msg in client.iter_messages(chanel, limit=100, reverse=False):
+    async for msg in client.iter_messages(chanel, limit=10, reverse=False):
         # print(msg)
         yield msg
 
@@ -238,35 +259,26 @@ def save_metadata(metadata):
     """
     ON CONFLICT (id) DO NOTHING - вариант для отказ записи Дубликата
     """
-
     conn = duckdb.connect(str(DB_PATH))
-
-    table = conn.execute("""
-            SELECT id
-            FROM metadata
-        """).fetchdf()
-    id_msg = set(table.id)
 
     try:
         for content in metadata.values():
-            if content.id not in id_msg:
-                conn.execute("""
+            conn.execute("""
                     INSERT INTO metadata
                     VALUES (?, ?, ?, ?, ?, ?, ?)
                     ON CONFLICT (channel_link, id) DO NOTHING
                 """, (
-                    content.id,
-                    content.message_date,
-                    content.grade,
-                    content.vacancy_name,
-                    content.location,
-                    content.channel_name,
-                    content.channel_link,
-                ))
+                content.id,
+                content.message_date,
+                content.grade,
+                content.vacancy_name,
+                content.location,
+                content.channel_name,
+                content.channel_link,
+            ))
 
     finally:
         conn.close()
-
 
 
 def table_data():
@@ -281,6 +293,8 @@ def table_data():
     #     select *
     #     from metadata
     # """).fetchall()
+
+    # print(table)
 
     # TODO Вариант 2
 
@@ -303,7 +317,7 @@ def table_data():
 
     return table
 
-
+@flow
 async def main():
     init_database()
 
@@ -371,4 +385,5 @@ async def main():
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()
+    # asyncio.run(main())

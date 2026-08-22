@@ -37,6 +37,11 @@ src - организационная папка для исходного код
 import asyncio
 import re
 
+import pandas as pd
+
+pd.set_option("display.max_rows", None)
+pd.set_option("display.max_columns", None)
+
 from dataclasses import dataclass
 
 import duckdb
@@ -196,7 +201,7 @@ pref_metadata = {
 
 # TODO Ответ от источника надо ждать поэтому async
 async def extract_messages(chanel):
-    async for msg in client.iter_messages(chanel, limit=10, reverse=False):
+    async for msg in client.iter_messages(chanel, limit=100, reverse=False):
         # print(msg)
         yield msg
 
@@ -302,7 +307,14 @@ def table_data():
         SELECT *
         FROM metadata
     """)
-    print(table)
+
+    pd.set_option('display.max_columns', None)
+
+    df_mdata = pd.DataFrame(table.fetchall(), columns=table.columns)
+
+    print(df_mdata)
+    # print(table.columns)
+
 
     # TODO Вариант 3
 
@@ -317,7 +329,7 @@ def table_data():
 
     return table
 
-@flow
+# @flow
 async def main():
     init_database()
 
@@ -385,5 +397,5 @@ async def main():
 
 
 if __name__ == "__main__":
-    main()
-    # asyncio.run(main())
+    # main()
+    asyncio.run(main())

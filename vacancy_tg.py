@@ -89,6 +89,11 @@ def init_database():
 
     conn = duckdb.connect(str(DB_PATH))
 
+    # TODO Однократное удаление БД
+    # conn.execute("""
+    # DROP TABLE metadata;
+    # """)
+
     try:
         conn.execute("""
                     CREATE TABLE IF NOT EXISTS metadata (
@@ -108,9 +113,7 @@ def init_database():
             ON metadata(id)
         """)
 
-        # conn.execute("""
-        # DROP TABLE metadata;
-        # """)
+
 
     finally:
         conn.close()
@@ -139,7 +142,7 @@ API_ID = os.getenv("API_ID")
 API_HASH = os.getenv("API_HASH")
 
 CHANNELS = {
-    "Мой канал": "@Kirill_50plus_DS",
+    # "Мой канал": "@Kirill_50plus_DS",
     # "Тёмная Башня": "@tbaudiobook",
     "Работа и вакансии в IT": "@proglib_jobs",
     "Доска AI-объявлений": "@DS_avitotech",
@@ -155,7 +158,10 @@ CHANNELS = {
     "getmatch": "https://t.me/g_jobbot",
     "Python Django Jobs": "@python_django_work",
     "Python Jobs": "@python_djangojobs",
-    "Ит Вакансии ": "@hr_itwork"
+    "Ит Вакансии ": "@hr_itwork",
+    "fFinder1": "@theyseeku",
+    "fFinder2": "@finder",
+    "fFinder3": "@finderwork"
 
 }
 
@@ -167,45 +173,36 @@ client = TelegramClient(
     API_HASH,
 )
 
-#  Префиксы общие
-PREFIX = [
-    'python',
-    'vacancy',
-    'job',
-    'ваканс',
-    'удалён',
-    'удален',
-    'remote',
-    'datanalyst',
-    'analys',
-    'datas',
-    'scientist',
-    'стажё',
-    'стаже',
-    'jun',
-    'intern',
-    'аналит'
-]
-
 #  Префиксы по группам
 pref_metadata = {
     'VACANCY_NAME': ["datanalyst", "analys", "datas", "scientist", "data scientist", "аналит", "разраб"],
-    'GRADE': ["jun", "intern", "стаже", "стажё", "middle", "стажир"]
-    , 'LOCATION': ["удалён", "remote", "удален"]
+    'GRADE': [
+        "jun",
+        "intern",
+        "стаже",
+        "стажё",
+        # "middle",
+        "стажир"
+    ]
+    , 'LOCATION': [
+        "удалён",
+        "remote",
+        "удален"
+    ]
     , 'CHANNEL_NAME': []
     , 'MESSAGE_DATE': []
     , "ID": []
 
 }
 
-
+# @task
 # TODO Ответ от источника надо ждать поэтому async
 async def extract_messages(chanel):
     async for msg in client.iter_messages(chanel, limit=100, reverse=False):
         # print(msg)
         yield msg
 
-
+# @task
 def metadata_messages(id, compar, chanel_name, chanel_link):
     # print(compar.get("VACANCY_NAME"))
 
@@ -234,6 +231,7 @@ dict_metadata = {}  # Словарь для заполнения метадат�
 
 
 # TODO Ответ ждать не надо поэтому не async
+# @task
 def comparison(msg_id, word, meta_date):
     """
     * msg_id - нужен для группировки метадаты
@@ -259,14 +257,18 @@ def comparison(msg_id, word, meta_date):
 
                     return dict_metadata[msg_id]
 
-
+# @task
 def save_metadata(metadata):
     """
     ON CONFLICT (id) DO NOTHING - вариант для отказ записи Дубликата
+    Перед заполнением таблицы очищаем данные
     """
     conn = duckdb.connect(str(DB_PATH))
 
     try:
+        conn.execute("""
+        TRUNCATE TABLE metadata;
+        """)
         for content in metadata.values():
             conn.execute("""
                     INSERT INTO metadata
@@ -286,6 +288,7 @@ def save_metadata(metadata):
         conn.close()
 
 
+# @task
 def table_data():
     """
     Три варианта вывода таблицы
@@ -306,15 +309,11 @@ def table_data():
     table = conn.sql("""
         SELECT *
         FROM metadata
+        where message_date >= CURRENT_DATE - INTERVAL '2 months'
+        order by message_date
     """)
 
-    pd.set_option('display.max_columns', None)
-
-    df_mdata = pd.DataFrame(table.fetchall(), columns=table.columns)
-
-    print(df_mdata)
-    # print(table.columns)
-
+    print(table.show(max_rows=1000))
 
     # TODO Вариант 3
 
@@ -325,9 +324,23 @@ def table_data():
     #
     # print(table)
 
-    conn.close()
+    # TODO Вариант 4
+    # pd.set_option('display.max_columns', None)
+    #
+    # df_mdata = pd.DataFrame(table.show(max_rows=1000), columns=table.columns)
+    #
+    # print(df_mdata)
 
-    return table
+    # TODO Проверка типа даты
+    # typed = conn.sql("""
+    #    SELECT pg_typeof(message_date)
+    #    FROM metadata
+    #    """)
+    # print(typed)
+
+    conn.close()
+    # return table
+
 
 # @flow
 async def main():

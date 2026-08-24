@@ -32,6 +32,9 @@ src - организационная папка для исходного код
 ├── database    → работать с БД
 └── pipeline    → запустить весь процесс
 
+PREFECT
+prefect server start
+python -m src.pipeline
 """
 
 import asyncio
@@ -195,12 +198,21 @@ pref_metadata = {
 
 }
 
-# @task
-# TODO Ответ от источника надо ждать поэтому async
+
+@task(
+    name="save metadata",
+    retries=3,
+    retry_delay_seconds=10,
+    log_prints=True
+)
 async def extract_messages(chanel):
+    """
+    Ответ от источника надо ждать поэтому async
+    """
     async for msg in client.iter_messages(chanel, limit=100, reverse=False):
         # print(msg)
         yield msg
+
 
 # @task
 def metadata_messages(id, compar, chanel_name, chanel_link):
@@ -256,6 +268,7 @@ def comparison(msg_id, word, meta_date):
                     # metadt = metadata_messages(d, msg_id)
 
                     return dict_metadata[msg_id]
+
 
 # @task
 def save_metadata(metadata):
@@ -342,7 +355,7 @@ def table_data():
     # return table
 
 
-# @flow
+# @flow(name="main", log_prints=True)
 async def main():
     init_database()
 

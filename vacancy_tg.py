@@ -177,14 +177,14 @@ client = TelegramClient(
 )
 
 #  Префиксы по группам
-pref_metadata = {
+PREF_METADATA = {
     'VACANCY_NAME': ["datanalyst", "analys", "datas", "scientist", "data scientist", "аналит", "разраб"],
     'GRADE': [
         "jun",
         "intern",
         "стаже",
         "стажё",
-        # "middle",
+        "middle",
         "стажир"
     ]
     , 'LOCATION': [
@@ -248,7 +248,7 @@ def comparison(msg_id, word, meta_date):
     """
     * msg_id - нужен для группировки метадаты
     """
-    for name_mdata, pref_total in pref_metadata.items():
+    for name_mdata, pref_total in PREF_METADATA.items():
 
         for pref in pref_total:
 

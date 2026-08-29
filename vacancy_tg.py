@@ -184,7 +184,7 @@ PREF_METADATA = {
         "intern",
         "стаже",
         "стажё",
-        "middle",
+        # "middle",
         "стажир"
     ]
     , 'LOCATION': [

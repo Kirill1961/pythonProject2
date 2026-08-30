@@ -215,7 +215,7 @@ async def extract_messages(chanel):
 
 
 # @task
-def metadata_messages(id, compar, chanel_name, chanel_link):
+def metadata_from_messages(id, compar, chanel_name, chanel_link):
     # print(compar.get("VACANCY_NAME"))
 
     metadata = MessageMetadata(
@@ -265,13 +265,13 @@ def comparison(msg_id, word, meta_date):
 
                 if dict_metadata[msg_id].get("GRADE"):
                     # print(d[msg_id])
-                    # metadt = metadata_messages(d, msg_id)
+                    # metadt = metadata_from_messages(d, msg_id)
 
                     return dict_metadata[msg_id]
 
 
 # @task
-def save_metadata(metadata):
+def save_into_database(metadata):
     """
     ON CONFLICT (id) DO NOTHING - вариант для отказ записи Дубликата
     Перед заполнением таблицы очищаем данные
@@ -399,7 +399,7 @@ async def main():
                             # print(dict_mdata[message.id])
                             # print(compar)
 
-                            dict_mdata[message.id] = metadata_messages(message.id, compar, chanel_name, chanel_link)
+                            dict_mdata[message.id] = metadata_from_messages(message.id, compar, chanel_name, chanel_link)
 
                             # if metadt:
 
@@ -415,7 +415,7 @@ async def main():
 
     await client.disconnect()
 
-    save_metadata(dict_mdata)
+    save_into_database(dict_mdata)
 
     table_data()
 

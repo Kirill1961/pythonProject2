@@ -199,12 +199,12 @@ PREF_METADATA = {
 }
 
 
-@task(
-    name="save metadata",
-    retries=3,
-    retry_delay_seconds=10,
-    log_prints=True
-)
+# @task(
+#     name="save metadata",
+#     retries=3,
+#     retry_delay_seconds=10,
+#     log_prints=True
+# )
 async def extract_messages(chanel):
     """
     Ответ от источника надо ждать поэтому async

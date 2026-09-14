@@ -1,3 +1,19 @@
+"""
+Таблицы
+sales:
+client_id — клиент
+product — продукт
+date — дата покупки
+quantity — количество купленного товара
+
+digital:
+client_id — клиент
+product — продукт
+date — дата действия
+event — 'Impression' или 'Click'
+cnt — количество таких событий
+"""
+
 import numpy as np
 import pandas as pd
 
@@ -162,8 +178,8 @@ result[:10]
 #%%
 query = """
     select *
-    from sales s
-    left join digital d on d.client_id = s.client_id
+    from digital
+    --left join digital d on d.client_id = s.client_id
     ;
 """
 
@@ -171,3 +187,4 @@ query = """
 result = pd.read_sql_query(query, conn)
 
 result[:10]
+

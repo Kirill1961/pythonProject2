@@ -53,6 +53,7 @@ df = df[
 
 df = df.sample(frac=1, random_state=10).reset_index(drop=True)
 
+#  Сохраняем csv в папку в родной директории, поэтом просто указываем папку seeds
 df.to_csv('seeds/raw_orders.csv', index=False)
 
 print(df.head())

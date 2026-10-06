@@ -6,19 +6,20 @@ print(len(sys.argv), ' len(sys.argv)')
 print("Имя скрипта:", sys.argv[0])
 print("Аргументы командной строки:", sys.argv[1:])
 
-regex = sys.argv[1]
+# regex = sys.argv[:]
+regex = r"w+"
 print(regex, ' regex ************')
 for line in sys.stdin:
     print(line, ' line>>>>>>>>>>>>')
     print(sys.stdout.write(line), ' stdout.write(line)<<<<<<<<<<<<<<<<')
     if re.search(regex, line): sys.stdout.write(line)
-    # try:
-    #     sys.stdout = open('eek.txt', 'a')
-    #     print(regex)
-    # finally:
-    #     # Закрываем file.txt
-    #     sys.stdout.close()
-    #     sys.stdout = sys.__stdout__
+    try:
+        sys.stdout = open('eek.txt', 'a')
+        print(regex)
+    finally:
+        # Закрываем file.txt
+        sys.stdout.close()
+        sys.stdout = sys.__stdout__
     count = 0
     for line in sys.stdin:
         count += 1

@@ -7,3 +7,6 @@ he,
 he,
 he,
 he
+\W+
+\W+
+w+

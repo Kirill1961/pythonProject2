@@ -8,10 +8,17 @@
 import os
 import pandas as pd
 import numpy as np
+from itertools import product
 
 
 a = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 print(*a, " распаковали из списка")
+
+# TODO Распаковка списка в коде
+#  *[[2, 3]] - распаковали звездой
+res = list(product(*[[2, 3]] * 3))
+print("Распаковка *[[2, 3]]", res, "\n")
+
 
 a = ([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
 print(*a, " распаковали из кортежа")

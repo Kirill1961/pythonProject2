@@ -3,7 +3,7 @@ import itertools as it
 import operator
 import numpy as np
 import random
-from itertools import combinations, islice
+from itertools import combinations, islice, compress, product
 
 a = [[0, 1], [0, 0], [1, 0], [1, 1]]
 
@@ -20,8 +20,9 @@ print(b([[i] for i in a])[-1], " accumulate - Накопление в списо
 
 c = [["qwer"], ["asdf"], ["zxcv"]]
 
-
 print()
+
+
 def b(x):
     r = list(it.accumulate(x))
     return r
@@ -39,6 +40,13 @@ for i in arr:
     print(i)
 print("for loop матрицы", "\n")
 
+# TODO Зададим маску из комбинаций 0, 1
+#  Отфильтруем значения по маске
+#  *[[0, 1]] - распаковка списка
+items = "ASQ"
+for mask in product(*[[0, 1]] * len(items)):
+    res = list(set(compress(items, mask)))
+    print("items :", items, ", mask :", mask, ", res :", res, "\n")
 
 # iter - остановка генератора  по заданному значению
 def foo():
@@ -94,7 +102,7 @@ b = list('abcde')
 ls = []
 for i in range(len(b)):
     for j in range(i + 1, len(b)):
-        ls.append( (b[i], b[j]) )
+        ls.append((b[i], b[j]))
 
 print(f'Ручной аналог : {ls}')
 
@@ -103,9 +111,20 @@ for i in range(len(b)):
     for j in b[i + 1:]:
         print(b[i], j)
 
-
 # TODO срез словаря
 d = {i: j for j, i in enumerate(list('abcde'))}
 sls = dict(islice(d.items(), 3))
 
 print('срез словаря :', sls)
+
+data = "ABCDEF"
+selectors = [1, 0, 1, 0, 1, 1]
+
+
+def compress(data, selectors):
+    # compress('ABCDEF', [1,0,1,0,1,1]) → A C E F
+    return (datum for datum, selector in zip(data, selectors) if selector)
+
+
+res = list(compress(data, selectors))
+print(res)

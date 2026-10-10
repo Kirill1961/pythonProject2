@@ -30,7 +30,8 @@ def b(x):
 
 print(b([[i] for i in c])[-1], " accumulate - Накопление в список элементов из другого списка ", "\n")
 
-# Генераторы комбинаций чисел
+# TODO Генераторы комбинаций чисел
+#  repeat=2 - это число комбинаций
 combi = list(it.product([1, 2, 3], repeat=2))
 print("product ; Генераторы комбинаций чисел : ", '\n', f'{combi}', "\n")
 arr = np.array(combi)
@@ -129,3 +130,8 @@ def compress(data, selectors):
 
 res = list(compress(data, selectors))
 print(res)
+
+# TODO Комбинации Признаков через маску из комбинаций 0 и 1
+items = ["revenue", "data", "age", "purchase"]
+combine = [list(compress(items, mask)) for mask in list(product([0, 1], repeat=len(items)))]
+print(combine)

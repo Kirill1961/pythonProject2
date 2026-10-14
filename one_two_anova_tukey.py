@@ -19,7 +19,7 @@ from statsmodels.graphics.gofplots import qqplot
 
 # TODO index_col=0 - Убрали лишнюю колонку с индексами
 data = pd.read_csv("D:\Eduson_data\Customer Segmentation.csv", index_col=0)
-print(data.head())
+print(data.head(), "\n")
 
 data.info()
 
@@ -30,7 +30,7 @@ sns.boxplot(data=data, x="Segmentation", y="Age", hue="Graduated")
 
 # one-way anova
 one_way = ols("Age ~ Segmentation", data).fit()
-anova_lm(one_way)
+print("ANOVA one_way: \n", anova_lm(one_way), "\n")
 
 # qq-plot, проверяем нормальность остатков
 sm.qqplot(one_way.resid, line="s")
@@ -41,14 +41,14 @@ for group_id, group in data.groupby(["Segmentation"]):
     groups.append(group.Age)
 
 # тест Левена
-stats.bartlett(*groups)
+print("LEVENE : \n", stats.bartlett(*groups), "\n")
 
 # апостериорный анализ
 print(pairwise_tukeyhsd(endog=data.Age, groups=data.Segmentation, alpha=0.05))
 
 # two-way anova
 two_way = ols("Age ~ Segmentation + Graduated + Segmentation:Graduated", data).fit()
-anova_lm(two_way)
+print("ANOVA tow_way", anova_lm(two_way), "\n")
 
 # qq-plot, проверяем нормальность остатков
 sm.qqplot(two_way.resid, line="s")

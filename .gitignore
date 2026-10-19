@@ -8,3 +8,4 @@ venv/
 pytorch_cpu_env/
 ts_env/
 .env
+pytorch_env/

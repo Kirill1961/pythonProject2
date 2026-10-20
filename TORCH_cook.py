@@ -9,7 +9,7 @@ from collections import defaultdict
 import itertools
 import matplotlib.pyplot as plt
 import torch
-import tensorflow as tf
+# import tensorflow as tf
 import torch
 from torch import nn
 from torch.utils.data import DataLoader
